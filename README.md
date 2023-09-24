@@ -19,7 +19,7 @@ This is a portfolio website built with Next.js, Tailwind CSS, and Framer Motion.
 2. Change into the project directory:
 
    ```bash
-   cd portfolio-nextjs-latest
+   cd anil-latest-portfolio
    ```
 
 3. Install the dependencies:
