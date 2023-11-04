@@ -1,7 +1,9 @@
 import React from "react";
 import { SocialIcon } from "react-social-icons";
 import { motion } from "framer-motion";
-import Image from "next/image";
+// import Image from "next/image";
+// import { FaFilePdf } from "react-icons/fa";
+
 
 type Props = {};
 
@@ -62,6 +64,13 @@ export default function Header({}: Props) {
           fgColor="#a9a9a9"
           bgColor="transparent"
         />
+        {/* <a href="https://drive.google.com/file/d/1Hnw6J86OnGXp0bYprY6HTxKNe3h0iJUc/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+          <FaFilePdf
+            // fgColor="#a9a9a9"
+            // bgColor="transparent"
+            className="ml-3"
+          />
+        </a> */}
       </motion.div>
 
       <motion.div

@@ -50,4 +50,3 @@ function Skills({}: Props) {
 }
 
 export default Skills;
-

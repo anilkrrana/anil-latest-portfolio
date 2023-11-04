@@ -8,7 +8,6 @@ import Image from "next/image";
 //   "https://cdn.hashnode.com/res/hashnode/image/upload/v1671209654236/2TRB5sdiZ.png?w=500&h=500&fit=crop&crop=faces&auto=compress";
 
 type Props = { src: string };
-
 export default function Hero({ src }: Props) {
   const [text, count] = useTypewriter({
     words: [
@@ -62,9 +61,13 @@ export default function Hero({ src }: Props) {
               projects
             </button>
           </Link>
+          <Link href="https://drive.google.com/file/d/1Hnw6J86OnGXp0bYprY6HTxKNe3h0iJUc/view">
+            <button className="heroButton bg-slate-500/20 backdrop-blur-sm">
+              resume
+            </button>
+          </Link>
         </div>
       </div>
     </div>
   );
 }
-

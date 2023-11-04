@@ -3,18 +3,16 @@
     "data": [
       {
         "id": 1,
-        "title": "Landing Page",
-        "content": "",
-        "imgurl": "/projectSS/landing-page.png",
-        "githubLink": "https://github.com/anilkrrana/Landing_page_animate_on_scroll",
-        "deployedLink": "https://landing-page-animate-on-scroll.vercel.app/",
+        "title": "ShoppingAdda (E-commerce)",
+        "content": " Developed and deployed a E-commerce website with features like authentication, Cart, ChatBot, Payment integration.nsured Security of users using Firebase authentication system . Sign in through google account is also added",
+        "imgurl": "/projectSS/ShoppingAdda.png",
+        "githubLink": "https://github.com/anilkrrana/ShoppingAdda",
+        "deployedLink": "https://shopping-adda-hazel.vercel.app/",
         "tech": [
           {
-            "id": 11,
             "tech": "/skillsLogos/react.png"
           },
           {
-            "id": 12,
             "tech": "/skillsLogos/tailwind.png"
           }
         ]
@@ -37,6 +35,24 @@
       },
       {
         "id": 3,
+        "title": "Landing Page",
+        "content": "",
+        "imgurl": "/projectSS/landing-page.png",
+        "githubLink": "https://github.com/anilkrrana/Landing_page_animate_on_scroll",
+        "deployedLink": "https://landing-page-animate-on-scroll.vercel.app/",
+        "tech": [
+          {
+            "id": 11,
+            "tech": "/skillsLogos/react.png"
+          },
+          {
+            "id": 12,
+            "tech": "/skillsLogos/tailwind.png"
+          }
+        ]
+      },
+      {
+        "id": 4,
         "title": "Quiz web app",
         "content": "The Quiz web app was built using Html, Css and Js, which uses IMDB API to fetch using a search query using user input. reactjs and rest api to fetch data and display results.",
         "imgurl": "/projectSS/quizapp.png",
@@ -55,7 +71,7 @@
         ]
       },
       {
-        "id": 4,
+        "id": 5,
         "title": "TravelEase",
         "content": "The TravelEase was built using reactjs and use Codesandbox tools to create the  website. CSS to style the website.",
         "imgurl": "/projectSS/TravelEase.png",
@@ -74,7 +90,7 @@
         ]
       },
       {
-        "id": 5,
+        "id": 6,
         "title": "Todos List",
         "content": "Todos List web-app that was built using reactJS, TailwindCSS. The website is fully responsive and mobile friendly.",
         "imgurl": "/projectSS/todos-list.png",
