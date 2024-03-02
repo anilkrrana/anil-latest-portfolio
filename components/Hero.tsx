@@ -25,7 +25,7 @@ export default function Hero({ src }: Props) {
 
       <Image
         className="relative w-aut0 h-auto rounded-full mx-auto object-cover"
-        src="/linkedin2.png"
+        src="/mypic.jpg"
         alt=""
         width={132}
         height={122}
@@ -61,7 +61,7 @@ export default function Hero({ src }: Props) {
               projects
             </button>
           </Link>
-          <Link href="https://drive.google.com/file/d/1Hnw6J86OnGXp0bYprY6HTxKNe3h0iJUc/view">
+          <Link href="https://drive.google.com/file/d/1myTFvpr0hjdU8MXcpJcBPylhy1dkLl8J/view?usp=sharing">
             <button className="heroButton bg-slate-500/20 backdrop-blur-sm">
               resume
             </button>
