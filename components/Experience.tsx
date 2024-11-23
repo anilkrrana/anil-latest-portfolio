@@ -18,6 +18,15 @@ export default function Experience({}: Props) {
       </h3>
 
       <div className="w-full mt-20 flex space-x-10 overflow-x-scroll p-10 snap-x snap-mandatory scrollbar-track-transparent scrollbar-thin xl:space-x-14 ">
+      <ExperienceCard
+          clogo="/companyLogo/capgLogo.png"
+          title="Software Engineer"
+          company="CAPGEMINI"
+          point1="Working on Core JAVA, SpringBoot, MicroServices and many more technologies."
+          point2="Contributed to the development of Backend using MicroServices."
+          startDate="Sep, 2024"
+          endDate="Present"
+        />
         <ExperienceCard
           clogo="/companyLogo/simplbyte-logo.png"
           title="Web developer and Design intern"
@@ -27,15 +36,7 @@ export default function Experience({}: Props) {
           startDate="March, 2023"
           endDate="April, 2023"
         />
-        <ExperienceCard
-          clogo="/companyLogo/lhc.jpeg"
-          title="Frontend Developer Intern"
-          company="SDE Camp"
-          point1="Implemented interactive features using React and optimize data display and enhance user engagement."
-          point2="Contributed to the development of UI and components using Next.js for their Landing Page"
-          startDate="July, 2023"
-          endDate="July 2023"
-        />
+        
         {/* <ExperienceCard
           clogo="/companyLogo/lhc.jpeg"
           title="Virtual Apprentenship"

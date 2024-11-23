@@ -50,7 +50,7 @@ export default function About({}: Props) {
           Welcome to my digital abode! <br />
           <br /> I am a{" "}
           <span className="text-blue-500 font-semibold">
-            front-end developer/Java Spring-Boot Developer
+            front-end developer/Java Spring-Boot Developer,
           </span>{" "}
           Currently i am working as a Software Engineer at Capgemini. I am having an experience of building high-performing, responsive,
           beautiful web applications.

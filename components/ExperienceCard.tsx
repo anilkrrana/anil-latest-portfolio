@@ -29,7 +29,7 @@ export default function ExperienceCard({
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           src={clogo}
-          className="object-cover h-10 w-10 rounded-full object-center xl:w-[55px] xl:h-[55px]"
+          className="object-cover h-10 w-10 rounded-full object-center xl:w-[60px] xl:h-[60px]"
           alt=""
         />
         <div className="md:pl-4 pl-6 text-left">

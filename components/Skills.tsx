@@ -25,6 +25,13 @@ function Skills({}: Props) {
         <Skill imgsrc="/skillsLogos/css.png" directionLeft />
         <Skill imgsrc="/skillsLogos/js.png" directionLeft />
         <Skill imgsrc="/skillsLogos/c++.png" directionLeft />
+        <Skill imgsrc="/skillsLogos/java.png" />
+        <Skill imgsrc="/skillsLogos/python.png" />
+        <Skill imgsrc="/skillsLogos/react.png" />
+        <Skill imgsrc="/skillsLogos/next-js.png" />
+        <Skill imgsrc="/skillsLogos/postman.png" />
+        <Skill imgsrc="/skillsLogos/postGreSQL.png" />
+        <Skill imgsrc="/skillsLogos/tailwind.png" />
         <Skill imgsrc="/skillsLogos/bootstrap.png" directionLeft />
         {/* <Skill imgsrc="/skillsLogos/c.png" directionLeft/> */}
         {/* <Skill imgsrc="/skillsLogos/docker.png" directionLeft/> */}
@@ -32,17 +39,11 @@ function Skills({}: Props) {
         {/* <Skill imgsrc="/skillsLogos/framer.png" directionLeft/> */}
         <Skill imgsrc="/skillsLogos/git.png" directionLeft />
         <Skill imgsrc="/skillsLogos/github.png" directionLeft />
-        {/* <Skill imgsrc="/skillsLogos/java.png" />
         <Skill imgsrc="/skillsLogos/kuber.png" />
-        <Skill imgsrc="/skillsLogos/linux.png" /> */}
+        <Skill imgsrc="/skillsLogos/linux.png" />
         <Skill imgsrc="/skillsLogos/mongodb.png" />
-        <Skill imgsrc="/skillsLogos/next-js.png" />
         <Skill imgsrc="/skillsLogos/node.png" />
-        <Skill imgsrc="/skillsLogos/postman.png" />
-        <Skill imgsrc="/skillsLogos/python.png" />
-        <Skill imgsrc="/skillsLogos/react.png" />
-        <Skill imgsrc="/skillsLogos/sanityio.png" />
-        <Skill imgsrc="/skillsLogos/tailwind.png" />
+        <Skill imgsrc="/skillsLogos/sanityio.png" />    
         <Skill imgsrc="/skillsLogos/typescript.png" />
       </div>
     </motion.div>
