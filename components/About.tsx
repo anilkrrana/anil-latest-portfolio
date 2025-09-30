@@ -38,7 +38,7 @@ export default function About({}: Props) {
         viewport={{
           once: true,
         }}
-        src="/profile pic.jpeg"
+        src="/profile-pic-portfolio.jpg"
         className="-mb-32 md:mb-0 md:ml-16 flex-shrink-0 w-40 h-40 rounded-xl object-cover md:rounded-lg md:w-64 md:h-96 xl:w-[350px] xl:h-[450px]"
       />
 
