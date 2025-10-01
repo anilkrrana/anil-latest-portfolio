@@ -7,6 +7,7 @@ type Props = {
   company: string;
   point1?: string;
   point2?: string;
+  point3?: string;
   startDate: string;
   endDate: string;
 };
@@ -17,6 +18,7 @@ export default function ExperienceCard({
   company,
   point1,
   point2,
+  point3,
   startDate,
   endDate,
 }: Props) {
@@ -48,6 +50,8 @@ export default function ExperienceCard({
           <li>{point1}</li>
 
           <li>{point2}</li>
+
+          <li>{point3}</li>
         </ul>
       </div>
     </article>

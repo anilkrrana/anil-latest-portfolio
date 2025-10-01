@@ -22,8 +22,9 @@ export default function Experience({}: Props) {
           clogo="/companyLogo/capgLogo.png"
           title="Software Engineer"
           company="CAPGEMINI"
-          point1="Working on Core JAVA, SpringBoot, MicroServices and many more technologies."
-          point2="Contributed to the development of Backend using MicroServices."
+          point1="Worked on Core JAVA, SpringBoot, MicroServices and many more technologies."
+          point2="Working as a MuleSoft Developer in the project."
+          point3="Specialized in secure, high-performance API integrations using MuleSoft Anypoint Platform. Proficient in Dataweave, RAML API-led connectivity, real-time data processing, and database integration... ensuring seamless data flow and system reliability."
           startDate="Sep, 2024"
           endDate="Present"
         />
