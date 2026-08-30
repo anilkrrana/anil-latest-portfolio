@@ -1,118 +1,160 @@
-import React from "react";
-import { SocialIcon } from "react-social-icons";
-import { motion } from "framer-motion";
-// import Image from "next/image";
-// import { FaFilePdf } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Bars3Icon, XMarkIcon, ArrowDownTrayIcon, SunIcon, MoonIcon } from "@heroicons/react/24/solid";
+import { useTheme } from "@/context/ThemeContext";
 
+const navItems = [
+  { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
+  { name: "OrderFlow", href: "#orderflow", highlight: true },
+  { name: "Engineering", href: "#engineering" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Teaching", href: "#teaching" },
+  { name: "Contact", href: "#contact" },
+];
 
-type Props = {};
+export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
-export default function Header({}: Props) {
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 py-3 -mx-6 md:p-3 flex items-start justify-around md:mx-auto z-50 xl:items-center backdrop-blur-sm bg-slate-800/30 ">
-      <motion.div
-        initial={{
-          x: -500,
-          opacity: 0,
-          scale: 0.5,
-        }}
-        animate={{
-          x: 0,
-          opacity: 1,
-          scale: 1,
-        }}
-        transition={{
-          duration: 1.5,
-          type: "tween",
-        }}
-        className="flex flex-row items-center"
-      >
-        <a href="#hero">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="#a9a9a9"
-            className="bi bi-house-fill"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fillRule="evenodd"
-              d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
-            />
-            <path
-              fillRule="evenodd"
-              d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
-            />
-          </svg>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "dark:bg-black/90 bg-white/90 backdrop-blur-md border-b dark:border-neutral-800/80 border-slate-200 py-3 shadow-md"
+          : "bg-transparent py-5"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        {/* Logo / Personal Brand */}
+        <a
+          href="#hero"
+          className="flex items-center gap-3 group focus:outline-none"
+        >
+          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-mono font-bold text-sm shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+            AK
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-semibold tracking-wider dark:text-neutral-100 text-slate-900 font-outfit group-hover:text-blue-500 transition-colors">
+              ANIL KUMAR RANA
+            </span>
+            <span className="text-[10px] font-mono dark:text-neutral-400 text-slate-500 tracking-tight">
+              SENIOR SOFTWARE ENGINEER
+            </span>
+          </div>
         </a>
 
-        {/* Social icons */}
-        <SocialIcon
-          url="https://www.linkedin.com/in/anil-kumar-rana/"
-          fgColor="#a9a9a9"
-          bgColor="transparent"
-          className="ml-3"
-        />
-        <SocialIcon
-          url="https://twitter.com/anilkrana_"
-          fgColor="#a9a9a9"
-          bgColor="transparent"
-        />
-        <SocialIcon
-          url="https://github.com/anilkrrana"
-          fgColor="#a9a9a9"
-          bgColor="transparent"
-        />
-        {/* <a href="https://drive.google.com/file/d/1Hnw6J86OnGXp0bYprY6HTxKNe3h0iJUc/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-          <FaFilePdf
-            // fgColor="#a9a9a9"
-            // bgColor="transparent"
-            className="ml-3"
-          />
-        </a> */}
-      </motion.div>
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-1 dark:bg-neutral-900/80 bg-slate-100/80 p-1.5 rounded-full border dark:border-neutral-800/80 border-slate-200 backdrop-blur-md">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+                item.highlight
+                  ? "text-blue-500 hover:text-blue-600 dark:hover:text-white dark:bg-blue-900/30 bg-blue-50 border border-blue-500/30"
+                  : "dark:text-neutral-300 text-slate-700 dark:hover:text-white hover:text-slate-900 dark:hover:bg-neutral-800/60 hover:bg-slate-200/60"
+              }`}
+            >
+              {item.name}
+            </a>
+          ))}
+        </nav>
 
-      <motion.div
-        initial={{
-          x: 500,
-          opacity: 0,
-          scale: 0.5,
-        }}
-        animate={{
-          x: 0,
-          opacity: 1,
-          scale: 1,
-        }}
-        transition={{
-          duration: 1.5,
-          type: "tween",
-        }}
-        className="flex flex-row items-center text-white cursor-pointer"
-      >
-        <SocialIcon
-          className="cursor-pointer"
-          network="email"
-          fgColor="#a9a9a9"
-          bgColor="transparent"
-          url="#contact"
-        />
-        {/* <p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6"
+        {/* Action CTAs: Theme Toggle & Resume */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Dark / Light Mode Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg dark:bg-neutral-900 bg-slate-100 border dark:border-neutral-800 border-slate-200 text-neutral-400 dark:hover:text-amber-400 hover:text-indigo-600 transition-colors focus:outline-none"
+            aria-label="Toggle Theme Mode"
+            title={`Switch to ${theme === "dark" ? "Light" : "Dark"} Mode`}
           >
-            <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
-            <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
-          </svg>
-        </p> */}
-        <p className="hidden md:inline-flex text-sm text-[#a9a9a9]">
-          <a href="#contact">Get in touch</a>
-        </p>
-      </motion.div>
+            {theme === "dark" ? (
+              <SunIcon className="w-4 h-4 text-amber-400" />
+            ) : (
+              <MoonIcon className="w-4 h-4 text-indigo-600" />
+            )}
+          </button>
+
+          <a
+            href="https://drive.google.com/file/d/1z94SpgAE9w-950xogS74NxzpgCRpod7N/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium dark:text-neutral-200 text-slate-700 dark:bg-neutral-900 bg-white hover:bg-slate-50 dark:hover:bg-neutral-800 border dark:border-neutral-700/80 border-slate-200 rounded-lg transition-all focus:outline-none"
+          >
+            <ArrowDownTrayIcon className="w-3.5 h-3.5 text-blue-500" />
+            <span>Resume</span>
+          </a>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 rounded-lg dark:bg-neutral-900 bg-slate-100 border dark:border-neutral-800 border-slate-200 dark:text-neutral-300 text-slate-700 hover:text-blue-500 focus:outline-none"
+            aria-label="Toggle Navigation Menu"
+          >
+            {mobileMenuOpen ? (
+              <XMarkIcon className="w-6 h-6" />
+            ) : (
+              <Bars3Icon className="w-6 h-6" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Navigation */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden dark:bg-black/95 bg-white/95 border-b dark:border-neutral-800 border-slate-200 backdrop-blur-xl px-4 pt-3 pb-6 overflow-hidden shadow-xl"
+          >
+            <div className="flex flex-col gap-2">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                    item.highlight
+                      ? "text-blue-500 dark:bg-blue-900/40 bg-blue-50 border border-blue-500/30"
+                      : "dark:text-neutral-300 text-slate-700 dark:hover:text-white hover:text-slate-900 dark:hover:bg-neutral-900 hover:bg-slate-100"
+                  }`}
+                >
+                  {item.name}
+                </a>
+              ))}
+              <div className="pt-2 border-t dark:border-neutral-800/80 border-slate-200 mt-2 flex flex-col gap-2">
+                <a
+                  href="https://drive.google.com/file/d/1z94SpgAE9w-950xogS74NxzpgCRpod7N/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-center px-4 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-500 rounded-lg flex items-center justify-center gap-2"
+                >
+                  <ArrowDownTrayIcon className="w-4 h-4" />
+                  <span>Download Resume</span>
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
-
