@@ -3,109 +3,157 @@
     "data": [
       {
         "id": 1,
-        "title": "ShoppingAdda (E-commerce)",
-        "content": " Developed and deployed a E-commerce website with features like authentication, Cart, ChatBot, Payment integration.nsured Security of users using Firebase authentication system . Sign in through google account is also added",
-        "imgurl": "/projectSS/ShoppingAdda.png",
-        "githubLink": "https://github.com/anilkrrana/ShoppingAdda",
-        "deployedLink": "https://shopping-adda-hazel.vercel.app/",
+        "title": "OrderFlow (E-Commerce Backend Engine)",
+        "category": "backend",
+        "isFlagship": true,
+        "subtitle": "Production-Oriented Spring Boot Backend Engine",
+        "content": "A high-performance Java 21 & Spring Boot 3.x backend implementing JWT auth with refresh token rotation, pessimistic row-level DB locking for concurrency control, Redis cache-aside invalidation, API idempotency, and Razorpay HMAC-SHA256 webhook verification.",
+        "imgurl": "/projectSS/landing-page.png",
+        "githubLink": "https://github.com/anilkrrana/orderflow",
+        "deployedLink": "",
+        "tags": ["Java 21", "Spring Boot", "PostgreSQL", "Redis", "Spring Security", "JWT", "Razorpay", "Docker", "Flyway", "Testcontainers"],
+        "engineeringHighlights": [
+          "JWT Auth with Refresh Token Rotation",
+          "PostgreSQL Pessimistic DB Locking for Inventory Control",
+          "Server-side Price & Stock Validation",
+          "Redis Cache-Aside Strategy with Eviction TTL",
+          "HMAC-SHA256 Razorpay Webhook Verification",
+          "Flyway Schema Migrations & Testcontainers Integration Tests"
+        ],
         "tech": [
-          {
-            "tech": "/skillsLogos/react.png"
-          },
-          {
-            "tech": "/skillsLogos/tailwind.png"
-          }
+          { "name": "Java 21", "tech": "/skillsLogos/java.png" },
+          { "name": "PostgreSQL", "tech": "/skillsLogos/postGreSQL.png" },
+          { "name": "Redis", "tech": "/skillsLogos/express.png" },
+          { "name": "Docker", "tech": "/skillsLogos/kuber.png" }
         ]
       },
       {
         "id": 2,
-        "title": "Youtube Clone",
-        "content": " The Youtube clone was built using ReactJS, which uses rest API to fetch using a search query using user input. reactjs and rest api to fetch data and display results.",
-        "imgurl": "/projectSS/youtube-clone.png",
-        "githubLink": "https://github.com/anilkrrana/youtube_clone",
-        "deployedLink": "https://youtube-clone-anilkrrana.vercel.app/",
+        "title": "ShoppingAdda (E-Commerce Platform)",
+        "category": "fullstack",
+        "isFlagship": false,
+        "subtitle": "Full-Stack Web Store with Authentication & Payments",
+        "content": "Full-stack e-commerce web application featuring user authentication with OAuth Google Sign-In, interactive product catalog, shopping cart management, state persistence, chatbot integration, and payment checkout flow.",
+        "imgurl": "/projectSS/ShoppingAdda.png",
+        "githubLink": "https://github.com/anilkrrana/ShoppingAdda",
+        "deployedLink": "https://shopping-adda-hazel.vercel.app/",
+        "tags": ["React.js", "Tailwind CSS", "Firebase Auth", "REST APIs", "Context API"],
+        "engineeringHighlights": [
+          "Firebase Authentication & Google OAuth",
+          "Cart State Management & Persistence",
+          "Payment Gateway Integration Flow",
+          "Responsive Cross-Device Layout"
+        ],
         "tech": [
-          {
-            "tech": "/skillsLogos/react.png"
-          },
-          {
-            "tech": "/skillsLogos/tailwind.png"
-          }
+          { "name": "React", "tech": "/skillsLogos/react.png" },
+          { "name": "Tailwind", "tech": "/skillsLogos/tailwind.png" },
+          { "name": "JavaScript", "tech": "/skillsLogos/js.png" }
         ]
       },
       {
         "id": 3,
-        "title": "Landing Page",
-        "content": "",
-        "imgurl": "/projectSS/landing-page.png",
-        "githubLink": "https://github.com/anilkrrana/Landing_page_animate_on_scroll",
-        "deployedLink": "https://landing-page-animate-on-scroll.vercel.app/",
+        "title": "YouTube Clone Platform",
+        "category": "frontend",
+        "isFlagship": false,
+        "subtitle": "REST API-Driven Video Streaming Application",
+        "content": "Frontend video application built with React, demonstrating component-driven architecture, REST API integration, live search query debouncing, responsive video player controls, and category feed filtering.",
+        "imgurl": "/projectSS/youtube-clone.png",
+        "githubLink": "https://github.com/anilkrrana/youtube_clone",
+        "deployedLink": "https://youtube-clone-anilkrrana.vercel.app/",
+        "tags": ["React.js", "REST APIs", "Tailwind CSS", "Async Fetch"],
+        "engineeringHighlights": [
+          "Asynchronous REST API Integration",
+          "Dynamic Video Search & Feed Filtering",
+          "Reusable React Component Architecture"
+        ],
         "tech": [
-          {
-            "id": 11,
-            "tech": "/skillsLogos/react.png"
-          },
-          {
-            "id": 12,
-            "tech": "/skillsLogos/tailwind.png"
-          }
+          { "name": "React", "tech": "/skillsLogos/react.png" },
+          { "name": "Tailwind", "tech": "/skillsLogos/tailwind.png" }
         ]
       },
       {
         "id": 4,
-        "title": "Quiz web app",
-        "content": "The Quiz web app was built using Html, Css and Js, which uses IMDB API to fetch using a search query using user input. reactjs and rest api to fetch data and display results.",
-        "imgurl": "/projectSS/quizapp.png",
-        "githubLink": "https://github.com/anilkrrana/SIMBT_04_Quiz-app",
-        "deployedLink": "https://simbt-04-quiz-app.vercel.app/",
+        "title": "Animate-On-Scroll Web Product",
+        "category": "frontend",
+        "isFlagship": false,
+        "subtitle": "Interactive Landing Experience with Scroll Animations",
+        "content": "Interactive web landing showcase focused on high-performance scroll triggers, Framer Motion viewport reveals, clean typography hierarchy, and smooth layout composition.",
+        "imgurl": "/projectSS/landing-page.png",
+        "githubLink": "https://github.com/anilkrrana/Landing_page_animate_on_scroll",
+        "deployedLink": "https://landing-page-animate-on-scroll.vercel.app/",
+        "tags": ["React.js", "Framer Motion", "Tailwind CSS", "UX Design"],
+        "engineeringHighlights": [
+          "Viewport Intersection Triggered Reveal Animations",
+          "Mobile-First Responsive Flexbox & Grid Systems"
+        ],
         "tech": [
-          {
-            "tech": "/skillsLogos/html.png"
-          },
-          {
-            "tech": "/skillsLogos/css.png"
-          },
-          {
-            "tech": "/skillsLogos/js.png"
-          }
+          { "name": "React", "tech": "/skillsLogos/react.png" },
+          { "name": "Tailwind", "tech": "/skillsLogos/tailwind.png" }
         ]
       },
       {
         "id": 5,
-        "title": "TravelEase",
-        "content": "The TravelEase was built using reactjs and use Codesandbox tools to create the  website. CSS to style the website.",
-        "imgurl": "/projectSS/TravelEase.png",
-        "githubLink": "https://github.com/anilkrrana/React-Tour-Travel-Website",
-        "deployedLink": "https://codesandbox.io/s/github/anilkrrana/React-Tour-Travel-Website",
+        "title": "Interactive Quiz Web Application",
+        "category": "frontend",
+        "isFlagship": false,
+        "subtitle": "API-Driven Real-Time Quiz Engine",
+        "content": "Real-time interactive quiz application using vanilla Web APIs, dynamic DOM manipulation, score state tracking, timed progress handlers, and asynchronous trivia endpoint fetching.",
+        "imgurl": "/projectSS/quizapp.png",
+        "githubLink": "https://github.com/anilkrrana/SIMBT_04_Quiz-app",
+        "deployedLink": "https://simbt-04-quiz-app.vercel.app/",
+        "tags": ["JavaScript", "HTML5", "CSS3", "Fetch API"],
+        "engineeringHighlights": [
+          "Pure JavaScript DOM State Handler",
+          "Asynchronous Endpoint Data Extraction",
+          "Dynamic Score Calculation & Timer Logic"
+        ],
         "tech": [
-          {
-            "tech": "/skillsLogos/react.png"
-          },
-          {
-            "tech": "/skillsLogos/css.png"
-          },
-          {
-            "tech": "/skillsLogos/js.png"
-          }
+          { "name": "HTML5", "tech": "/skillsLogos/html.png" },
+          { "name": "CSS3", "tech": "/skillsLogos/css.png" },
+          { "name": "JavaScript", "tech": "/skillsLogos/js.png" }
         ]
       },
       {
         "id": 6,
-        "title": "Todos List",
-        "content": "Todos List web-app that was built using reactJS, TailwindCSS. The website is fully responsive and mobile friendly.",
+        "title": "TravelEase Booking Interface",
+        "category": "frontend",
+        "isFlagship": false,
+        "subtitle": "Modular React Travel & Tour Exploration Platform",
+        "content": "Modular travel destination platform designed for exploring tour packages, filtering locations dynamically, managing booking details, and displaying custom modal UI views.",
+        "imgurl": "/projectSS/TravelEase.png",
+        "githubLink": "https://github.com/anilkrrana/React-Tour-Travel-Website",
+        "deployedLink": "https://codesandbox.io/s/github/anilkrrana/React-Tour-Travel-Website",
+        "tags": ["React.js", "JavaScript", "CSS Modules"],
+        "engineeringHighlights": [
+          "Dynamic Location Filtering & Search",
+          "Component State Isolation & Modal Controls"
+        ],
+        "tech": [
+          { "name": "React", "tech": "/skillsLogos/react.png" },
+          { "name": "CSS3", "tech": "/skillsLogos/css.png" },
+          { "name": "JavaScript", "tech": "/skillsLogos/js.png" }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Todos List Task Manager",
+        "category": "frontend",
+        "isFlagship": false,
+        "subtitle": "Lightweight Task Management & LocalStorage Persistence App",
+        "content": "Lightweight task management web application built with React and Tailwind CSS featuring local browser storage persistence, status filters, task creation, and instant deletion.",
         "imgurl": "/projectSS/todos-list.png",
         "githubLink": "https://github.com/anilkrrana/SIMBT_02-Todos-List",
         "deployedLink": "https://simbt-02-todos-list.vercel.app/",
+        "tags": ["React.js", "Tailwind CSS", "LocalStorage API"],
+        "engineeringHighlights": [
+          "Browser LocalStorage Sync & Persistence",
+          "Clean State CRUD Handlers in React"
+        ],
         "tech": [
-          {
-            "tech": "/skillsLogos/react.png"
-          },
-          {
-            "tech": "/skillsLogos/tailwind.png"
-          }
+          { "name": "React", "tech": "/skillsLogos/react.png" },
+          { "name": "Tailwind", "tech": "/skillsLogos/tailwind.png" }
         ]
       }
     ]
   }
 }
-

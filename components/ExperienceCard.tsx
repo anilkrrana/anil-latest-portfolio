@@ -1,59 +1,95 @@
-import { motion } from "framer-motion";
 import React from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { CalendarIcon, BuildingOffice2Icon } from "@heroicons/react/24/outline";
 
 type Props = {
   clogo: string;
   title: string;
   company: string;
-  point1?: string;
-  point2?: string;
-  point3?: string;
-  startDate: string;
-  endDate: string;
+  period: string;
+  location?: string;
+  points: string[];
+  skills: string[];
+  isCurrent?: boolean;
 };
 
 export default function ExperienceCard({
   clogo,
   title,
   company,
-  point1,
-  point2,
-  point3,
-  startDate,
-  endDate,
+  period,
+  points,
+  skills,
+  isCurrent = false,
 }: Props) {
   return (
-    <article className="flex flex-col rounded-r-lg flex-shrink-0 snap-center backdrop-blur-sm font-outfit bg-[#141414] transition-opacity duration-200 overflow-hidden md:py-14 py-10 mt-10 border-l border-blue-500 md:border-gray-600 md:hover:border-blue-500 md:max-w-3xl max-w-xs md:px-0 px-5">
-      <div className="flex items-center md:pl-10">
-        <motion.img
-          initial={{ opacity: 0, x: -50 }}
-          transition={{ duration: 1 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          src={clogo}
-          className="object-cover h-10 w-10 rounded-full object-center xl:w-[60px] xl:h-[60px]"
-          alt=""
-        />
-        <div className="md:pl-4 pl-6 text-left">
-          <h4 className="md:text-xl text-lg font-medium md:font-semibold">{title}</h4>
-          <p className="font-medium text-sm md:text-base md:pt-1 text-gray-300">{company}</p>
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className={`cmdCard p-6 sm:p-8 border-neutral-800 relative overflow-hidden transition-all duration-300 ${
+        isCurrent
+          ? "border-l-4 border-l-blue-500 dark:bg-neutral-900/80 bg-white shadow-md"
+          : "opacity-90 hover:opacity-100"
+      }`}
+    >
+      {/* Header Info */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b dark:border-neutral-800/80 border-slate-200">
+        <div className="flex items-center gap-4">
+          <div className="relative w-12 h-12 rounded-xl overflow-hidden dark:bg-black bg-slate-100 border dark:border-neutral-800 border-slate-200 p-1 flex-shrink-0 flex items-center justify-center">
+            <Image
+              src={clogo}
+              alt={company}
+              width={40}
+              height={40}
+              className="object-contain rounded-lg"
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="text-lg sm:text-xl font-bold dark:text-white text-slate-900 font-outfit">
+                {title}
+              </h3>
+              {isCurrent && (
+                <span className="cmdBadge text-[10px] py-0.5">CURRENT ROLE</span>
+              )}
+            </div>
+            <p className="text-sm font-semibold text-blue-500 flex items-center gap-1.5 mt-0.5">
+              <BuildingOffice2Icon className="w-4 h-4" />
+              <span>{company}</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 text-xs font-mono dark:text-neutral-400 text-slate-600 dark:bg-black bg-slate-100 px-3 py-1.5 rounded-lg border dark:border-neutral-800 border-slate-200 self-start sm:self-auto">
+          <CalendarIcon className="w-4 h-4 text-blue-500" />
+          <span>{period}</span>
         </div>
       </div>
 
-      <div className="px-0 md:px-10 text-left text-[#f5f5f7] mt-6">
-
-        <p className="lowercase py-2 text-sm text-gray-400">
-          {startDate} - {endDate}
-        </p>
-
-        <ul className="list-disc space-y-4 ml-5 font-light text-gray-200 text-base mt-4">
-          <li>{point1}</li>
-
-          <li>{point2}</li>
-
-          <li>{point3}</li>
-        </ul>
+      {/* Responsibility Points */}
+      <div className="py-6 space-y-3">
+        {points.map((point, idx) => (
+          <div key={idx} className="flex items-start gap-3 text-sm dark:text-neutral-300 text-slate-700 font-light leading-relaxed">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
+            <span>{point}</span>
+          </div>
+        ))}
       </div>
-    </article>
+
+      {/* Skills Badges */}
+      <div className="pt-4 border-t dark:border-neutral-800/60 border-slate-200 flex flex-wrap gap-2">
+        {skills.map((skill, idx) => (
+          <span
+            key={idx}
+            className="px-2.5 py-1 rounded-md dark:bg-black bg-slate-100 dark:text-neutral-300 text-slate-700 text-xs font-mono border dark:border-neutral-800 border-slate-200"
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+    </motion.article>
   );
 }

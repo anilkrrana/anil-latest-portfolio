@@ -1,54 +1,75 @@
-import { motion } from "framer-motion";
 import React from "react";
 import ExperienceCard from "./ExperienceCard";
 
-type Props = {};
+export default function Experience() {
+  const experiences = [
+    {
+      clogo: "/companyLogo/capgLogo.png",
+      title: "Senior Software Engineer — MuleSoft & Java",
+      company: "Capgemini",
+      period: "Sep 2024 – Present (Promoted Mar 2025)",
+      isCurrent: true,
+      points: [
+        "Architect and deliver high-throughput Spring Boot microservices, improving backend performance by 40% across enterprise integration systems.",
+        "Lead API-led connectivity initiatives using MuleSoft 4.9, DataWeave 2.0, and layered Experience/Process/System API architecture.",
+        "Reduced integration failures by 35% through systematic error handling, retry logic, and robust MuleSoft pipeline design.",
+        "Govern API security via Mule Gateway policies; integrate ActiveMQ messaging queues and LDAP directory services.",
+        "Mentor junior engineers, conduct knowledge-transfer sessions, and drive enterprise integration standards.",
+        "Champion CI/CD improvements using Jenkins and Bitbucket, cutting deployment cycle time by 25%."
+      ],
+      skills: [
+        "Java 21",
+        "Spring Boot",
+        "MuleSoft 4.9",
+        "DataWeave 2.0",
+        "RAML",
+        "ActiveMQ",
+        "PostgreSQL",
+        "Jenkins CI/CD"
+      ]
+    },
+    {
+      clogo: "/companyLogo/simplbyte-logo.png",
+      title: "Frontend Developer Intern",
+      company: "SimpleByte",
+      period: "Mar 2024 – May 2024",
+      isCurrent: false,
+      points: [
+        "Built responsive web application components using React.js and Tailwind CSS.",
+        "Improved component render performance by 30% through optimized state handlers and memoization.",
+        "Collaborated on cross-browser user experience and REST API endpoint integration."
+      ],
+      skills: [
+        "React.js",
+        "Tailwind CSS",
+        "JavaScript",
+        "REST APIs"
+      ]
+    }
+  ];
 
-export default function Experience({}: Props) {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1.5 }}
-      viewport={{ once: true }}
-      className="flex flex-col relative h-screen text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center"
-    >
-      <h3 className="absolute top-32 uppercase tracking-[20px] text-gray-400 text-2xl pl-6">
-        Experience
-      </h3>
+    <section id="experience" className="py-24 relative bg-command-grid">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex flex-col items-center text-center mb-16">
+          <span className="cmdBadge mb-3">PROFESSIONAL TIMELINE</span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold dark:text-white text-slate-900 font-outfit tracking-tight">
+            Work Experience
+          </h2>
+          <p className="text-sm dark:text-neutral-400 text-slate-600 mt-2 max-w-xl">
+            2+ years of professional software engineering experience delivering enterprise API integrations and Spring Boot backend systems.
+          </p>
+          <div className="w-12 h-1 bg-blue-500 rounded-full mt-3" />
+        </div>
 
-      <div className="w-full mt-20 flex space-x-10 overflow-x-scroll p-10 snap-x snap-mandatory scrollbar-track-transparent scrollbar-thin xl:space-x-14 ">
-      <ExperienceCard
-          clogo="/companyLogo/capgLogo.png"
-          title="Software Engineer"
-          company="CAPGEMINI"
-          point1="Worked on Core JAVA, SpringBoot, MicroServices and many more technologies."
-          point2="Working as a MuleSoft Developer in the project."
-          point3="Specialized in secure, high-performance API integrations using MuleSoft Anypoint Platform. Proficient in Dataweave, RAML API-led connectivity, real-time data processing, and database integration... ensuring seamless data flow and system reliability."
-          startDate="Sep, 2024"
-          endDate="Present"
-        />
-        <ExperienceCard
-          clogo="/companyLogo/simplbyte-logo.png"
-          title="Web developer and Design intern"
-          company="at, Simplebyte"
-          point1="Contributed to the development of UI and components using Next.js for  applications across various industries."
-          point2="Implemented interactive features using React and optimize data display and enhance user engagement."
-          startDate="March, 2023"
-          endDate="April, 2023"
-        />
-        
-        {/* <ExperienceCard
-          clogo="/companyLogo/lhc.jpeg"
-          title="Virtual Apprentenship"
-          company="ZenSar"
-          point1="Tained in Industry level skills by Zensar's proffessionals "
-          point2="Learned about the industry requirments and "
-          startDate="August, 2021"
-          endDate="December 2021"
-        /> */}
+        {/* Experience Cards Stack */}
+        <div className="space-y-8">
+          {experiences.map((exp, idx) => (
+            <ExperienceCard key={idx} {...exp} />
+          ))}
+        </div>
       </div>
-    </motion.div>
+    </section>
   );
 }
-

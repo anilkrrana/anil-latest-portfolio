@@ -1,38 +1,114 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Default Dark Mode */
+  html.dark body {
+    background-color: #09090b;
+    color: #f4f4f5;
+  }
+
+  /* Light Mode */
+  html:not(.dark) body {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  body {
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* Command Center Tech Grid Background - Dark */
+.dark .bg-command-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.dark .bg-radial-gradient {
+  background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.12) 0%, rgba(9, 9, 11, 0) 70%);
+}
+
+/* Command Center Tech Grid Background - Light */
+html:not(.dark) .bg-command-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+}
+
+html:not(.dark) .bg-radial-gradient {
+  background: radial-gradient(circle at 50% 20%, rgba(37, 99, 235, 0.06) 0%, rgba(248, 250, 252, 0) 70%);
+}
 
 @layer components {
-  .heroButton {
-    @apply text-sm bg-transparent text-gray-400 border border-blue-400/10 mr-3 mt-3 py-2 px-5 rounded-full hover:text-white hover:border-[white] hover:duration-1000 font-light;
+  /* Dark mode classes */
+  .dark .heroButton {
+    @apply text-xs md:text-sm bg-neutral-900 text-neutral-300 border border-neutral-800 py-2 px-4 md:px-5 rounded-full hover:text-white hover:border-blue-500/50 hover:bg-blue-900/30 transition-all duration-300 font-medium tracking-wide flex items-center justify-center gap-2 backdrop-blur-sm;
   }
-  .contactInput {
-    @apply outline-none bg-slate-400/10 rounded-md px-3 py-2 text-gray-400 focus:text-white;
+
+  .dark .cmdCard {
+    @apply bg-neutral-900/60 border border-neutral-800/80 hover:border-neutral-700/80 rounded-xl transition-all duration-300 backdrop-blur-md;
   }
-  .contactButton {
-    @apply bg-transparent text-gray-400 border border-[#454545] font-bold py-2 px-5 rounded-md hover:text-white hover:border-[white] hover:duration-1000;
+
+  .dark .cmdBadge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-blue-400 border border-blue-800/40 bg-blue-900/30;
+  }
+
+  /* Light mode classes */
+  html:not(.dark) .heroButton {
+    @apply text-xs md:text-sm bg-white text-slate-700 border border-slate-200 py-2 px-4 md:px-5 rounded-full hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50/50 transition-all duration-300 font-medium tracking-wide flex items-center justify-center gap-2 shadow-sm;
+  }
+
+  html:not(.dark) .cmdCard {
+    @apply bg-white border border-slate-200 hover:border-blue-300 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md;
+  }
+
+  html:not(.dark) .cmdBadge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-blue-700 border border-blue-200 bg-blue-50;
   }
 }
 
-.link-underline {
-  border-bottom-width: 0;
-  background-image: linear-gradient(transparent, transparent), linear-gradient(#2563eb, #2563eb);
-  background-size: 0 2px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size .5s ease-in-out;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.link-underline:hover {
-  background-size: 100% 2px;
-  background-position: 0 100%
+.dark ::-webkit-scrollbar-track {
+  background: #09090b;
 }
 
-/* black-faint shade: #1d1d1f */
-/* text on black-faint: #a9a9a9 */
-/* cards-bg: #141414 */
-/* text on cards-bg: #f5f5f7 */
+.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
