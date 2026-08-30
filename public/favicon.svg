@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer Rounded Container -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#09090b" stroke="url(#borderGrad)" stroke-width="2.5"/>
+  
+  <!-- Inner Subtle Glow Box -->
+  <rect x="6" y="6" width="52" height="52" rx="12" fill="url(#bgGrad)" opacity="0.15"/>
+  
+  <!-- AKR Text Mark -->
+  <text x="32" y="42" font-family="'JetBrains Mono', 'Outfit', 'Inter', system-ui, sans-serif" font-weight="900" font-size="24" fill="#ffffff" text-anchor="middle" letter-spacing="-1">AKR</text>
+</svg>
