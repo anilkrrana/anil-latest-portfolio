@@ -40,7 +40,9 @@ export default function About() {
                 src="/profile-pic-portfolio.jpg"
                 alt="Anil Kumar Rana"
                 fill
-                sizes="(max-width: 768px) 100vw, 300px"
+                quality={100}
+                sizes="(max-width: 768px) 100vw, 600px"
+                priority
                 className="object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t dark:from-neutral-950 from-slate-900/60 via-transparent to-transparent opacity-80" />

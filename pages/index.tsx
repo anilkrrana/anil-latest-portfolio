@@ -2,6 +2,8 @@ import Head from "next/head";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import AskAnil from "@/components/AskAnil";
+import ProfessionalFeedback from "@/components/ProfessionalFeedback";
 import Experience from "@/components/Experience";
 import OrderFlowShowcase from "@/components/OrderFlowShowcase";
 import EngineeringMindset from "@/components/EngineeringMindset";
@@ -41,55 +43,61 @@ export default function Home({ data }: any) {
         <meta name="twitter:description" content={description} />
       </Head>
 
-      {/* 1. Command Center Navbar with Dark/Light Toggle */}
+      {/* 1. Header Navigation */}
       <Header />
 
-      {/* 2. Hero Section (Clean right panel, NO scribble/circle decoration) */}
+      {/* 2. Hero Section */}
       <section id="hero">
         <Hero />
       </section>
 
-      {/* 3. Narrative & Stats */}
+      {/* 3. About Section */}
       <section id="about">
         <About />
       </section>
 
-      {/* 4. Timeline & Work Experience */}
+      {/* 4. 🤖 Ask Anil — AI Personal Assistant */}
+      <AskAnil />
+
+      {/* 5. ⭐ Professional Feedback / Recommendations */}
+      <ProfessionalFeedback />
+
+      {/* 6. Timeline & Work Experience */}
       <section id="experience">
         <Experience />
       </section>
 
-      {/* 5. Flagship Section — OrderFlow Showcase & Simulator */}
+      {/* 7. Flagship Section — OrderFlow Showcase & Simulator */}
       <section id="orderflow">
         <OrderFlowShowcase />
       </section>
 
-      {/* 6. System Design Pillars */}
+      {/* 8. Engineering Mindset & System Design Pillars */}
       <section id="engineering">
         <EngineeringMindset />
       </section>
 
-      {/* 7. Skills & Tech Constellation (Smooth Category Scrolling) */}
+      {/* 9. Skills & Tech Constellation */}
       <section id="skills">
         <Skills />
       </section>
 
-      {/* 8. Preserved Projects Showcase */}
+      {/* 10. Projects Showcase */}
       <section id="projects">
         <Projects data={data?.data || []} />
       </section>
 
-      {/* 9. Teaching & Mentorship + YouTube WebTechNil */}
+      {/* 11. Teaching & Mentorship */}
       <section id="teaching">
         <TeachingMentorship />
       </section>
 
-      {/* 10. Currently Building & Learning */}
+      {/* 12. Currently Building & Learning */}
       <section id="learning">
         <CurrentlyLearning />
       </section>
 
-      {/* 11. Contact & Minimal Footer */}
+      {/* 13. Contact & Footer */}
       <Contact />
     </div>
   );

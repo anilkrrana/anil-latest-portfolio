@@ -103,6 +103,39 @@ html:not(.dark) ::-webkit-scrollbar-thumb {
   border-radius: 4px;
 }
 
+/* Explicit High-Contrast Chatbot Input & Preview Styling */
+.dark .ask-anil-input {
+  background-color: #171717 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+.dark .ask-anil-input::placeholder {
+  color: #a3a3a3 !important;
+}
+
+html:not(.dark) .ask-anil-input {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) .ask-anil-input::placeholder {
+  color: #64748b !important;
+}
+
+.dark .ask-anil-preview-btn {
+  background-color: #0c0d12 !important;
+  color: #f3f4f6 !important;
+  border-color: #262626 !important;
+}
+
+html:not(.dark) .ask-anil-preview-btn {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
 /* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   * {

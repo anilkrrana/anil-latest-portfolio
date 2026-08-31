@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="#00B4D8"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    {/* RAML Document Blueprint */}
+    <path d="M 18,12 L 38,12 L 48,22 L 48,52 C 48,54.2 46.2,56 44,56 L 20,56 C 17.8,56 16,54.2 16,52 L 16,14 C 16,12.9 16.9,12 18,12 Z" />
+    <path d="M 38,12 L 38,22 L 48,22" />
+    {/* REST API Endpoints */}
+    <line x1="24" y1="30" x2="40" y2="30" />
+    <line x1="24" y1="38" x2="36" y2="38" />
+    <line x1="24" y1="46" x2="32" y2="46" />
+  </g>
+</svg>

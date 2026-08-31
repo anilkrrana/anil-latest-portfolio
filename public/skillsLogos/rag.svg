@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="#3B82F6"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    {/* Database layers */}
+    <ellipse cx="32" cy="18" rx="16" ry="6" />
+    <path d="M 16,18 L 16,30 C 16,35 48,35 48,30 L 48,18" />
+    <path d="M 16,30 L 16,42 C 16,47 48,47 48,42 L 48,30" />
+    {/* Vector Search Magnifier */}
+    <circle cx="42" cy="42" r="7" stroke-width="3" fill="#3B82F6"/>
+    <line x1="47" y1="47" x2="54" y2="54" stroke-width="4"/>
+  </g>
+</svg>
