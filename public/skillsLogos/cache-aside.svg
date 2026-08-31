@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="#DC2626"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    {/* Fast Cache Memory Bank */}
+    <rect x="14" y="16" width="36" height="12" rx="4" fill="#DC2626" />
+    <path d="M 20,22 L 28,22" />
+    <circle cx="42" cy="22" r="2" fill="#FFFFFF"/>
+    {/* Cache Eviction Arrow */}
+    <path d="M 22,34 L 42,34 C 45,34 46,36 46,39 C 46,42 45,44 42,44 L 28,44" />
+    <polyline points="32,40 27,44 32,48" />
+  </g>
+</svg>

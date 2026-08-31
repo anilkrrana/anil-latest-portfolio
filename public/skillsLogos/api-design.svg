@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="#0D9488"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    {/* API Gateway Node */}
+    <circle cx="20" cy="32" r="6" />
+    <circle cx="44" cy="20" r="6" />
+    <circle cx="44" cy="44" r="6" />
+    <path d="M 26,32 L 38,20" />
+    <path d="M 26,32 L 38,44" />
+    <polyline points="32,21 38,20 37,26" />
+    <polyline points="32,43 38,44 37,38" />
+  </g>
+</svg>

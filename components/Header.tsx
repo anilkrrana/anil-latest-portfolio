@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bars3Icon, XMarkIcon, ArrowDownTrayIcon, SunIcon, MoonIcon } from "@heroicons/react/24/solid";
+import { Bars3Icon, XMarkIcon, ArrowDownTrayIcon, SunIcon, MoonIcon, SparklesIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "@/context/ThemeContext";
 
 const navItems = [
   { name: "About", href: "#about" },
+  { name: "Ask Anil ✦", href: "#ask-anil", highlight: true },
+  { name: "Feedback", href: "#feedback" },
   { name: "Experience", href: "#experience" },
-  { name: "OrderFlow", href: "#orderflow", highlight: true },
+  { name: "OrderFlow", href: "#orderflow" },
   { name: "Engineering", href: "#engineering" },
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
@@ -59,14 +61,14 @@ export default function Header() {
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 dark:bg-neutral-900/80 bg-slate-100/80 p-1.5 rounded-full border dark:border-neutral-800/80 border-slate-200 backdrop-blur-md">
+        <nav className="hidden xl:flex items-center gap-1 dark:bg-neutral-900/80 bg-slate-100/80 p-1.5 rounded-full border dark:border-neutral-800/80 border-slate-200 backdrop-blur-md">
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                 item.highlight
-                  ? "text-blue-500 hover:text-blue-600 dark:hover:text-white dark:bg-blue-900/30 bg-blue-50 border border-blue-500/30"
+                  ? "text-blue-500 hover:text-blue-600 dark:hover:text-white dark:bg-blue-900/30 bg-blue-50 border border-blue-500/30 font-semibold"
                   : "dark:text-neutral-300 text-slate-700 dark:hover:text-white hover:text-slate-900 dark:hover:bg-neutral-800/60 hover:bg-slate-200/60"
               }`}
             >
@@ -104,7 +106,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg dark:bg-neutral-900 bg-slate-100 border dark:border-neutral-800 border-slate-200 dark:text-neutral-300 text-slate-700 hover:text-blue-500 focus:outline-none"
+            className="xl:hidden p-2 rounded-lg dark:bg-neutral-900 bg-slate-100 border dark:border-neutral-800 border-slate-200 dark:text-neutral-300 text-slate-700 hover:text-blue-500 focus:outline-none"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? (
@@ -123,7 +125,7 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden dark:bg-black/95 bg-white/95 border-b dark:border-neutral-800 border-slate-200 backdrop-blur-xl px-4 pt-3 pb-6 overflow-hidden shadow-xl"
+            className="xl:hidden dark:bg-black/95 bg-white/95 border-b dark:border-neutral-800 border-slate-200 backdrop-blur-xl px-4 pt-3 pb-6 overflow-hidden shadow-xl"
           >
             <div className="flex flex-col gap-2">
               {navItems.map((item) => (
@@ -133,7 +135,7 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                     item.highlight
-                      ? "text-blue-500 dark:bg-blue-900/40 bg-blue-50 border border-blue-500/30"
+                      ? "text-blue-500 dark:bg-blue-900/40 bg-blue-50 border border-blue-500/30 font-semibold"
                       : "dark:text-neutral-300 text-slate-700 dark:hover:text-white hover:text-slate-900 dark:hover:bg-neutral-900 hover:bg-slate-100"
                   }`}
                 >

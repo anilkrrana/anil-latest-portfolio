@@ -105,9 +105,8 @@ export default function Contact() {
         </div>
 
         {/* Minimal Copyright Line */}
-        <div className="mt-12 text-center text-xs font-mono dark:text-neutral-500 text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto">
+        <div className="mt-12 text-center text-xs font-mono dark:text-neutral-500 text-slate-500 flex items-center justify-center max-w-4xl mx-auto">
           <span>© 2026 Anil Kumar Rana · Senior Software Engineer</span>
-          <span>Designed & Built with Next.js, Tailwind CSS & Framer Motion</span>
         </div>
       </div>
     </footer>

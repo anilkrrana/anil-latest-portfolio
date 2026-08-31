@@ -13,13 +13,13 @@ export default function Skills() {
       icon: ServerIcon,
       skills: [
         { name: "Java 21", imgsrc: "/skillsLogos/java.png" },
-        { name: "Spring Boot", imgsrc: "/skillsLogos/java.png" },
-        { name: "REST APIs", imgsrc: "/skillsLogos/postman.png" },
-        { name: "Spring Security", imgsrc: "/skillsLogos/java.png" },
-        { name: "JPA / Hibernate", imgsrc: "/skillsLogos/java.png" },
-        { name: "MuleSoft 4.9", imgsrc: "/skillsLogos/java.png" },
-        { name: "DataWeave 2.0", imgsrc: "/skillsLogos/java.png" },
-        { name: "RAML", imgsrc: "/skillsLogos/postman.png" },
+        { name: "Spring Boot", imgsrc: "/skillsLogos/springboot.svg" },
+        { name: "REST APIs", imgsrc: "/skillsLogos/api-design.svg" },
+        { name: "Spring Security", imgsrc: "/skillsLogos/springsecurity.svg" },
+        { name: "JPA / Hibernate", imgsrc: "/skillsLogos/hibernate.svg" },
+        { name: "MuleSoft", imgsrc: "/skillsLogos/mulesoft.svg" },
+        { name: "DataWeave 2.0", imgsrc: "/skillsLogos/dataweave.svg" },
+        { name: "RAML", imgsrc: "/skillsLogos/raml.svg" },
       ]
     },
     {
@@ -28,8 +28,9 @@ export default function Skills() {
       icon: CpuChipIcon,
       skills: [
         { name: "PostgreSQL", imgsrc: "/skillsLogos/postGreSQL.png" },
-        { name: "Redis", imgsrc: "/skillsLogos/express.png" },
-        { name: "MySQL", imgsrc: "/skillsLogos/postGreSQL.png" },
+        { name: "Redis", imgsrc: "/skillsLogos/redis.svg" },
+        { name: "AWS RDS", imgsrc: "/skillsLogos/aws-rds.svg" },
+        { name: "MySQL", imgsrc: "/skillsLogos/mysql.svg" },
         { name: "MongoDB", imgsrc: "/skillsLogos/mongodb.png" },
       ]
     },
@@ -38,12 +39,12 @@ export default function Skills() {
       title: "System Architecture",
       icon: CommandLineIcon,
       skills: [
-        { name: "Microservices", imgsrc: "/skillsLogos/kuber.png" },
-        { name: "API Design", imgsrc: "/skillsLogos/postman.png" },
-        { name: "Concurrency Locking", imgsrc: "/skillsLogos/java.png" },
-        { name: "Cache-Aside Pattern", imgsrc: "/skillsLogos/express.png" },
-        { name: "Idempotency", imgsrc: "/skillsLogos/postman.png" },
-        { name: "Flyway Migrations", imgsrc: "/skillsLogos/postGreSQL.png" },
+        { name: "Microservices", imgsrc: "/skillsLogos/microservices.svg" },
+        { name: "API Design", imgsrc: "/skillsLogos/api-design.svg" },
+        { name: "Concurrency Locking", imgsrc: "/skillsLogos/concurrency.svg" },
+        { name: "Cache-Aside Pattern", imgsrc: "/skillsLogos/cache-aside.svg" },
+        { name: "Idempotency", imgsrc: "/skillsLogos/idempotency.svg" },
+        { name: "Flyway Migrations", imgsrc: "/skillsLogos/flyway.svg" },
       ]
     },
     {
@@ -51,10 +52,9 @@ export default function Skills() {
       title: "DevOps & Tools",
       icon: CloudIcon,
       skills: [
-        { name: "Docker", imgsrc: "/skillsLogos/kuber.png" },
+        { name: "Docker", imgsrc: "/skillsLogos/docker.png" },
         { name: "GitHub Actions", imgsrc: "/skillsLogos/github.png" },
         { name: "Git", imgsrc: "/skillsLogos/git.png" },
-        { name: "Linux", imgsrc: "/skillsLogos/linux.png" },
         { name: "Postman", imgsrc: "/skillsLogos/postman.png" },
       ]
     },
@@ -75,9 +75,11 @@ export default function Skills() {
       title: "AI & Emerging Tech",
       icon: SparklesIcon,
       skills: [
-        { name: "Spring AI", imgsrc: "/skillsLogos/java.png" },
-        { name: "RAG Concepts", imgsrc: "/skillsLogos/python.png" },
-        { name: "LLM Integration", imgsrc: "/skillsLogos/python.png" },
+        { name: "GenAI", imgsrc: "/skillsLogos/genai.svg" },
+        { name: "Claude AI", imgsrc: "/skillsLogos/claude.svg" },
+        { name: "Spring AI", imgsrc: "/skillsLogos/spring.svg" },
+        { name: "RAG Concepts", imgsrc: "/skillsLogos/rag.svg" },
+        { name: "LLM Integration", imgsrc: "/skillsLogos/llm.svg" },
       ]
     }
   ];
@@ -99,7 +101,7 @@ export default function Skills() {
         <div className="flex flex-col items-center text-center mb-16">
           <span className="cmdBadge mb-3">TECHNICAL PROFICIENCY</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold dark:text-white text-slate-900 font-outfit tracking-tight">
-            Skills & Technology Constellation
+            Skills &amp; Technology Constellation
           </h2>
           <p className="text-sm dark:text-neutral-400 text-slate-600 mt-2 max-w-xl">
             Click any category below to smoothly navigate to the corresponding skill cluster.

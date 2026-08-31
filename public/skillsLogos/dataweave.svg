@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="#00A1DF"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    {/* DataWeave bracket flow symbol */}
+    <path d="M 18,16 C 12,16 12,27 8,32 C 12,37 12,48 18,48" />
+    <path d="M 46,16 C 52,16 52,27 56,32 C 52,37 52,48 46,48" />
+    {/* Interlocking transform weave vectors */}
+    <path d="M 23,24 L 33,32 L 23,40" stroke-width="3.5"/>
+    <path d="M 41,24 L 31,32 L 41,40" stroke-width="3.5"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="#4F46E5"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    {/* Idempotency Key Shield & Check */}
+    <path d="M 32,14 L 46,20 V 33 C 46,43 38,49 32,52 C 26,49 18,43 18,33 V 20 L 32,14 Z" />
+    <path d="M 27,33 L 31,37 L 38,28" stroke-width="3.5"/>
+  </g>
+</svg>
