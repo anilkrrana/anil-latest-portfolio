@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bars3Icon, XMarkIcon, ArrowDownTrayIcon, SunIcon, MoonIcon, SparklesIcon } from "@heroicons/react/24/solid";
+import { Bars3Icon, XMarkIcon, ArrowDownTrayIcon, SunIcon, MoonIcon, SparklesIcon, AcademicCapIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "@/context/ThemeContext";
 
 const navItems = [
@@ -102,6 +103,15 @@ export default function Header() {
             <ArrowDownTrayIcon className="w-3.5 h-3.5 text-blue-500" />
             <span>Resume</span>
           </a>
+
+          <Link
+            href="/infosys-sp-preparation"
+            className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold text-blue-400 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg transition-all focus:outline-none"
+            title="Infosys SP Coding Assessment & Interview Preparation System"
+          >
+            <AcademicCapIcon className="w-4 h-4 text-blue-400" />
+            <span>SP PREP 🎯</span>
+          </Link>
 
           {/* Mobile Menu Button */}
           <button
