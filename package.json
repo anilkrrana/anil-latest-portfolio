@@ -19,12 +19,14 @@
     "eslint-config-next": "13.1.6",
     "font-awesome": "^4.7.0",
     "framer-motion": "^9.0.1",
+    "lucide-react": "^1.52.0",
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.1",
     "react-simple-typewriter": "^5.0.1",
     "react-social-icons": "^5.15.0",
+    "recharts": "^3.10.1",
     "tailwind-scrollbar": "^2.1.0"
   },
   "devDependencies": {
