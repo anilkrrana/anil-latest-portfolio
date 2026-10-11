@@ -22,9 +22,66 @@ import {
 } from '../data/defaultPrepData';
 import userSavedState from '../data/userPrepState.json';
 
-const DEFAULT_BASE_STATE: PrepState = (userSavedState && (userSavedState as any).targetDate)
-  ? (userSavedState as unknown as PrepState)
-  : INITIAL_PREP_STATE;
+export const normalizeProject = (p: any, idx: number = 0): ProjectPrep => ({
+  id: p?.id || `p${idx + 1}`,
+  projectName: p?.projectName || p?.title || p?.name || 'Enterprise E-Commerce Microservices Engine',
+  problemSolved: p?.problemSolved || p?.starSituation || p?.situation || 'High-throughput inventory allocation & payment processing during flash sales.',
+  architecture: p?.architecture || p?.starAction || p?.action || 'Spring Boot microservices with Spring Cloud Gateway, Kafka event bus, PostgreSQL, Redis cache.',
+  technologies: Array.isArray(p?.technologies)
+    ? p.technologies
+    : (Array.isArray(p?.techStack) ? p.techStack : ['Java 17', 'Spring Boot 3', 'Kafka', 'Redis', 'PostgreSQL', 'Docker', 'Kubernetes']),
+  myContribution: p?.myContribution || p?.starTask || p?.task || 'Designed order processing pipeline, implemented idempotent payment gateway integration, optimized SQL query latency.',
+  challenges: p?.challenges || 'Preventing double-booking of inventory under 5,000 requests/second concurrent load.',
+  performance: p?.performance || p?.starResult || p?.result || 'Reduced average P99 API response time from 450ms to 42ms using Redis caching & async Kafka processing.',
+  testing: p?.testing || '85%+ JUnit 5 test coverage, Mockito for unit testing, Testcontainers for integration tests.',
+  deployment: p?.deployment || 'Deployed on AWS EKS using Helm charts and GitHub Actions CI/CD pipeline.',
+  crossQuestions: Array.isArray(p?.crossQuestions)
+    ? p.crossQuestions.map((q: any) => ({
+        question: q?.question || '',
+        myAnswer: q?.myAnswer || q?.answer || ''
+      }))
+    : [
+        {
+          question: 'How did you handle distributed transactions across Microservices without 2-phase commit?',
+          myAnswer: 'Used the Saga Pattern with orchestration. Each microservice publishes events to Kafka, and if a downstream service fails, compensating transactions are published to roll back state.'
+        },
+        {
+          question: 'How did you prevent Redis cache stampede/thundering herd during flash sales?',
+          myAnswer: 'Used Redis distributed lock (Redisson) for cache miss calculation combined with jittered TTL expiration times.'
+        }
+      ]
+});
+
+export const normalizePrepState = (raw: any): PrepState => {
+  if (!raw || typeof raw !== 'object') {
+    return INITIAL_PREP_STATE;
+  }
+
+  const base = INITIAL_PREP_STATE;
+
+  const projects = (Array.isArray(raw.projects) && raw.projects.length > 0)
+    ? raw.projects.map((p: any, idx: number) => normalizeProject(p, idx))
+    : base.projects.map((p: any, idx: number) => normalizeProject(p, idx));
+
+  return {
+    targetDate: typeof raw.targetDate === 'string' ? raw.targetDate : base.targetDate,
+    mode: raw.mode === 'interview' ? 'interview' : 'assessment',
+    dailyTasks: Array.isArray(raw.dailyTasks) ? raw.dailyTasks : base.dailyTasks,
+    dsaTopics: (Array.isArray(raw.dsaTopics) && raw.dsaTopics.length > 0) ? raw.dsaTopics : base.dsaTopics,
+    javaTopics: (Array.isArray(raw.javaTopics) && raw.javaTopics.length > 0) ? raw.javaTopics : base.javaTopics,
+    csTopics: (Array.isArray(raw.csTopics) && raw.csTopics.length > 0) ? raw.csTopics : base.csTopics,
+    problems: Array.isArray(raw.problems) ? raw.problems : base.problems,
+    timedSessions: Array.isArray(raw.timedSessions) ? raw.timedSessions : base.timedSessions,
+    mockTests: Array.isArray(raw.mockTests) ? raw.mockTests : base.mockTests,
+    interviewQuestions: (Array.isArray(raw.interviewQuestions) && raw.interviewQuestions.length > 0) ? raw.interviewQuestions : base.interviewQuestions,
+    projects,
+    journalEntries: Array.isArray(raw.journalEntries) ? raw.journalEntries : base.journalEntries,
+    studyDays: Array.isArray(raw.studyDays) ? raw.studyDays : base.studyDays,
+    totalStudyHours: typeof raw.totalStudyHours === 'number' ? raw.totalStudyHours : (base.totalStudyHours || 0),
+  };
+};
+
+const DEFAULT_BASE_STATE: PrepState = normalizePrepState(userSavedState);
 
 interface ReadinessBreakdown {
   overall: number;
@@ -165,8 +222,11 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed && parsed.targetDate && parsed.dsaTopics) {
-          setState(parsed);
+        if (parsed && typeof parsed === 'object') {
+          const normalized = normalizePrepState(parsed);
+          setState(normalized);
+          // Heal the localStorage cache immediately with normalized fields
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
         }
       } else {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_BASE_STATE));
@@ -177,8 +237,9 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const backup = localStorage.getItem(STORAGE_KEY + '_backup');
         if (backup) {
           const parsedBackup = JSON.parse(backup);
-          if (parsedBackup && parsedBackup.targetDate) {
-            setState(parsedBackup);
+          if (parsedBackup && typeof parsedBackup === 'object') {
+            const normalizedBackup = normalizePrepState(parsedBackup);
+            setState(normalizedBackup);
           }
         }
       } catch (err) {}
@@ -191,11 +252,12 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
     fetch('/api/prep-state')
       .then(res => res.json())
       .then(serverData => {
-        if (serverData && serverData.targetDate && serverData.dsaTopics) {
+        if (serverData && typeof serverData === 'object' && serverData.targetDate) {
+          const normalizedServer = normalizePrepState(serverData);
           const currentLocal = localStorage.getItem(STORAGE_KEY);
           if (!currentLocal) {
-            setState(serverData);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(serverData));
+            setState(normalizedServer);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizedServer));
           }
         }
       })
@@ -524,10 +586,15 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const updateProjectPrep = (id: string, updates: Partial<ProjectPrep>) => {
     if (!isAdmin) return;
-    setState(prev => ({
-      ...prev,
-      projects: prev.projects.map(p => p.id === id ? { ...p, ...updates } : p)
-    }));
+    setState(prev => {
+      const currentProjects = Array.isArray(prev.projects) && prev.projects.length > 0
+        ? prev.projects
+        : DEFAULT_BASE_STATE.projects;
+      return {
+        ...prev,
+        projects: currentProjects.map(p => p.id === id ? { ...p, ...updates } : p)
+      };
+    });
   };
 
   const addJournalEntry = (entryData: Omit<JournalEntry, 'id'>) => {
@@ -535,7 +602,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const id = 'j_' + Date.now();
     setState(prev => ({
       ...prev,
-      journalEntries: [{ ...entryData, id }, ...prev.journalEntries]
+      journalEntries: [{ ...entryData, id }, ...(Array.isArray(prev.journalEntries) ? prev.journalEntries : [])]
     }));
     recordTodayActivity(0.3);
   };
@@ -554,8 +621,10 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!isAdmin) return false;
     try {
       const parsed = JSON.parse(jsonData);
-      if (parsed.targetDate && parsed.dsaTopics) {
-        setState(parsed);
+      if (parsed && typeof parsed === 'object') {
+        const normalized = normalizePrepState(parsed);
+        setState(normalized);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
         return true;
       }
       return false;

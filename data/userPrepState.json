@@ -2,267 +2,467 @@
   "targetDate": "2026-11-01",
   "mode": "assessment",
   "dailyTasks": [
-    { "id": "t1", "category": "DSA", "text": "HashMap & Frequency Counting pattern practice", "completed": true },
-    { "id": "t2", "category": "DSA", "text": "Two Pointers & Sliding Window optimization", "completed": true },
-    { "id": "t3", "category": "Java", "text": "Core Collections framework & internal HashMap structure", "completed": true },
-    { "id": "t4", "category": "DSA", "text": "Solve Subarray Sum Equals K & 3Sum", "completed": false },
-    { "id": "t5", "category": "Timed Practice", "text": "45-minute timed set (2 Medium problems)", "completed": false },
-    { "id": "t6", "category": "Interview", "text": "Revise 10 Core Java interview questions & STAR story", "completed": false }
+    {
+      "id": "t1",
+      "category": "DSA",
+      "text": "HashMap revision",
+      "completed": false
+    },
+    {
+      "id": "t2",
+      "category": "DSA",
+      "text": "Frequency counting pattern practice",
+      "completed": false
+    },
+    {
+      "id": "t3",
+      "category": "DSA",
+      "text": "Solve Two Sum & Group Anagrams",
+      "completed": false
+    },
+    {
+      "id": "t4",
+      "category": "Java",
+      "text": "Core Collections framework revision",
+      "completed": false
+    },
+    {
+      "id": "t5",
+      "category": "Timed Practice",
+      "text": "45-minute timed coding set",
+      "completed": false
+    },
+    {
+      "id": "t6",
+      "category": "Interview",
+      "text": "Revise 10 Core Java interview questions",
+      "completed": false
+    }
   ],
   "dsaTopics": [
-    { "id": "arrays", "name": "Arrays", "status": "Interview Ready", "problemsCount": 14, "independentCount": 13, "hintsCount": 1, "confidence": 90 },
-    { "id": "strings", "name": "Strings", "status": "Comfortable", "problemsCount": 9, "independentCount": 8, "hintsCount": 2, "confidence": 85 },
-    { "id": "hashmap", "name": "HashMap", "status": "Interview Ready", "problemsCount": 12, "independentCount": 11, "hintsCount": 1, "confidence": 92 },
-    { "id": "hashset", "name": "HashSet", "status": "Comfortable", "problemsCount": 7, "independentCount": 6, "hintsCount": 1, "confidence": 84 },
-    { "id": "two-pointers", "name": "Two Pointers", "status": "Comfortable", "problemsCount": 8, "independentCount": 7, "hintsCount": 1, "confidence": 85 },
-    { "id": "sliding-window", "name": "Sliding Window", "status": "Practicing", "problemsCount": 6, "independentCount": 5, "hintsCount": 2, "confidence": 75 },
-    { "id": "prefix-sum", "name": "Prefix Sum", "status": "Comfortable", "problemsCount": 5, "independentCount": 5, "hintsCount": 0, "confidence": 88 },
-    { "id": "sorting", "name": "Sorting", "status": "Comfortable", "problemsCount": 4, "independentCount": 4, "hintsCount": 0, "confidence": 85 },
-    { "id": "binary-search", "name": "Binary Search", "status": "Practicing", "problemsCount": 6, "independentCount": 5, "hintsCount": 1, "confidence": 78 },
-    { "id": "linked-list", "name": "Linked List", "status": "Practicing", "problemsCount": 5, "independentCount": 4, "hintsCount": 1, "confidence": 72 },
-    { "id": "stack", "name": "Stack", "status": "Practicing", "problemsCount": 4, "independentCount": 3, "hintsCount": 1, "confidence": 70 },
-    { "id": "queue", "name": "Queue", "status": "Not Started", "problemsCount": 0, "independentCount": 0, "hintsCount": 0, "confidence": 0 },
-    { "id": "recursion", "name": "Recursion", "status": "Not Started", "problemsCount": 0, "independentCount": 0, "hintsCount": 0, "confidence": 0 },
-    { "id": "backtracking", "name": "Backtracking", "status": "Not Started", "problemsCount": 0, "independentCount": 0, "hintsCount": 0, "confidence": 0 },
-    { "id": "trees", "name": "Trees", "status": "Learning", "problemsCount": 3, "independentCount": 2, "hintsCount": 2, "confidence": 55 },
-    { "id": "bfs", "name": "BFS", "status": "Not Started", "problemsCount": 0, "independentCount": 0, "hintsCount": 0, "confidence": 0 },
-    { "id": "dfs", "name": "DFS", "status": "Not Started", "problemsCount": 0, "independentCount": 0, "hintsCount": 0, "confidence": 0 },
-    { "id": "heap", "name": "Heap", "status": "Not Started", "problemsCount": 0, "independentCount": 0, "hintsCount": 0, "confidence": 0 },
-    { "id": "graphs", "name": "Graphs", "status": "Not Started", "problemsCount": 0, "independentCount": 0, "hintsCount": 0, "confidence": 0 },
-    { "id": "dp", "name": "Dynamic Programming", "status": "Not Started", "problemsCount": 0, "independentCount": 0, "hintsCount": 0, "confidence": 0 }
+    {
+      "id": "arrays",
+      "name": "Arrays",
+      "status": "Learning",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "strings",
+      "name": "Strings",
+      "status": "Learning",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "hashmap",
+      "name": "HashMap",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "hashset",
+      "name": "HashSet",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "two-pointers",
+      "name": "Two Pointers",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "sliding-window",
+      "name": "Sliding Window",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "prefix-sum",
+      "name": "Prefix Sum",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "sorting",
+      "name": "Sorting",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "binary-search",
+      "name": "Binary Search",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "linked-list",
+      "name": "Linked List",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "stack",
+      "name": "Stack",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "queue",
+      "name": "Queue",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "recursion",
+      "name": "Recursion",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "backtracking",
+      "name": "Backtracking",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "trees",
+      "name": "Trees",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "bfs",
+      "name": "BFS",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "dfs",
+      "name": "DFS",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "heap",
+      "name": "Heap",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "graphs",
+      "name": "Graphs",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    },
+    {
+      "id": "dp",
+      "name": "Dynamic Programming",
+      "status": "Not Started",
+      "problemsCount": 0,
+      "independentCount": 0,
+      "hintsCount": 0,
+      "confidence": 0
+    }
   ],
   "javaTopics": [
-    { "id": "oop", "category": "Core Java", "name": "OOP", "progress": 95, "confidence": 95, "lastRevised": "2026-10-10" },
-    { "id": "string", "category": "Core Java", "name": "String", "progress": 85, "confidence": 85, "lastRevised": "2026-10-09" },
-    { "id": "stringbuilder", "category": "Core Java", "name": "StringBuilder", "progress": 80, "confidence": 80, "lastRevised": "2026-10-09" },
-    { "id": "exceptions", "category": "Core Java", "name": "Exception Handling", "progress": 80, "confidence": 80, "lastRevised": "2026-10-08" },
-    { "id": "collections", "category": "Core Java", "name": "Collections", "progress": 90, "confidence": 92, "lastRevised": "2026-10-09" },
-    { "id": "generics", "category": "Core Java", "name": "Generics", "progress": 70, "confidence": 70, "lastRevised": "2026-10-07" },
-    { "id": "java8", "category": "Core Java", "name": "Java 8", "progress": 85, "confidence": 85, "lastRevised": "2026-10-08" },
-    { "id": "streams", "category": "Core Java", "name": "Streams", "progress": 85, "confidence": 85, "lastRevised": "2026-10-08" },
-    { "id": "lambda", "category": "Core Java", "name": "Lambda", "progress": 80, "confidence": 80, "lastRevised": "2026-10-08" },
-    { "id": "multithreading", "category": "Core Java", "name": "Multithreading", "progress": 75, "confidence": 75, "lastRevised": "2026-10-07" },
-    { "id": "spring", "category": "Backend", "name": "Spring", "progress": 80, "confidence": 80, "lastRevised": "2026-10-08" },
-    { "id": "springboot", "category": "Backend", "name": "Spring Boot", "progress": 88, "confidence": 88, "lastRevised": "2026-10-09" },
-    { "id": "rest", "category": "Backend", "name": "REST", "progress": 90, "confidence": 90, "lastRevised": "2026-10-06" },
-    { "id": "jpa", "category": "Backend", "name": "JPA", "progress": 82, "confidence": 80, "lastRevised": "2026-10-05" },
-    { "id": "hibernate", "category": "Backend", "name": "Hibernate", "progress": 82, "confidence": 80, "lastRevised": "2026-10-05" },
-    { "id": "microservices", "category": "Backend", "name": "Microservices", "progress": 80, "confidence": 82, "lastRevised": "2026-10-08" },
-    { "id": "security", "category": "Backend", "name": "Security", "progress": 70, "confidence": 70, "lastRevised": "2026-10-04" },
-    { "id": "jwt", "category": "Backend", "name": "JWT", "progress": 75, "confidence": 75, "lastRevised": "2026-10-04" },
-    { "id": "testing", "category": "Backend", "name": "Testing", "progress": 75, "confidence": 75, "lastRevised": "2026-10-03" }
+    {
+      "id": "oop",
+      "category": "Core Java",
+      "name": "OOP",
+      "progress": 77,
+      "confidence": 0
+    },
+    {
+      "id": "string",
+      "category": "Core Java",
+      "name": "String",
+      "progress": 71,
+      "confidence": 0
+    },
+    {
+      "id": "stringbuilder",
+      "category": "Core Java",
+      "name": "StringBuilder",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "exceptions",
+      "category": "Core Java",
+      "name": "Exception Handling",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "collections",
+      "category": "Core Java",
+      "name": "Collections",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "generics",
+      "category": "Core Java",
+      "name": "Generics",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "java8",
+      "category": "Core Java",
+      "name": "Java 8",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "streams",
+      "category": "Core Java",
+      "name": "Streams",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "lambda",
+      "category": "Core Java",
+      "name": "Lambda",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "multithreading",
+      "category": "Core Java",
+      "name": "Multithreading",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "spring",
+      "category": "Backend",
+      "name": "Spring",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "springboot",
+      "category": "Backend",
+      "name": "Spring Boot",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "rest",
+      "category": "Backend",
+      "name": "REST",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "jpa",
+      "category": "Backend",
+      "name": "JPA",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "hibernate",
+      "category": "Backend",
+      "name": "Hibernate",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "microservices",
+      "category": "Backend",
+      "name": "Microservices",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "security",
+      "category": "Backend",
+      "name": "Security",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "jwt",
+      "category": "Backend",
+      "name": "JWT",
+      "progress": 0,
+      "confidence": 0
+    },
+    {
+      "id": "testing",
+      "category": "Backend",
+      "name": "Testing",
+      "progress": 0,
+      "confidence": 0
+    }
   ],
   "csTopics": [
-    { "id": "sql", "name": "SQL", "progress": 88, "confidence": 85 },
-    { "id": "dbms", "name": "DBMS", "progress": 82, "confidence": 80 },
-    { "id": "os", "name": "Operating Systems", "progress": 78, "confidence": 75 },
-    { "id": "networks", "name": "Computer Networks", "progress": 75, "confidence": 72 }
-  ],
-  "problems": [
     {
-      "id": "p1",
-      "name": "Subarray Sum Equals K",
-      "date": "2026-10-11",
-      "topic": "HashMap",
-      "pattern": "HashMap / Frequency Counting",
-      "difficulty": "Medium",
-      "timeTakenMinutes": 22,
-      "solvedIndependently": true,
-      "hintsRequired": 0,
-      "mistakeNotes": "Key insight: prefix sum frequency mapping with pre-seeding prefixSumMap.put(0, 1).",
-      "revisionRequired": false
+      "id": "sql",
+      "name": "SQL",
+      "progress": 0,
+      "confidence": 0
     },
     {
-      "id": "p2",
-      "name": "Group Anagrams",
-      "date": "2026-10-10",
-      "topic": "Strings",
-      "pattern": "HashMap / Frequency Counting",
-      "difficulty": "Medium",
-      "timeTakenMinutes": 19,
-      "solvedIndependently": true,
-      "hintsRequired": 0,
-      "mistakeNotes": "Character frequency array as String key outperforms Arrays.sort() for large inputs.",
-      "revisionRequired": false
+      "id": "dbms",
+      "name": "DBMS",
+      "progress": 0,
+      "confidence": 0
     },
     {
-      "id": "p3",
-      "name": "Longest Substring Without Repeating Characters",
-      "date": "2026-10-09",
-      "topic": "Sliding Window",
-      "pattern": "Sliding Window",
-      "difficulty": "Medium",
-      "timeTakenMinutes": 28,
-      "solvedIndependently": false,
-      "hintsRequired": 1,
-      "mistakeNotes": "Remember to update left pointer to max(left, lastSeenIndex + 1) to avoid backward regression.",
-      "revisionRequired": true,
-      "nextRevisionDate": "2026-10-12"
+      "id": "os",
+      "name": "Operating Systems",
+      "progress": 0,
+      "confidence": 0
     },
     {
-      "id": "p4",
-      "name": "3Sum",
-      "date": "2026-10-08",
-      "topic": "Two Pointers",
-      "pattern": "Two Pointers",
-      "difficulty": "Medium",
-      "timeTakenMinutes": 26,
-      "solvedIndependently": true,
-      "hintsRequired": 0,
-      "mistakeNotes": "Skip duplicates on both outer loop and inner two-pointer increments.",
-      "revisionRequired": false
-    },
-    {
-      "id": "p5",
-      "name": "Search in Rotated Sorted Array",
-      "date": "2026-10-07",
-      "topic": "Binary Search",
-      "pattern": "Binary Search",
-      "difficulty": "Medium",
-      "timeTakenMinutes": 31,
-      "solvedIndependently": true,
-      "hintsRequired": 1,
-      "mistakeNotes": "Identify which half is strictly sorted before testing target containment bounds.",
-      "revisionRequired": true,
-      "nextRevisionDate": "2026-10-13"
-    },
-    {
-      "id": "p6",
-      "name": "Two Sum",
-      "date": "2026-10-06",
-      "topic": "HashMap",
-      "pattern": "HashMap / Frequency Counting",
-      "difficulty": "Easy",
-      "timeTakenMinutes": 11,
-      "solvedIndependently": true,
-      "hintsRequired": 0,
-      "mistakeNotes": "One-pass hash table with target - nums[i] lookup.",
-      "revisionRequired": false
+      "id": "networks",
+      "name": "Computer Networks",
+      "progress": 0,
+      "confidence": 0
     }
   ],
-  "timedSessions": [
-    {
-      "id": "ts1",
-      "date": "2026-10-10",
-      "type": "45 MIN",
-      "durationMinutes": 45,
-      "timeUsedMinutes": 39,
-      "score": 100,
-      "maxScore": 100,
-      "problemsSolved": 2,
-      "totalProblems": 2,
-      "accuracy": 95,
-      "hintsUsed": 0,
-      "failedTestCases": 0,
-      "weakPatterns": []
-    },
-    {
-      "id": "ts2",
-      "date": "2026-10-08",
-      "type": "30 MIN",
-      "durationMinutes": 30,
-      "timeUsedMinutes": 24,
-      "score": 100,
-      "maxScore": 100,
-      "problemsSolved": 1,
-      "totalProblems": 1,
-      "accuracy": 100,
-      "hintsUsed": 0,
-      "failedTestCases": 0,
-      "weakPatterns": []
-    }
-  ],
-  "mockTests": [
-    {
-      "id": "m1",
-      "title": "INFOSYS SP MOCK #1",
-      "date": "2026-10-09",
-      "score": 250,
-      "maxScore": 300,
-      "q1Status": "Solved",
-      "q2Status": "Solved",
-      "q3Status": "Partial",
-      "timeTakenMinutes": 78,
-      "totalTimeMinutes": 90,
-      "notes": "Q1 (HashMap) solved in 18m. Q2 (Sliding Window) solved in 25m. Q3 (Graph BFS) passed 7/10 test cases before timeout."
-    }
-  ],
+  "problems": [],
+  "timedSessions": [],
+  "mockTests": [],
   "interviewQuestions": [
     {
       "id": "q1",
-      "category": "Core Java",
-      "question": "How does HashMap work internally in Java 8?",
-      "answerSnippet": "Array of Node buckets. Hash calculation: (key.hashCode() ^ (h >>> 16)) & (n-1). In Java 8, when bucket length exceeds TREEIFY_THRESHOLD (8) and capacity >= 64, linked list converts to Red-Black tree (TreeNode), reducing worst-case lookup from O(N) to O(log N).",
-      "frequency": "High",
-      "status": "Confident"
+      "category": "Java",
+      "question": "Explain internal working of HashMap in Java 8 (buckets, red-black tree threshold, hash collisions).",
+      "status": "Not Practiced"
     },
     {
       "id": "q2",
-      "category": "Core Java",
-      "question": "Difference between ConcurrentHashMap and SynchronizedMap?",
-      "answerSnippet": "SynchronizedMap locks the entire collection on every read/write. ConcurrentHashMap (Java 8) uses CAS (Compare-And-Swap) for empty bucket insertion and synchronized on the bucket head node for collisions, allowing concurrent reads and segmented concurrent writes without full table locking.",
-      "frequency": "High",
-      "status": "Confident"
+      "category": "Java",
+      "question": "Difference between String, StringBuilder, and StringBuffer with immutability & thread-safety.",
+      "status": "Not Practiced"
     },
     {
       "id": "q3",
-      "category": "Spring Boot",
-      "question": "Bean lifecycle in Spring Framework?",
-      "answerSnippet": "1. Instantiation -> 2. Populate Properties -> 3. BeanNameAware / BeanFactoryAware -> 4. BeanPostProcessor (postProcessBeforeInitialization) -> 5. @PostConstruct / InitializingBean (afterPropertiesSet) -> 6. Custom init-method -> 7. BeanPostProcessor (postProcessAfterInitialization) -> 8. Ready for use -> 9. @PreDestroy / DisposableBean -> 10. Custom destroy-method.",
-      "frequency": "High",
-      "status": "Practiced"
+      "category": "Java",
+      "question": "How does Garbage Collection work in Java? Explain G1GC and memory regions (Young, Old, Metaspace).",
+      "status": "Not Practiced"
     },
     {
       "id": "q4",
-      "category": "Microservices",
-      "question": "How to handle distributed transactions across Microservices?",
-      "answerSnippet": "Use Saga Pattern (Orchestration vs Choreography). Two-Phase Commit (2PC) is synchronous and causes blocking/latency. Saga uses compensating transactions to rollback intermediate state if a subsequent step fails.",
-      "frequency": "Medium",
-      "status": "Practiced"
+      "category": "Java",
+      "question": "Difference between Fail-Fast and Fail-Safe iterators with ConcurrentModificationException.",
+      "status": "Not Practiced"
     },
     {
       "id": "q5",
-      "category": "Core Java",
-      "question": "Why is String immutable in Java?",
-      "answerSnippet": "1. Security: used in network connections, database URLs, class loading. 2. Thread-safety: shared across threads without synchronization. 3. String Constant Pool optimization: caching saves memory. 4. Hashcode caching: hashCode calculated once and cached for fast Map operations.",
-      "frequency": "High",
-      "status": "Practiced"
+      "category": "Spring Boot",
+      "question": "What happens under the hood when @SpringBootApplication is executed?",
+      "status": "Not Practiced"
     },
     {
       "id": "q6",
-      "category": "SQL & DBMS",
-      "question": "Difference between WHERE and HAVING clause?",
-      "answerSnippet": "WHERE filters rows before aggregation (cannot use aggregate functions). HAVING filters group rows after GROUP BY aggregation.",
-      "frequency": "High",
-      "status": "Unprepared"
+      "category": "Spring Boot",
+      "question": "Explain Spring Bean Lifecycle and Scope types (Singleton, Prototype, Request, Session).",
+      "status": "Not Practiced"
     },
     {
       "id": "q7",
-      "category": "Operating Systems",
-      "question": "Process vs Thread and how Context Switching works?",
-      "answerSnippet": "A Process is an executing program instance with its own virtual address space, memory, and file descriptors. A Thread is a lightweight execution unit inside a process sharing the same address space but with its own stack and program counter. Process switching incurs TLB cache invalidation overhead; thread switching within the same process does not.",
-      "frequency": "Medium",
-      "status": "Unprepared"
+      "category": "SQL",
+      "question": "Difference between WHERE and HAVING clause. How does GROUP BY evaluate queries?",
+      "status": "Not Practiced"
     },
     {
       "id": "q8",
-      "category": "Spring Boot",
-      "question": "What is @Transactional and how does Spring manage rollbacks?",
-      "answerSnippet": "Uses Spring AOP dynamic proxy to intercept method calls and begin/commit transaction with PlatformTransactionManager. By default, rolls back only on unchecked exceptions (RuntimeException and Error), NOT on checked exceptions unless rollbackFor = Exception.class is explicitly configured.",
-      "frequency": "High",
-      "status": "Needs Revision"
+      "category": "DBMS",
+      "question": "Explain ACID properties and transaction isolation levels (Read Uncommitted to Serializable).",
+      "status": "Not Practiced"
+    },
+    {
+      "id": "q9",
+      "category": "OS",
+      "question": "Difference between Process and Thread. Explain Deadlock conditions and avoidance (Banker Algorithm).",
+      "status": "Not Practiced"
+    },
+    {
+      "id": "q10",
+      "category": "Networking",
+      "question": "What happens step-by-step when you type a URL into browser bar? (DNS -> TCP 3-way handshake -> HTTP/TLS).",
+      "status": "Not Practiced"
     }
   ],
   "projects": [
     {
-      "id": "proj1",
-      "title": "Enterprise Microservices E-Commerce Platform",
-      "techStack": ["Java 17", "Spring Boot 3", "Spring Cloud", "Kafka", "Redis", "PostgreSQL", "Docker", "Kubernetes"],
-      "starSituation": "Existing legacy monolith suffered frequent checkout timeouts during festive sales and had single point of failure bottlenecks.",
-      "starTask": "Architect a distributed high-throughput microservices backend supporting 5,000 requests/sec with 99.9% uptime and zero order data loss.",
-      "starAction": "Decomposed monolith into Order, Payment, Inventory, and Notification services using Spring Boot 3. Implemented Saga pattern with Kafka for distributed transactions, Redis for distributed locking (Redisson), and resilience patterns via Resilience4j circuit breakers.",
-      "starResult": "Reduced P99 latency from 450ms to 42ms. Achieved 99.95% uptime during peak load tests with zero double-booking errors.",
-      "architecture": "Client -> Spring Cloud API Gateway -> Eureka Discovery -> Microservices (Order, Payment, Inventory) -> Kafka Event Bus + Redis Cache + PostgreSQL",
+      "id": "p1",
+      "projectName": "Enterprise E-Commerce Microservices Engine",
+      "problemSolved": "High-throughput inventory allocation & payment processing during flash sales.",
+      "architecture": "Spring Boot microservices with Spring Cloud Gateway, Kafka event bus, PostgreSQL, Redis cache.",
+      "technologies": [
+        "Java 17",
+        "Spring Boot 3",
+        "Kafka",
+        "Redis",
+        "PostgreSQL",
+        "Docker",
+        "Kubernetes"
+      ],
+      "myContribution": "Designed order processing pipeline, implemented idempotent payment gateway integration, optimized SQL query latency.",
       "challenges": "Preventing double-booking of inventory under 5,000 requests/second concurrent load.",
       "performance": "Reduced average P99 API response time from 450ms to 42ms using Redis caching & async Kafka processing.",
       "testing": "85%+ JUnit 5 test coverage, Mockito for unit testing, Testcontainers for integration tests.",
@@ -279,26 +479,10 @@
       ]
     }
   ],
-  "journalEntries": [
-    {
-      "id": "j1",
-      "date": "2026-10-11",
-      "whatILearned": "Mastered Prefix Sum + HashMap technique for Subarray Sum Equals K. Understood how cumulative frequencies translate O(N^2) subarray iteration into an O(N) single-pass lookup.",
-      "problemsSolved": "Subarray Sum Equals K, Two Sum, Group Anagrams",
-      "struggledWith": "Handling edge case when cumulative sum directly equals K without subtraction (resolved by map.put(0, 1)).",
-      "mistakes": "Initially forgot to handle duplicate elements in 3Sum.",
-      "tomorrowPriority": "Binary Search variations + custom Comparator sorting in Java 17."
-    },
-    {
-      "id": "j2",
-      "date": "2026-10-10",
-      "whatILearned": "Re-examined HashMap internal rehashing in Java 8. When bucket count exceeds 8 and table capacity >= 64, buckets convert from LinkedList to Red-Black Tree (O(log N)).",
-      "problemsSolved": "Group Anagrams, Two Sum II",
-      "struggledWith": "Sliding window pointer regression on repeat characters.",
-      "mistakes": "Did not use Math.max for left pointer advancement.",
-      "tomorrowPriority": "Mock Assessment Simulation #2 under timed conditions."
-    }
+  "journalEntries": [],
+  "studyDays": [
+    "2026-10-07",
+    "2026-10-11"
   ],
-  "studyDays": ["2026-10-07", "2026-10-08", "2026-10-09", "2026-10-10", "2026-10-11"],
-  "totalStudyHours": 18.5
+  "totalStudyHours": 1.5
 }

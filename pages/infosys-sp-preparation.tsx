@@ -22,6 +22,7 @@ import { InterviewMode } from '../components/prep/InterviewMode';
 import { ProjectPrep } from '../components/prep/ProjectPrep';
 import { DailyJournal } from '../components/prep/DailyJournal';
 import { Settings } from '../components/prep/Settings';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 import { 
   LayoutDashboard, 
@@ -122,29 +123,31 @@ const DashboardContent: React.FC = () => {
         </div>
 
         {/* Tab Views */}
-        {activeTab === 'overview' && (
-          <div className="space-y-6">
-            <HeroCountdown />
-            <NextActionBanner onNavigateTab={(tab) => setActiveTab(tab as NavTab)} />
-            <KPIGrid />
-            <TodayPlan />
-          </div>
-        )}
+        <ErrorBoundary fallbackTitle="Preparation Module Error">
+          {activeTab === 'overview' && (
+            <div className="space-y-6">
+              <HeroCountdown />
+              <NextActionBanner onNavigateTab={(tab) => setActiveTab(tab as NavTab)} />
+              <KPIGrid />
+              <TodayPlan />
+            </div>
+          )}
 
-        {activeTab === 'roadmap' && <Roadmap22Days />}
-        {activeTab === 'dsa' && <DSATracker />}
-        {activeTab === 'java-cs' && <JavaCSTracker />}
-        {activeTab === 'problems' && <ProblemLog />}
-        {activeTab === 'revision' && <RevisionEngine />}
-        {activeTab === 'patterns' && <PatternLibrary />}
-        {activeTab === 'timed-coding' && <TimedCodingMode />}
-        {activeTab === 'mock-tests' && <MockAssessmentMode />}
-        {activeTab === 'analytics' && <PerformanceAnalytics />}
-        {activeTab === 'readiness' && <ReadinessScore />}
-        {activeTab === 'interview-q' && <InterviewMode />}
-        {activeTab === 'project-prep' && <ProjectPrep />}
-        {activeTab === 'journal' && <DailyJournal />}
-        {activeTab === 'settings' && <Settings />}
+          {activeTab === 'roadmap' && <Roadmap22Days />}
+          {activeTab === 'dsa' && <DSATracker />}
+          {activeTab === 'java-cs' && <JavaCSTracker />}
+          {activeTab === 'problems' && <ProblemLog />}
+          {activeTab === 'revision' && <RevisionEngine />}
+          {activeTab === 'patterns' && <PatternLibrary />}
+          {activeTab === 'timed-coding' && <TimedCodingMode />}
+          {activeTab === 'mock-tests' && <MockAssessmentMode />}
+          {activeTab === 'analytics' && <PerformanceAnalytics />}
+          {activeTab === 'readiness' && <ReadinessScore />}
+          {activeTab === 'interview-q' && <InterviewMode />}
+          {activeTab === 'project-prep' && <ProjectPrep />}
+          {activeTab === 'journal' && <DailyJournal />}
+          {activeTab === 'settings' && <Settings />}
+        </ErrorBoundary>
       </main>
     </div>
   );
