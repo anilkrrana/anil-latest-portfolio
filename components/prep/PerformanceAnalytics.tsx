@@ -1,7 +1,22 @@
 import React from 'react';
 import { usePrep } from '../../context/PrepContext';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import * as RechartsModule from 'recharts';
 import { BarChart3, TrendingUp, Zap, PieChart as PieIcon } from 'lucide-react';
+
+// Cast recharts components to any to avoid React 18 / Recharts 3.x ReactPortal children type conflict on CI builds
+const {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell
+} = RechartsModule as any;
 
 export const PerformanceAnalytics: React.FC = () => {
   const { state, readiness } = usePrep();
