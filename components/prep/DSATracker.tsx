@@ -4,7 +4,7 @@ import { DSAStatus, DSATopic } from '../../types/prep';
 import { Code, CheckCircle, HelpCircle, UserCheck, Flame } from 'lucide-react';
 
 export const DSATracker: React.FC = () => {
-  const { state, updateDSATopic } = usePrep();
+  const { state, updateDSATopic, isAdmin } = usePrep();
 
   const statuses: DSAStatus[] = [
     'Not Started',
@@ -41,6 +41,11 @@ export const DSATracker: React.FC = () => {
             <span className="rounded bg-blue-500/10 px-2.5 py-0.5 text-xs font-mono text-blue-400 border border-blue-500/20">
               20 Core Topics
             </span>
+            {!isAdmin && (
+              <span className="rounded bg-zinc-800/80 px-2 py-0.5 text-[10px] font-mono text-zinc-400 border border-zinc-700/50">
+                Showcase Mode
+              </span>
+            )}
           </h2>
           <p className="mt-1 text-xs text-zinc-400 font-inter">
             Track status, problems count, hint dependency, and confidence across all DSA topics.
@@ -85,70 +90,104 @@ export const DSATracker: React.FC = () => {
                   <span>{t.name}</span>
                 </td>
 
-                {/* Status Dropdown */}
+                {/* Status Dropdown or Badge */}
                 <td className="px-4 py-3">
-                  <select
-                    value={t.status}
-                    onChange={(e) => updateDSATopic(t.id, { status: e.target.value as DSAStatus })}
-                    className={`rounded border px-2.5 py-1 text-xs font-mono font-medium focus:outline-none cursor-pointer ${getStatusBadge(t.status)}`}
-                  >
-                    {statuses.map(s => (
-                      <option key={s} value={s} className="bg-[#121318] text-white">
-                        {s}
-                      </option>
-                    ))}
-                  </select>
+                  {!isAdmin ? (
+                    <span className={`inline-flex items-center rounded border px-2.5 py-1 text-xs font-mono font-medium ${getStatusBadge(t.status)}`}>
+                      {t.status}
+                    </span>
+                  ) : (
+                    <select
+                      value={t.status}
+                      onChange={(e) => updateDSATopic(t.id, { status: e.target.value as DSAStatus })}
+                      className={`rounded border px-2.5 py-1 text-xs font-mono font-medium focus:outline-none cursor-pointer ${getStatusBadge(t.status)}`}
+                    >
+                      {statuses.map(s => (
+                        <option key={s} value={s} className="bg-[#121318] text-white">
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  )}
                 </td>
 
                 {/* Problems Solved */}
                 <td className="px-4 py-3 text-right font-mono font-medium text-white">
-                  <input
-                    type="number"
-                    min="0"
-                    value={t.problemsCount}
-                    onChange={(e) => updateDSATopic(t.id, { problemsCount: parseInt(e.target.value) || 0 })}
-                    className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-0.5 text-right font-mono text-white focus:outline-none focus:border-blue-500"
-                  />
+                  {!isAdmin ? (
+                    <span className="font-mono font-semibold text-white px-2 py-0.5">{t.problemsCount}</span>
+                  ) : (
+                    <input
+                      type="number"
+                      min="0"
+                      value={t.problemsCount}
+                      onChange={(e) => updateDSATopic(t.id, { problemsCount: parseInt(e.target.value) || 0 })}
+                      className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-0.5 text-right font-mono text-white focus:outline-none focus:border-blue-500"
+                    />
+                  )}
                 </td>
 
                 {/* Independent Count */}
                 <td className="px-4 py-3 text-right font-mono text-emerald-400">
-                  <input
-                    type="number"
-                    min="0"
-                    value={t.independentCount}
-                    onChange={(e) => updateDSATopic(t.id, { independentCount: parseInt(e.target.value) || 0 })}
-                    className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-0.5 text-right font-mono text-emerald-400 focus:outline-none focus:border-emerald-500"
-                  />
+                  {!isAdmin ? (
+                    <span className="font-mono font-semibold text-emerald-400 px-2 py-0.5">{t.independentCount}</span>
+                  ) : (
+                    <input
+                      type="number"
+                      min="0"
+                      value={t.independentCount}
+                      onChange={(e) => updateDSATopic(t.id, { independentCount: parseInt(e.target.value) || 0 })}
+                      className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-0.5 text-right font-mono text-emerald-400 focus:outline-none focus:border-emerald-500"
+                    />
+                  )}
                 </td>
 
                 {/* Hints Count */}
                 <td className="px-4 py-3 text-right font-mono text-amber-400">
-                  <input
-                    type="number"
-                    min="0"
-                    value={t.hintsCount}
-                    onChange={(e) => updateDSATopic(t.id, { hintsCount: parseInt(e.target.value) || 0 })}
-                    className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-0.5 text-right font-mono text-amber-400 focus:outline-none focus:border-amber-500"
-                  />
+                  {!isAdmin ? (
+                    <span className={`font-mono font-semibold px-2 py-0.5 ${t.hintsCount > 0 ? 'text-amber-400' : 'text-zinc-500'}`}>
+                      {t.hintsCount}
+                    </span>
+                  ) : (
+                    <input
+                      type="number"
+                      min="0"
+                      value={t.hintsCount}
+                      onChange={(e) => updateDSATopic(t.id, { hintsCount: parseInt(e.target.value) || 0 })}
+                      className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-0.5 text-right font-mono text-amber-400 focus:outline-none focus:border-amber-500"
+                    />
+                  )}
                 </td>
 
-                {/* Confidence Slider */}
+                {/* Confidence */}
                 <td className="px-4 py-3">
-                  <div className="flex items-center gap-3 justify-center">
-                    <input
-                      type="range"
-                      min="0"
-                      max="100"
-                      step="5"
-                      value={t.confidence}
-                      onChange={(e) => updateDSATopic(t.id, { confidence: parseInt(e.target.value) })}
-                      className="w-24 accent-blue-500 cursor-pointer"
-                    />
-                    <span className="w-9 text-right font-mono text-xs font-semibold text-white">
-                      {t.confidence}%
-                    </span>
-                  </div>
+                  {!isAdmin ? (
+                    <div className="flex items-center gap-2.5 justify-center">
+                      <div className="w-20 bg-[#09090b] rounded-full h-1.5 overflow-hidden border border-[#1e2029]">
+                        <div 
+                          className="bg-blue-500 h-1.5 rounded-full transition-all" 
+                          style={{ width: `${t.confidence}%` }}
+                        />
+                      </div>
+                      <span className="w-9 text-right font-mono text-xs font-semibold text-blue-400">
+                        {t.confidence}%
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-3 justify-center">
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        step="5"
+                        value={t.confidence}
+                        onChange={(e) => updateDSATopic(t.id, { confidence: parseInt(e.target.value) })}
+                        className="w-24 accent-blue-500 cursor-pointer"
+                      />
+                      <span className="w-9 text-right font-mono text-xs font-semibold text-white">
+                        {t.confidence}%
+                      </span>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}

@@ -3,9 +3,16 @@ import { usePrep } from '../../context/PrepContext';
 import { Settings as SettingsIcon, Download, Upload, RefreshCw, Sparkles, Database, ShieldAlert } from 'lucide-react';
 
 export const Settings: React.FC = () => {
-  const { state, exportData, importData, resetData, seedDemoData } = usePrep();
+  const { state, exportData, importData, resetData, seedDemoData, isAdmin } = usePrep();
   const [importJson, setImportJson] = useState('');
   const [importStatus, setImportStatus] = useState<string | null>(null);
+  const [copiedSnapshot, setCopiedSnapshot] = useState(false);
+
+  const handleCopySnapshot = () => {
+    navigator.clipboard.writeText(JSON.stringify(state, null, 2));
+    setCopiedSnapshot(true);
+    setTimeout(() => setCopiedSnapshot(false), 3000);
+  };
 
   const handleImportSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,86 +93,116 @@ export const Settings: React.FC = () => {
             <span>Import & Restore Data</span>
           </h3>
 
-          {importStatus && (
-            <div className="rounded bg-[#09090b] p-2 text-xs font-mono text-emerald-400 border border-emerald-500/20">
-              {importStatus}
+          {isAdmin ? (
+            <>
+              {importStatus && (
+                <div className="rounded bg-[#09090b] p-2 text-xs font-mono text-emerald-400 border border-emerald-500/20">
+                  {importStatus}
+                </div>
+              )}
+
+              <div className="space-y-3 text-xs font-mono">
+                <div>
+                  <label className="block text-zinc-400 mb-1">Upload Backup JSON File</label>
+                  <input
+                    type="file"
+                    accept=".json"
+                    onChange={handleFileUpload}
+                    className="w-full text-xs text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-[#09090b] file:text-blue-400 file:font-semibold hover:file:bg-zinc-800"
+                  />
+                </div>
+
+                <form onSubmit={handleImportSubmit} className="space-y-2 pt-2 border-t border-[#1e2029]">
+                  <label className="block text-zinc-400">Or Paste JSON Content</label>
+                  <textarea
+                    rows={3}
+                    placeholder="Paste backup JSON string here..."
+                    value={importJson}
+                    onChange={e => setImportJson(e.target.value)}
+                    className="w-full rounded bg-[#09090b] border border-[#1e2029] p-2 text-xs text-white"
+                  ></textarea>
+                  <button
+                    type="submit"
+                    className="rounded bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-500"
+                  >
+                    Restore JSON Data
+                  </button>
+                </form>
+              </div>
+            </>
+          ) : (
+            <div className="rounded-lg bg-[#09090b] p-6 text-center border border-[#1e2029] space-y-2">
+              <ShieldAlert className="h-6 w-6 text-amber-400 mx-auto" />
+              <div className="text-xs font-mono text-white font-bold">Owner Access Required</div>
+              <p className="text-[11px] text-zinc-400 font-inter">
+                Database restore and overwrite capabilities are protected behind Owner PIN authentication.
+              </p>
             </div>
           )}
-
-          <div className="space-y-3 text-xs font-mono">
-            <div>
-              <label className="block text-zinc-400 mb-1">Upload Backup JSON File</label>
-              <input
-                type="file"
-                accept=".json"
-                onChange={handleFileUpload}
-                className="w-full text-xs text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-[#09090b] file:text-blue-400 file:font-semibold hover:file:bg-zinc-800"
-              />
-            </div>
-
-            <form onSubmit={handleImportSubmit} className="space-y-2 pt-2 border-t border-[#1e2029]">
-              <label className="block text-zinc-400">Or Paste JSON Content</label>
-              <textarea
-                rows={3}
-                placeholder="Paste backup JSON string here..."
-                value={importJson}
-                onChange={e => setImportJson(e.target.value)}
-                className="w-full rounded bg-[#09090b] border border-[#1e2029] p-2 text-xs text-white"
-              ></textarea>
-              <button
-                type="submit"
-                className="rounded bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-500"
-              >
-                Restore JSON Data
-              </button>
-            </form>
-          </div>
         </div>
 
         {/* Demo Data & Reset */}
         <div className="md:col-span-2 rounded-xl border border-rose-500/20 bg-[#121318] p-5 space-y-4">
-          <h3 className="text-base font-bold text-white font-outfit flex items-center gap-2 border-b border-[#1e2029] pb-3">
-            <Database className="h-4 w-4 text-amber-400" />
-            <span>Testing & System State Actions</span>
-          </h3>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-lg bg-[#09090b] p-4 border border-[#1e2029] space-y-2">
-              <div className="text-sm font-bold text-white font-mono flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-amber-400" />
-                <span>Seed Sample Data</span>
-              </div>
-              <p className="text-xs text-zinc-400 font-inter">
-                Populate dashboard with sample problems, mock scores, and topic progress to preview full analytics visuals.
-              </p>
+          <div className="flex items-center justify-between border-b border-[#1e2029] pb-3">
+            <h3 className="text-base font-bold text-white font-outfit flex items-center gap-2">
+              <Database className="h-4 w-4 text-amber-400" />
+              <span>Testing & System State Actions</span>
+            </h3>
+            {isAdmin && (
               <button
-                onClick={seedDemoData}
-                className="rounded bg-amber-600/20 text-amber-300 border border-amber-500/30 px-4 py-2 text-xs font-bold hover:bg-amber-600 hover:text-white transition-all font-mono"
+                onClick={handleCopySnapshot}
+                className="rounded bg-blue-600/20 text-blue-300 border border-blue-500/30 px-3 py-1 text-xs font-mono font-medium hover:bg-blue-600 hover:text-white transition-all"
               >
-                SEED SAMPLE DEMO DATA
+                {copiedSnapshot ? '✓ Copied Snapshot JSON!' : 'Copy Live Snapshot JSON'}
               </button>
-            </div>
-
-            <div className="rounded-lg bg-[#09090b] p-4 border border-[#1e2029] space-y-2">
-              <div className="text-sm font-bold text-white font-mono flex items-center gap-2">
-                <RefreshCw className="h-4 w-4 text-rose-400" />
-                <span>Reset to Clean 0 State</span>
-              </div>
-              <p className="text-xs text-zinc-400 font-inter">
-                Clear all problems, mock tests, and activity to start fresh with 0 solves and real date countdown.
-              </p>
-              <button
-                onClick={() => {
-                  if (confirm('Are you sure you want to reset all dashboard data to zero?')) {
-                    resetData();
-                  }
-                }}
-                className="rounded bg-rose-600/20 text-rose-300 border border-rose-500/30 px-4 py-2 text-xs font-bold hover:bg-rose-600 hover:text-white transition-all font-mono"
-              >
-                RESET ALL DATA TO ZERO
-              </button>
-            </div>
+            )}
           </div>
+
+          {isAdmin ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="rounded-lg bg-[#09090b] p-4 border border-[#1e2029] space-y-2">
+                <div className="text-sm font-bold text-white font-mono flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-amber-400" />
+                  <span>Seed Sample Data</span>
+                </div>
+                <p className="text-xs text-zinc-400 font-inter">
+                  Populate dashboard with sample problems, mock scores, and topic progress to preview full analytics visuals.
+                </p>
+                <button
+                  onClick={seedDemoData}
+                  className="rounded bg-amber-600/20 text-amber-300 border border-amber-500/30 px-4 py-2 text-xs font-bold hover:bg-amber-600 hover:text-white transition-all font-mono"
+                >
+                  SEED SAMPLE DEMO DATA
+                </button>
+              </div>
+
+              <div className="rounded-lg bg-[#09090b] p-4 border border-[#1e2029] space-y-2">
+                <div className="text-sm font-bold text-white font-mono flex items-center gap-2">
+                  <RefreshCw className="h-4 w-4 text-rose-400" />
+                  <span>Reset to Clean 0 State</span>
+                </div>
+                <p className="text-xs text-zinc-400 font-inter">
+                  Clear all problems, mock tests, and activity to start fresh with 0 solves and real date countdown.
+                </p>
+                <button
+                  onClick={() => {
+                    if (confirm('Are you sure you want to reset all dashboard data to zero?')) {
+                      resetData();
+                    }
+                  }}
+                  className="rounded bg-rose-600/20 text-rose-300 border border-rose-500/30 px-4 py-2 text-xs font-bold hover:bg-rose-600 hover:text-white transition-all font-mono"
+                >
+                  RESET ALL DATA TO ZERO
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-lg bg-[#09090b] p-6 text-center border border-[#1e2029] space-y-2">
+              <div className="text-xs font-mono text-zinc-400">
+                🔒 System reset and data seeding actions are locked to prevent accidental state loss.
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

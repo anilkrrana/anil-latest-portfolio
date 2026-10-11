@@ -4,7 +4,7 @@ import { ShieldAlert, Play, Clock, CheckCircle2, AlertTriangle, Trophy } from 'l
 import { MockTest } from '../../types/prep';
 
 export const MockAssessmentMode: React.FC = () => {
-  const { saveMockTest, state } = usePrep();
+  const { saveMockTest, state, isAdmin } = usePrep();
 
   const [inMock, setInMock] = useState(false);
   const [mockTitle, setMockTitle] = useState('INFOSYS SP MOCK #' + (state.mockTests.length + 1));
@@ -176,13 +176,19 @@ export const MockAssessmentMode: React.FC = () => {
           <p className="text-xs text-zinc-300 max-w-md mx-auto font-inter">
             90 minutes. 3 Problems (Easy/Med, Med, Med/Hard). No hints. Test your exact speed and accuracy under exam conditions.
           </p>
-          <button
-            onClick={handleStart}
-            className="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-6 py-3 text-sm font-bold text-white hover:bg-rose-500 transition-all shadow-xl shadow-rose-600/20"
-          >
-            <Play className="h-4 w-4" />
-            <span>START FULL INFOSYS SP MOCK EXAM</span>
-          </button>
+          {isAdmin ? (
+            <button
+              onClick={handleStart}
+              className="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-6 py-3 text-sm font-bold text-white hover:bg-rose-500 transition-all shadow-xl shadow-rose-600/20"
+            >
+              <Play className="h-4 w-4" />
+              <span>START FULL INFOSYS SP MOCK EXAM</span>
+            </button>
+          ) : (
+            <div className="inline-flex items-center gap-2 rounded-xl bg-[#09090b] border border-[#1e2029] px-6 py-2.5 text-xs font-mono text-zinc-400">
+              🔒 Owner Mode Required to Launch Simulations
+            </div>
+          )}
         </div>
       )}
 

@@ -4,7 +4,7 @@ import { Clock, Play, Pause, RotateCcw, CheckCircle, AlertTriangle, ShieldCheck 
 import { TimedSession } from '../../types/prep';
 
 export const TimedCodingMode: React.FC = () => {
-  const { saveTimedSession, state } = usePrep();
+  const { saveTimedSession, state, isAdmin } = usePrep();
 
   const [activeTestType, setActiveTestType] = useState<'30 MIN' | '45 MIN' | '60 MIN' | 'FULL MOCK' | null>(null);
   const [durationMinutes, setDurationMinutes] = useState(45);
@@ -221,13 +221,19 @@ export const TimedCodingMode: React.FC = () => {
                 <p className="mt-1 text-xs text-zinc-400 font-inter">{test.desc}</p>
               </div>
 
-              <button
-                onClick={() => startTest(test.type as any, test.mins)}
-                className="w-full flex items-center justify-center gap-2 rounded-lg bg-purple-600/20 text-purple-300 border border-purple-500/30 py-2 text-xs font-bold hover:bg-purple-600 hover:text-white transition-all"
-              >
-                <Play className="h-3.5 w-3.5" />
-                <span>START SESSION</span>
-              </button>
+              {isAdmin ? (
+                <button
+                  onClick={() => startTest(test.type as any, test.mins)}
+                  className="w-full flex items-center justify-center gap-2 rounded-lg bg-purple-600/20 text-purple-300 border border-purple-500/30 py-2 text-xs font-bold hover:bg-purple-600 hover:text-white transition-all"
+                >
+                  <Play className="h-3.5 w-3.5" />
+                  <span>START SESSION</span>
+                </button>
+              ) : (
+                <div className="w-full text-center py-2 text-xs font-mono text-zinc-500 rounded bg-[#09090b] border border-[#1e2029]">
+                  Owner Mode Required
+                </div>
+              )}
             </div>
           ))}
         </div>

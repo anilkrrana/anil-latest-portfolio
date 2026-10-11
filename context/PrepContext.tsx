@@ -37,6 +37,9 @@ interface PrepContextType {
   isAssessmentPassed: boolean;
   readiness: ReadinessBreakdown;
   nextAction: string;
+  isAdmin: boolean;
+  loginAdmin: (pin: string) => boolean;
+  logoutAdmin: () => void;
   
   // Actions
   toggleMode: (mode?: PrepMode) => void;
@@ -70,6 +73,42 @@ const STORAGE_KEY = 'infosys_sp_crack_system_v1';
 export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, setState] = useState<PrepState>(INITIAL_PREP_STATE);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Check admin session from sessionStorage
+  useEffect(() => {
+    try {
+      const adminSession = sessionStorage.getItem('prep_admin_session');
+      if (adminSession === 'true') {
+        setIsAdmin(true);
+      }
+    } catch (e) {
+      console.error('Session storage read error:', e);
+    }
+  }, []);
+
+  const loginAdmin = (pin: string): boolean => {
+    const targetPin = process.env.NEXT_PUBLIC_PREP_ADMIN_PIN || '7739';
+    if (pin.trim() === targetPin) {
+      setIsAdmin(true);
+      try {
+        sessionStorage.setItem('prep_admin_session', 'true');
+      } catch (e) {
+        console.error(e);
+      }
+      return true;
+    }
+    return false;
+  };
+
+  const logoutAdmin = () => {
+    setIsAdmin(false);
+    try {
+      sessionStorage.removeItem('prep_admin_session');
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   // Load from LocalStorage
   useEffect(() => {
@@ -253,6 +292,10 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const addProblem = (problemData: Omit<Problem, 'id'>) => {
+    if (!isAdmin) {
+      console.warn('Action denied: Owner Mode required to add problems.');
+      return;
+    }
     const id = 'prob_' + Date.now();
     const newProblem: Problem = { ...problemData, id };
     
@@ -282,6 +325,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateProblem = (id: string, updates: Partial<Problem>) => {
+    if (!isAdmin) return;
     setState(prev => ({
       ...prev,
       problems: prev.problems.map(p => p.id === id ? { ...p, ...updates } : p)
@@ -289,6 +333,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const deleteProblem = (id: string) => {
+    if (!isAdmin) return;
     setState(prev => ({
       ...prev,
       problems: prev.problems.filter(p => p.id !== id)
@@ -296,6 +341,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateDSATopic = (id: string, updates: Partial<DSATopic>) => {
+    if (!isAdmin) return;
     setState(prev => ({
       ...prev,
       dsaTopics: prev.dsaTopics.map(t => t.id === id ? { ...t, ...updates } : t)
@@ -303,6 +349,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateJavaTopic = (id: string, updates: Partial<JavaTopic>) => {
+    if (!isAdmin) return;
     setState(prev => ({
       ...prev,
       javaTopics: prev.javaTopics.map(t => t.id === id ? { ...t, ...updates } : t)
@@ -310,6 +357,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateCSTopic = (id: string, updates: Partial<CSFundTopic>) => {
+    if (!isAdmin) return;
     setState(prev => ({
       ...prev,
       csTopics: prev.csTopics.map(t => t.id === id ? { ...t, ...updates } : t)
@@ -317,6 +365,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const toggleDailyTask = (id: string) => {
+    if (!isAdmin) return;
     setState(prev => ({
       ...prev,
       dailyTasks: prev.dailyTasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t)
@@ -325,6 +374,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const addDailyTask = (category: DailyTask['category'], text: string) => {
+    if (!isAdmin) return;
     const id = 'task_' + Date.now();
     setState(prev => ({
       ...prev,
@@ -333,6 +383,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const deleteDailyTask = (id: string) => {
+    if (!isAdmin) return;
     setState(prev => ({
       ...prev,
       dailyTasks: prev.dailyTasks.filter(t => t.id !== id)
@@ -340,6 +391,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const saveTimedSession = (sessionData: Omit<TimedSession, 'id'>) => {
+    if (!isAdmin) return;
     const id = 'session_' + Date.now();
     setState(prev => ({
       ...prev,
@@ -349,6 +401,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const saveMockTest = (mockData: Omit<MockTest, 'id'>) => {
+    if (!isAdmin) return;
     const id = 'mock_' + Date.now();
     setState(prev => ({
       ...prev,
@@ -358,6 +411,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateInterviewQ = (id: string, updates: Partial<InterviewQuestion>) => {
+    if (!isAdmin) return;
     setState(prev => ({
       ...prev,
       interviewQuestions: prev.interviewQuestions.map(q => q.id === id ? { ...q, ...updates } : q)
@@ -365,6 +419,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const addInterviewQ = (category: InterviewQuestion['category'], question: string, answerSnippet?: string) => {
+    if (!isAdmin) return;
     const id = 'iq_' + Date.now();
     setState(prev => ({
       ...prev,
@@ -373,6 +428,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateProjectPrep = (id: string, updates: Partial<ProjectPrep>) => {
+    if (!isAdmin) return;
     setState(prev => ({
       ...prev,
       projects: prev.projects.map(p => p.id === id ? { ...p, ...updates } : p)
@@ -380,6 +436,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const addJournalEntry = (entryData: Omit<JournalEntry, 'id'>) => {
+    if (!isAdmin) return;
     const id = 'j_' + Date.now();
     setState(prev => ({
       ...prev,
@@ -399,6 +456,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const importData = (jsonData: string): boolean => {
+    if (!isAdmin) return false;
     try {
       const parsed = JSON.parse(jsonData);
       if (parsed.targetDate && parsed.dsaTopics) {
@@ -413,10 +471,12 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const resetData = () => {
+    if (!isAdmin) return;
     setState(INITIAL_PREP_STATE);
   };
 
   const seedDemoData = () => {
+    if (!isAdmin) return;
     const today = new Date().toISOString().split('T')[0];
     setState({
       ...INITIAL_PREP_STATE,
@@ -501,6 +561,9 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isAssessmentPassed,
         readiness,
         nextAction,
+        isAdmin,
+        loginAdmin,
+        logoutAdmin,
         toggleMode,
         addProblem,
         updateProblem,

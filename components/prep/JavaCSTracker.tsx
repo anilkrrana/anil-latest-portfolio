@@ -3,7 +3,7 @@ import { usePrep } from '../../context/PrepContext';
 import { Coffee, Server, Database, Cpu, Calendar } from 'lucide-react';
 
 export const JavaCSTracker: React.FC = () => {
-  const { state, updateJavaTopic, updateCSTopic } = usePrep();
+  const { state, updateJavaTopic, updateCSTopic, isAdmin } = usePrep();
 
   const coreJava = state.javaTopics.filter(j => j.category === 'Core Java');
   const backend = state.javaTopics.filter(j => j.category === 'Backend');
@@ -31,6 +31,11 @@ export const JavaCSTracker: React.FC = () => {
             <span className="rounded bg-amber-500/10 px-2.5 py-0.5 text-xs font-mono text-amber-400 border border-amber-500/20">
               Technical Interview Core
             </span>
+            {!isAdmin && (
+              <span className="rounded bg-zinc-800/80 px-2 py-0.5 text-[10px] font-mono text-zinc-400 border border-zinc-700/50">
+                Showcase Mode
+              </span>
+            )}
           </h2>
           <p className="mt-1 text-xs text-zinc-400 font-inter">
             Track Core Java 17, Spring Boot backend stack, and CS Fundamentals (SQL, DBMS, OS, Networks).
@@ -66,13 +71,23 @@ export const JavaCSTracker: React.FC = () => {
                   <div className="text-sm font-semibold text-white font-mono">{topic.name}</div>
                   <div className="flex items-center gap-2 text-[11px] text-zinc-400 font-mono mt-0.5">
                     <span>Conf: {topic.confidence}%</span>
-                    <span>•</span>
-                    <input
-                      type="date"
-                      value={topic.lastRevised || ''}
-                      onChange={(e) => updateJavaTopic(topic.id, { lastRevised: e.target.value })}
-                      className="bg-[#09090b] text-zinc-300 border border-[#1e2029] rounded px-1.5 py-0.5 text-[10px] focus:outline-none"
-                    />
+                    {topic.lastRevised && (
+                      <>
+                        <span>•</span>
+                        <span>Revised: {topic.lastRevised}</span>
+                      </>
+                    )}
+                    {isAdmin && (
+                      <>
+                        <span>•</span>
+                        <input
+                          type="date"
+                          value={topic.lastRevised || ''}
+                          onChange={(e) => updateJavaTopic(topic.id, { lastRevised: e.target.value })}
+                          className="bg-[#09090b] text-zinc-300 border border-[#1e2029] rounded px-1.5 py-0.5 text-[10px] focus:outline-none"
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -83,15 +98,23 @@ export const JavaCSTracker: React.FC = () => {
                       style={{ width: `${topic.progress}%` }}
                     ></div>
                   </div>
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={topic.progress}
-                    onChange={(e) => updateJavaTopic(topic.id, { progress: Math.min(100, Math.max(0, parseInt(e.target.value) || 0)) })}
-                    className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-1 text-right font-mono text-xs text-white focus:outline-none focus:border-amber-500"
-                  />
-                  <span className="text-xs font-mono text-zinc-400">%</span>
+                  {isAdmin ? (
+                    <div className="flex items-center gap-1">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={topic.progress}
+                        onChange={(e) => updateJavaTopic(topic.id, { progress: Math.min(100, Math.max(0, parseInt(e.target.value) || 0)) })}
+                        className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-1 text-right font-mono text-xs text-white focus:outline-none focus:border-amber-500"
+                      />
+                      <span className="text-xs font-mono text-zinc-400">%</span>
+                    </div>
+                  ) : (
+                    <span className="w-12 text-right font-mono text-xs font-semibold text-amber-400">
+                      {topic.progress}%
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
@@ -117,13 +140,23 @@ export const JavaCSTracker: React.FC = () => {
                   <div className="text-sm font-semibold text-white font-mono">{topic.name}</div>
                   <div className="flex items-center gap-2 text-[11px] text-zinc-400 font-mono mt-0.5">
                     <span>Conf: {topic.confidence}%</span>
-                    <span>•</span>
-                    <input
-                      type="date"
-                      value={topic.lastRevised || ''}
-                      onChange={(e) => updateJavaTopic(topic.id, { lastRevised: e.target.value })}
-                      className="bg-[#09090b] text-zinc-300 border border-[#1e2029] rounded px-1.5 py-0.5 text-[10px] focus:outline-none"
-                    />
+                    {topic.lastRevised && (
+                      <>
+                        <span>•</span>
+                        <span>Revised: {topic.lastRevised}</span>
+                      </>
+                    )}
+                    {isAdmin && (
+                      <>
+                        <span>•</span>
+                        <input
+                          type="date"
+                          value={topic.lastRevised || ''}
+                          onChange={(e) => updateJavaTopic(topic.id, { lastRevised: e.target.value })}
+                          className="bg-[#09090b] text-zinc-300 border border-[#1e2029] rounded px-1.5 py-0.5 text-[10px] focus:outline-none"
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -134,15 +167,23 @@ export const JavaCSTracker: React.FC = () => {
                       style={{ width: `${topic.progress}%` }}
                     ></div>
                   </div>
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={topic.progress}
-                    onChange={(e) => updateJavaTopic(topic.id, { progress: Math.min(100, Math.max(0, parseInt(e.target.value) || 0)) })}
-                    className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-1 text-right font-mono text-xs text-white focus:outline-none focus:border-blue-500"
-                  />
-                  <span className="text-xs font-mono text-zinc-400">%</span>
+                  {isAdmin ? (
+                    <div className="flex items-center gap-1">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={topic.progress}
+                        onChange={(e) => updateJavaTopic(topic.id, { progress: Math.min(100, Math.max(0, parseInt(e.target.value) || 0)) })}
+                        className="w-14 rounded bg-[#09090b] border border-[#1e2029] px-2 py-1 text-right font-mono text-xs text-white focus:outline-none focus:border-blue-500"
+                      />
+                      <span className="text-xs font-mono text-zinc-400">%</span>
+                    </div>
+                  ) : (
+                    <span className="w-12 text-right font-mono text-xs font-semibold text-blue-400">
+                      {topic.progress}%
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
@@ -178,17 +219,19 @@ export const JavaCSTracker: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#1e2029] flex items-center justify-between gap-2">
-                <label className="text-[10px] font-mono text-zinc-500">Update %</label>
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  value={cs.progress}
-                  onChange={(e) => updateCSTopic(cs.id, { progress: Math.min(100, Math.max(0, parseInt(e.target.value) || 0)) })}
-                  className="w-16 rounded bg-[#121318] border border-[#1e2029] px-2 py-0.5 text-right font-mono text-xs text-white focus:outline-none focus:border-emerald-500"
-                />
-              </div>
+              {isAdmin && (
+                <div className="mt-4 pt-3 border-t border-[#1e2029] flex items-center justify-between gap-2">
+                  <label className="text-[10px] font-mono text-zinc-500">Update %</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={cs.progress}
+                    onChange={(e) => updateCSTopic(cs.id, { progress: Math.min(100, Math.max(0, parseInt(e.target.value) || 0)) })}
+                    className="w-16 rounded bg-[#121318] border border-[#1e2029] px-2 py-0.5 text-right font-mono text-xs text-white focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              )}
             </div>
           ))}
         </div>

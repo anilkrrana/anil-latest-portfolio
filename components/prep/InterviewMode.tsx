@@ -4,7 +4,7 @@ import { InterviewQuestion } from '../../types/prep';
 import { MessageSquare, CheckCircle2, Plus, Search, HelpCircle } from 'lucide-react';
 
 export const InterviewMode: React.FC = () => {
-  const { state, updateInterviewQ, addInterviewQ } = usePrep();
+  const { state, updateInterviewQ, addInterviewQ, isAdmin } = usePrep();
   
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [selectedStatus, setSelectedStatus] = useState<string>('ALL');
@@ -52,19 +52,30 @@ export const InterviewMode: React.FC = () => {
             <span className="rounded bg-emerald-500/10 px-2.5 py-0.5 text-xs font-mono text-emerald-400 border border-emerald-500/20">
               10 Domain Categories
             </span>
+            {!isAdmin && (
+              <span className="rounded bg-zinc-800/80 px-2 py-0.5 text-[10px] font-mono text-zinc-400 border border-zinc-700/50">
+                Showcase Mode
+              </span>
+            )}
           </h2>
           <p className="mt-1 text-xs text-zinc-400 font-inter">
             Practice conceptual questions for Infosys SP technical interview rounds.
           </p>
         </div>
 
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-600/20"
-        >
-          <Plus className="h-4 w-4" />
-          <span>ADD QUESTION</span>
-        </button>
+        {isAdmin ? (
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-600/20"
+          >
+            <Plus className="h-4 w-4" />
+            <span>ADD QUESTION</span>
+          </button>
+        ) : (
+          <div className="rounded-lg bg-[#09090b] px-3 py-1.5 border border-[#1e2029] text-xs font-mono text-zinc-400">
+            Read-Only Bank
+          </div>
+        )}
       </div>
 
       {/* Filter Bar */}
@@ -106,16 +117,22 @@ export const InterviewMode: React.FC = () => {
                   {q.category}
                 </span>
 
-                <select
-                  value={q.status}
-                  onChange={(e) => updateInterviewQ(q.id, { status: e.target.value as any })}
-                  className={`rounded border px-2 py-0.5 text-xs font-mono font-medium focus:outline-none cursor-pointer ${getStatusBadge(q.status)}`}
-                >
-                  <option value="Not Practiced" className="bg-[#121318] text-white">Not Practiced</option>
-                  <option value="Practiced" className="bg-[#121318] text-white">Practiced</option>
-                  <option value="Confident" className="bg-[#121318] text-white">Confident</option>
-                  <option value="Needs Revision" className="bg-[#121318] text-white">Needs Revision</option>
-                </select>
+                {isAdmin ? (
+                  <select
+                    value={q.status}
+                    onChange={(e) => updateInterviewQ(q.id, { status: e.target.value as any })}
+                    className={`rounded border px-2 py-0.5 text-xs font-mono font-medium focus:outline-none cursor-pointer ${getStatusBadge(q.status)}`}
+                  >
+                    <option value="Not Practiced" className="bg-[#121318] text-white">Not Practiced</option>
+                    <option value="Practiced" className="bg-[#121318] text-white">Practiced</option>
+                    <option value="Confident" className="bg-[#121318] text-white">Confident</option>
+                    <option value="Needs Revision" className="bg-[#121318] text-white">Needs Revision</option>
+                  </select>
+                ) : (
+                  <span className={`rounded border px-2 py-0.5 text-xs font-mono font-medium ${getStatusBadge(q.status)}`}>
+                    {q.status}
+                  </span>
+                )}
               </div>
 
               <h3 className="mt-3 text-sm font-bold text-white font-outfit leading-snug">

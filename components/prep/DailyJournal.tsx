@@ -3,7 +3,7 @@ import { usePrep } from '../../context/PrepContext';
 import { BookOpen, Plus, Calendar, Save, Trash2 } from 'lucide-react';
 
 export const DailyJournal: React.FC = () => {
-  const { state, addJournalEntry } = usePrep();
+  const { state, addJournalEntry, isAdmin } = usePrep();
   const todayStr = new Date().toISOString().split('T')[0];
 
   const [whatILearned, setWhatILearned] = useState('');
@@ -40,6 +40,11 @@ export const DailyJournal: React.FC = () => {
             <span className="rounded bg-blue-500/10 px-2.5 py-0.5 text-xs font-mono text-blue-400 border border-blue-500/20">
               End of Day Reflection
             </span>
+            {!isAdmin && (
+              <span className="rounded bg-zinc-800/80 px-2 py-0.5 text-[10px] font-mono text-zinc-400 border border-zinc-700/50">
+                Showcase Mode
+              </span>
+            )}
           </h2>
           <p className="mt-1 text-xs text-zinc-400 font-inter">
             Log daily takeaways, technical insights, struggles, mistakes, and tomorrow&apos;s top priorities.
@@ -48,17 +53,18 @@ export const DailyJournal: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Form Card */}
+        {/* Form Card or Latest Entry Card */}
         <div className="lg:col-span-2 rounded-xl border border-[#1e2029] bg-[#121318] p-5 space-y-4">
           <div className="flex items-center justify-between border-b border-[#1e2029] pb-3">
             <h3 className="text-base font-bold text-white font-outfit flex items-center gap-2">
               <Calendar className="h-4 w-4 text-blue-400" />
-              <span>Today&apos;s Log Entry ({todayStr})</span>
+              <span>{isAdmin ? `Today's Log Entry (${todayStr})` : 'Candidate Reflection Overview'}</span>
             </h3>
             {isSaved && <span className="text-xs font-mono text-emerald-400">✓ Saved!</span>}
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
+          {isAdmin ? (
+            <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
             <div>
               <label className="block text-zinc-400 mb-1">What I Learned Today *</label>
               <textarea
@@ -124,7 +130,39 @@ export const DailyJournal: React.FC = () => {
               <span>Save Today&apos;s Journal Entry</span>
             </button>
           </form>
-        </div>
+        ) : (
+          <div className="space-y-4">
+            {state.journalEntries.length > 0 ? (
+              <div className="rounded-xl bg-[#09090b] p-5 border border-[#1e2029] space-y-3">
+                <div className="flex items-center justify-between border-b border-[#1e2029] pb-2">
+                  <span className="text-xs font-mono font-bold text-blue-400">Latest Log: {state.journalEntries[0].date}</span>
+                  <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[10px] font-mono text-emerald-400 border border-emerald-500/20">Active Record</span>
+                </div>
+                <div>
+                  <span className="text-xs font-mono text-zinc-400">Key Takeaway / Concepts:</span>
+                  <p className="mt-1 text-sm text-zinc-200 font-inter">{state.journalEntries[0].whatILearned}</p>
+                </div>
+                {state.journalEntries[0].tomorrowPriority && (
+                  <div className="rounded bg-[#121318] p-3 border border-[#1e2029] text-xs font-mono text-emerald-300">
+                    🎯 Priority Focus: {state.journalEntries[0].tomorrowPriority}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="rounded-xl bg-[#09090b] p-6 text-center border border-[#1e2029] space-y-2">
+                <BookOpen className="h-8 w-8 text-blue-400 mx-auto" />
+                <h4 className="text-sm font-bold text-white font-outfit">Daily Candidate Reflection Log</h4>
+                <p className="text-xs text-zinc-400 font-inter max-w-sm mx-auto">
+                  Detailed technical takeaways, patterns debugged, and next-day priorities logged during prep sessions appear here.
+                </p>
+              </div>
+            )}
+            <div className="text-center text-[11px] font-mono text-zinc-500">
+              🔒 Logging new reflections is reserved for Owner Mode.
+            </div>
+          </div>
+        )}
+      </div>
 
         {/* History Column */}
         <div className="rounded-xl border border-[#1e2029] bg-[#121318] p-5 space-y-4">
