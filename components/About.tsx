@@ -37,13 +37,13 @@ export default function About() {
           >
             <div className="relative w-64 h-80 sm:w-72 sm:h-96 rounded-2xl overflow-hidden border-2 dark:border-neutral-800 border-slate-200 p-2 dark:bg-neutral-900 bg-white shadow-xl group">
               <Image
-                src="/profile-pic-portfolio.jpg"
+                src="/anil-latest-profile.jpg"
                 alt="Anil Kumar Rana"
                 fill
                 quality={100}
                 sizes="(max-width: 768px) 100vw, 600px"
                 priority
-                className="object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                className="object-cover object-top rounded-xl group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t dark:from-neutral-950 from-slate-900/60 via-transparent to-transparent opacity-80" />
               

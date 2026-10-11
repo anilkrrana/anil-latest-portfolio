@@ -156,6 +156,9 @@ export default function InfosysPrepPage() {
       <Head>
         <title>INFOSYS SP L1/L2 — CRACK SYSTEM | Preparation Mission Control</title>
         <meta name="description" content="Mission Control for Infosys SP L1/L2 Specialist Programmer coding assessment and technical interview preparation." />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
       </Head>
       <PrepProvider>
         <DashboardContent />
