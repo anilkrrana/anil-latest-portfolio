@@ -32,7 +32,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // POST: Save updated state to data/userPrepState.json on disk
   if (req.method === 'POST') {
     const { state, pin } = req.body || {};
-    const targetPin = process.env.NEXT_PUBLIC_PREP_ADMIN_PIN || '7739';
+    const targetPin = process.env.NEXT_PUBLIC_PREP_ADMIN_PIN || '773970';
 
     if (pin !== targetPin) {
       return res.status(401).json({ error: 'Unauthorized: Invalid Owner PIN' });
