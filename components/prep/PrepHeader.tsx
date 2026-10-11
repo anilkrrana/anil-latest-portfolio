@@ -63,7 +63,7 @@ export const PrepHeader: React.FC = () => {
                 <button
                   onClick={() => setIsLockModalOpen(true)}
                   className="flex items-center gap-1.5 rounded-lg border border-[#1e2029] bg-[#121318] px-2.5 py-1.5 text-xs font-mono font-medium text-zinc-300 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all shadow-sm"
-                  title="Enter Owner PIN (7739) to unlock edit controls"
+                  title="Enter Owner PIN to unlock edit controls"
                 >
                   <Lock className="h-3.5 w-3.5 text-blue-400" />
                   <span>Owner Unlock</span>

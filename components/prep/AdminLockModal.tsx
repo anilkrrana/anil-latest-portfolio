@@ -82,7 +82,7 @@ export const AdminLockModal: React.FC<AdminLockModalProps> = ({ isOpen, onClose 
                 setPin(e.target.value);
                 setError(false);
               }}
-              placeholder="••••"
+              placeholder="••••••"
               className="w-full rounded-xl bg-[#09090b] border border-[#1e2029] p-3 text-center text-2xl font-mono tracking-widest text-white focus:outline-none focus:border-blue-500"
             />
           </div>

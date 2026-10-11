@@ -104,7 +104,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const loginAdmin = (pin: string): boolean => {
-    const targetPin = process.env.NEXT_PUBLIC_PREP_ADMIN_PIN || '7739';
+    const targetPin = process.env.NEXT_PUBLIC_PREP_ADMIN_PIN || '773970';
     if (pin.trim() === targetPin) {
       setIsAdmin(true);
       try {
@@ -138,7 +138,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           state: stateToSave,
-          pin: process.env.NEXT_PUBLIC_PREP_ADMIN_PIN || '7739',
+          pin: process.env.NEXT_PUBLIC_PREP_ADMIN_PIN || '773970',
         }),
       });
       const data = await res.json();
