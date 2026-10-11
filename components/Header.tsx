@@ -153,6 +153,15 @@ export default function Header() {
                 </a>
               ))}
               <div className="pt-2 border-t dark:border-neutral-800/80 border-slate-200 mt-2 flex flex-col gap-2">
+                <Link
+                  href="/infosys-sp-preparation"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center px-4 py-2.5 text-sm font-mono font-semibold text-blue-400 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg flex items-center justify-center gap-2"
+                >
+                  <AcademicCapIcon className="w-4 h-4 text-blue-400" />
+                  <span>SP PREP DASHBOARD 🎯</span>
+                </Link>
+
                 <a
                   href="https://drive.google.com/file/d/1z94SpgAE9w-950xogS74NxzpgCRpod7N/view?usp=sharing"
                   target="_blank"

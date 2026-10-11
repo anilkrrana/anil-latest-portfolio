@@ -3,7 +3,7 @@ import { usePrep } from '../../context/PrepContext';
 import { AlertCircle, Clock, CheckCircle2, RotateCcw, Zap } from 'lucide-react';
 
 export const RevisionEngine: React.FC = () => {
-  const { state, updateProblem } = usePrep();
+  const { state, updateProblem, isAdmin } = usePrep();
   const todayStr = new Date().toISOString().split('T')[0];
 
   // Algorithmic Categorization
@@ -94,13 +94,17 @@ export const RevisionEngine: React.FC = () => {
 
                   <div className="flex items-center justify-between pt-2 border-t border-[#1e2029] text-xs font-mono">
                     <span className="text-zinc-500">Solved in {p.timeTakenMinutes}m ({p.hintsRequired} hints)</span>
-                    <button
-                      onClick={() => handleMarkRevised(p.id)}
-                      className="inline-flex items-center gap-1 rounded bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-500 transition-all"
-                    >
-                      <CheckCircle2 className="h-3.5 w-3.5" />
-                      <span>Mark Revised</span>
-                    </button>
+                    {isAdmin ? (
+                      <button
+                        onClick={() => handleMarkRevised(p.id)}
+                        className="inline-flex items-center gap-1 rounded bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-500 transition-all"
+                      >
+                        <CheckCircle2 className="h-3.5 w-3.5" />
+                        <span>Mark Revised</span>
+                      </button>
+                    ) : (
+                      <span className="text-[11px] font-mono text-zinc-500">Scheduled Queue</span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -148,13 +152,17 @@ export const RevisionEngine: React.FC = () => {
 
                   <div className="flex items-center justify-between pt-2 border-t border-[#1e2029] text-xs font-mono">
                     <span className="text-zinc-500">Logged {p.date}</span>
-                    <button
-                      onClick={() => updateProblem(p.id, { revisionRequired: true, nextRevisionDate: todayStr })}
-                      className="inline-flex items-center gap-1 rounded bg-amber-600/30 text-amber-300 border border-amber-500/40 px-3 py-1 text-xs font-semibold hover:bg-amber-600/50 transition-all"
-                    >
-                      <RotateCcw className="h-3.5 w-3.5" />
-                      <span>Queue Revision</span>
-                    </button>
+                    {isAdmin ? (
+                      <button
+                        onClick={() => updateProblem(p.id, { revisionRequired: true, nextRevisionDate: todayStr })}
+                        className="inline-flex items-center gap-1 rounded bg-amber-600/30 text-amber-300 border border-amber-500/40 px-3 py-1 text-xs font-semibold hover:bg-amber-600/50 transition-all"
+                      >
+                        <RotateCcw className="h-3.5 w-3.5" />
+                        <span>Queue Revision</span>
+                      </button>
+                    ) : (
+                      <span className="text-[11px] font-mono text-zinc-500">Benchmark Log</span>
+                    )}
                   </div>
                 </div>
               ))}

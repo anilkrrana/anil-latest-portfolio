@@ -3,7 +3,7 @@ import { usePrep } from '../../context/PrepContext';
 import { FolderGit2, Plus, Code, HelpCircle, Layers, Cpu } from 'lucide-react';
 
 export const ProjectPrep: React.FC = () => {
-  const { state, updateProjectPrep } = usePrep();
+  const { state, updateProjectPrep, isAdmin } = usePrep();
   const [activeProjectIdx, setActiveProjectIdx] = useState(0);
 
   const [newQuestion, setNewQuestion] = useState('');
@@ -35,6 +35,11 @@ export const ProjectPrep: React.FC = () => {
             <span className="rounded bg-blue-500/10 px-2.5 py-0.5 text-xs font-mono text-blue-400 border border-blue-500/20">
               STAR Method Breakdown
             </span>
+            {!isAdmin && (
+              <span className="rounded bg-zinc-800/80 px-2 py-0.5 text-[10px] font-mono text-zinc-400 border border-zinc-700/50">
+                Showcase Mode
+              </span>
+            )}
           </h2>
           <p className="mt-1 text-xs text-zinc-400 font-inter">
             Prepare architecture explanations, challenges, performance optimization, and cross-questioning answers.
@@ -123,26 +128,32 @@ export const ProjectPrep: React.FC = () => {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleAddQuestion} className="pt-2 border-t border-[#1e2029] space-y-2">
-              <input
-                type="text"
-                required
-                placeholder="Add potential interview question..."
-                value={newQuestion}
-                onChange={e => setNewQuestion(e.target.value)}
-                className="w-full rounded bg-[#09090b] border border-[#1e2029] p-2 text-xs text-white"
-              />
-              <textarea
-                rows={2}
-                placeholder="Your prepared answer..."
-                value={newAnswer}
-                onChange={e => setNewAnswer(e.target.value)}
-                className="w-full rounded bg-[#09090b] border border-[#1e2029] p-2 text-xs text-white"
-              ></textarea>
-              <button type="submit" className="w-full bg-blue-600 text-white font-bold text-xs py-2 rounded hover:bg-blue-500">
-                Save Cross-Question
-              </button>
-            </form>
+            {isAdmin ? (
+              <form onSubmit={handleAddQuestion} className="pt-2 border-t border-[#1e2029] space-y-2">
+                <input
+                  type="text"
+                  required
+                  placeholder="Add potential interview question..."
+                  value={newQuestion}
+                  onChange={e => setNewQuestion(e.target.value)}
+                  className="w-full rounded bg-[#09090b] border border-[#1e2029] p-2 text-xs text-white"
+                />
+                <textarea
+                  rows={2}
+                  placeholder="Your prepared answer..."
+                  value={newAnswer}
+                  onChange={e => setNewAnswer(e.target.value)}
+                  className="w-full rounded bg-[#09090b] border border-[#1e2029] p-2 text-xs text-white"
+                ></textarea>
+                <button type="submit" className="w-full bg-blue-600 text-white font-bold text-xs py-2 rounded hover:bg-blue-500">
+                  Save Cross-Question
+                </button>
+              </form>
+            ) : (
+              <div className="pt-2 border-t border-[#1e2029] text-center text-xs font-mono text-zinc-500">
+                Cross-Question Archive
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -4,7 +4,7 @@ import { CheckSquare, Square, Plus, Trash2, Code, Coffee, Clock, MessageSquare }
 import { DailyTask } from '../../types/prep';
 
 export const TodayPlan: React.FC = () => {
-  const { state, toggleDailyTask, addDailyTask, deleteDailyTask } = usePrep();
+  const { state, toggleDailyTask, addDailyTask, deleteDailyTask, isAdmin } = usePrep();
   const [showAddForm, setShowAddForm] = useState(false);
   const [newCategory, setNewCategory] = useState<DailyTask['category']>('DSA');
   const [newText, setNewText] = useState('');
@@ -38,19 +38,28 @@ export const TodayPlan: React.FC = () => {
             <span className="rounded bg-blue-500/10 px-2 py-0.5 text-xs font-mono text-blue-400 border border-blue-500/20">
               {state.dailyTasks.filter(t => t.completed).length}/{state.dailyTasks.length} Done
             </span>
+            {!isAdmin && (
+              <span className="rounded bg-zinc-800/80 px-2 py-0.5 text-[10px] font-mono text-zinc-400 border border-zinc-700/50">
+                Showcase Mode
+              </span>
+            )}
           </h3>
           <p className="mt-0.5 text-xs text-zinc-400 font-inter">
             Check off items as you complete them throughout the day.
           </p>
         </div>
 
-        <button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className="flex items-center gap-1.5 rounded-lg border border-[#1e2029] bg-[#1a1c24] px-3 py-1.5 text-xs font-medium text-white hover:bg-zinc-800 transition-all"
-        >
-          <Plus className="h-3.5 w-3.5 text-blue-400" />
-          <span>Add Task</span>
-        </button>
+        {isAdmin ? (
+          <button
+            onClick={() => setShowAddForm(!showAddForm)}
+            className="flex items-center gap-1.5 rounded-lg border border-[#1e2029] bg-[#1a1c24] px-3 py-1.5 text-xs font-medium text-white hover:bg-zinc-800 transition-all"
+          >
+            <Plus className="h-3.5 w-3.5 text-blue-400" />
+            <span>Add Task</span>
+          </button>
+        ) : (
+          <span className="text-xs font-mono text-zinc-500">Read-Only</span>
+        )}
       </div>
 
       {/* Add Task Form */}
@@ -107,27 +116,42 @@ export const TodayPlan: React.FC = () => {
                       task.completed ? 'bg-emerald-950/20 text-zinc-400 line-through' : 'bg-[#121318] text-white hover:border-zinc-700'
                     } border border-transparent`}
                   >
-                    <button
-                      onClick={() => toggleDailyTask(task.id)}
-                      className="flex items-center gap-2.5 text-left flex-1"
-                    >
-                      {task.completed ? (
-                        <CheckCircle2Icon className="h-4 w-4 text-emerald-400 shrink-0" />
-                      ) : (
-                        <Square className="h-4 w-4 text-zinc-500 shrink-0 group-hover:text-blue-400" />
-                      )}
-                      <span className={task.completed ? 'text-zinc-500 line-through font-inter' : 'text-zinc-200 font-inter font-medium'}>
-                        {task.text}
-                      </span>
-                    </button>
+                    {isAdmin ? (
+                      <>
+                        <button
+                          onClick={() => toggleDailyTask(task.id)}
+                          className="flex items-center gap-2.5 text-left flex-1"
+                        >
+                          {task.completed ? (
+                            <CheckCircle2Icon className="h-4 w-4 text-emerald-400 shrink-0" />
+                          ) : (
+                            <Square className="h-4 w-4 text-zinc-500 shrink-0 group-hover:text-blue-400" />
+                          )}
+                          <span className={task.completed ? 'text-zinc-500 line-through font-inter' : 'text-zinc-200 font-inter font-medium'}>
+                            {task.text}
+                          </span>
+                        </button>
 
-                    <button
-                      onClick={() => deleteDailyTask(task.id)}
-                      className="opacity-0 group-hover:opacity-100 text-zinc-500 hover:text-rose-400 p-1 transition-all"
-                      title="Delete task"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
+                        <button
+                          onClick={() => deleteDailyTask(task.id)}
+                          className="opacity-0 group-hover:opacity-100 text-zinc-500 hover:text-rose-400 p-1 transition-all"
+                          title="Delete task"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </>
+                    ) : (
+                      <div className="flex items-center gap-2.5 text-left flex-1 cursor-default">
+                        {task.completed ? (
+                          <CheckCircle2Icon className="h-4 w-4 text-emerald-400 shrink-0" />
+                        ) : (
+                          <Square className="h-4 w-4 text-zinc-600 shrink-0" />
+                        )}
+                        <span className={task.completed ? 'text-zinc-500 line-through font-inter' : 'text-zinc-300 font-inter font-medium'}>
+                          {task.text}
+                        </span>
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>

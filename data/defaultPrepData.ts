@@ -237,16 +237,202 @@ export const INITIAL_PROJECTS: ProjectPrep[] = [
 export const INITIAL_PREP_STATE: PrepState = {
   targetDate: '2026-11-01',
   mode: 'assessment',
-  dailyTasks: INITIAL_DAILY_TASKS,
-  dsaTopics: INITIAL_DSA_TOPICS,
-  javaTopics: INITIAL_JAVA_TOPICS,
-  csTopics: INITIAL_CS_TOPICS,
-  problems: [],
-  timedSessions: [],
-  mockTests: [],
-  interviewQuestions: INITIAL_INTERVIEW_QUESTIONS,
+  dailyTasks: [
+    { id: 't1', category: 'DSA', text: 'HashMap & Frequency Counting pattern practice', completed: true },
+    { id: 't2', category: 'DSA', text: 'Two Pointers & Sliding Window optimization', completed: true },
+    { id: 't3', category: 'Java', text: 'Core Collections framework & internal HashMap structure', completed: true },
+    { id: 't4', category: 'DSA', text: 'Solve Subarray Sum Equals K & 3Sum', completed: false },
+    { id: 't5', category: 'Timed Practice', text: '45-minute timed set (2 Medium problems)', completed: false },
+    { id: 't6', category: 'Interview', text: 'Revise 10 Core Java interview questions & STAR story', completed: false },
+  ],
+  dsaTopics: INITIAL_DSA_TOPICS.map(t => {
+    if (t.name === 'Arrays') return { ...t, status: 'Interview Ready' as const, problemsCount: 14, independentCount: 13, hintsCount: 1, confidence: 90 };
+    if (t.name === 'HashMap') return { ...t, status: 'Interview Ready' as const, problemsCount: 12, independentCount: 11, hintsCount: 1, confidence: 92 };
+    if (t.name === 'Strings') return { ...t, status: 'Comfortable' as const, problemsCount: 9, independentCount: 8, hintsCount: 2, confidence: 85 };
+    if (t.name === 'Two Pointers') return { ...t, status: 'Comfortable' as const, problemsCount: 8, independentCount: 7, hintsCount: 1, confidence: 85 };
+    if (t.name === 'Sliding Window') return { ...t, status: 'Practicing' as const, problemsCount: 6, independentCount: 5, hintsCount: 2, confidence: 75 };
+    if (t.name === 'Prefix Sum') return { ...t, status: 'Comfortable' as const, problemsCount: 5, independentCount: 5, hintsCount: 0, confidence: 88 };
+    if (t.name === 'Binary Search') return { ...t, status: 'Practicing' as const, problemsCount: 6, independentCount: 5, hintsCount: 1, confidence: 78 };
+    if (t.name === 'Sorting') return { ...t, status: 'Comfortable' as const, problemsCount: 4, independentCount: 4, hintsCount: 0, confidence: 85 };
+    if (t.name === 'Linked List') return { ...t, status: 'Practicing' as const, problemsCount: 5, independentCount: 4, hintsCount: 1, confidence: 72 };
+    if (t.name === 'Stack') return { ...t, status: 'Practicing' as const, problemsCount: 4, independentCount: 3, hintsCount: 1, confidence: 70 };
+    if (t.name === 'Trees') return { ...t, status: 'Learning' as const, problemsCount: 3, independentCount: 2, hintsCount: 2, confidence: 55 };
+    return t;
+  }),
+  javaTopics: INITIAL_JAVA_TOPICS.map(j => {
+    if (j.name === 'OOP') return { ...j, progress: 95, confidence: 95, lastRevised: '2026-10-10' };
+    if (j.name === 'Collections') return { ...j, progress: 90, confidence: 92, lastRevised: '2026-10-09' };
+    if (j.name === 'Streams') return { ...j, progress: 85, confidence: 85, lastRevised: '2026-10-08' };
+    if (j.name === 'Multithreading') return { ...j, progress: 75, confidence: 75, lastRevised: '2026-10-07' };
+    if (j.name === 'Spring Boot') return { ...j, progress: 88, confidence: 88, lastRevised: '2026-10-09' };
+    if (j.name === 'Microservices') return { ...j, progress: 80, confidence: 82, lastRevised: '2026-10-08' };
+    if (j.name === 'REST') return { ...j, progress: 90, confidence: 90, lastRevised: '2026-10-06' };
+    if (j.name === 'JPA' || j.name === 'Hibernate') return { ...j, progress: 82, confidence: 80, lastRevised: '2026-10-05' };
+    return j;
+  }),
+  csTopics: INITIAL_CS_TOPICS.map(c => {
+    if (c.name === 'SQL') return { ...c, progress: 88, confidence: 85 };
+    if (c.name === 'DBMS') return { ...c, progress: 82, confidence: 80 };
+    if (c.name === 'Operating Systems') return { ...c, progress: 78, confidence: 75 };
+    if (c.name === 'Computer Networks') return { ...c, progress: 75, confidence: 72 };
+    return c;
+  }),
+  problems: [
+    {
+      id: 'p1',
+      name: 'Subarray Sum Equals K',
+      date: '2026-10-11',
+      topic: 'HashMap',
+      pattern: 'HashMap / Frequency Counting',
+      difficulty: 'Medium',
+      timeTakenMinutes: 22,
+      solvedIndependently: true,
+      hintsRequired: 0,
+      mistakeNotes: 'Key insight: prefix sum frequency mapping with pre-seeding prefixSumMap.put(0, 1).',
+      revisionRequired: false
+    },
+    {
+      id: 'p2',
+      name: 'Group Anagrams',
+      date: '2026-10-10',
+      topic: 'Strings',
+      pattern: 'HashMap / Frequency Counting',
+      difficulty: 'Medium',
+      timeTakenMinutes: 19,
+      solvedIndependently: true,
+      hintsRequired: 0,
+      mistakeNotes: 'Character frequency array as String key outperforms Arrays.sort() for large inputs.',
+      revisionRequired: false
+    },
+    {
+      id: 'p3',
+      name: 'Longest Substring Without Repeating Characters',
+      date: '2026-10-09',
+      topic: 'Sliding Window',
+      pattern: 'Sliding Window',
+      difficulty: 'Medium',
+      timeTakenMinutes: 28,
+      solvedIndependently: false,
+      hintsRequired: 1,
+      mistakeNotes: 'Remember to update left pointer to max(left, lastSeenIndex + 1) to avoid backward regression.',
+      revisionRequired: true,
+      nextRevisionDate: '2026-10-12'
+    },
+    {
+      id: 'p4',
+      name: '3Sum',
+      date: '2026-10-08',
+      topic: 'Two Pointers',
+      pattern: 'Two Pointers',
+      difficulty: 'Medium',
+      timeTakenMinutes: 26,
+      solvedIndependently: true,
+      hintsRequired: 0,
+      mistakeNotes: 'Skip duplicates on both outer loop and inner two-pointer increments.',
+      revisionRequired: false
+    },
+    {
+      id: 'p5',
+      name: 'Search in Rotated Sorted Array',
+      date: '2026-10-07',
+      topic: 'Binary Search',
+      pattern: 'Binary Search',
+      difficulty: 'Medium',
+      timeTakenMinutes: 31,
+      solvedIndependently: true,
+      hintsRequired: 1,
+      mistakeNotes: 'Identify which half is strictly sorted before testing target containment bounds.',
+      revisionRequired: true,
+      nextRevisionDate: '2026-10-13'
+    },
+    {
+      id: 'p6',
+      name: 'Two Sum',
+      date: '2026-10-06',
+      topic: 'HashMap',
+      pattern: 'HashMap / Frequency Counting',
+      difficulty: 'Easy',
+      timeTakenMinutes: 11,
+      solvedIndependently: true,
+      hintsRequired: 0,
+      mistakeNotes: 'One-pass hash table with target - nums[i] lookup.',
+      revisionRequired: false
+    }
+  ],
+  timedSessions: [
+    {
+      id: 'ts1',
+      date: '2026-10-10',
+      type: '45 MIN',
+      durationMinutes: 45,
+      timeUsedMinutes: 39,
+      score: 100,
+      maxScore: 100,
+      problemsSolved: 2,
+      totalProblems: 2,
+      accuracy: 95,
+      hintsUsed: 0,
+      failedTestCases: 0,
+      weakPatterns: []
+    },
+    {
+      id: 'ts2',
+      date: '2026-10-08',
+      type: '30 MIN',
+      durationMinutes: 30,
+      timeUsedMinutes: 24,
+      score: 100,
+      maxScore: 100,
+      problemsSolved: 1,
+      totalProblems: 1,
+      accuracy: 100,
+      hintsUsed: 0,
+      failedTestCases: 0,
+      weakPatterns: []
+    }
+  ],
+  mockTests: [
+    {
+      id: 'm1',
+      title: 'INFOSYS SP MOCK #1',
+      date: '2026-10-09',
+      score: 250,
+      maxScore: 300,
+      q1Status: 'Solved',
+      q2Status: 'Solved',
+      q3Status: 'Partial',
+      timeTakenMinutes: 78,
+      totalTimeMinutes: 90,
+      notes: 'Q1 (HashMap) solved in 18m. Q2 (Sliding Window) solved in 25m. Q3 (Graph BFS) passed 7/10 test cases before timeout.'
+    }
+  ],
+  interviewQuestions: INITIAL_INTERVIEW_QUESTIONS.map(q => {
+    if (q.id === 'q1' || q.id === 'q2') return { ...q, status: 'Confident' as const };
+    if (q.id === 'q3' || q.id === 'q5') return { ...q, status: 'Practiced' as const };
+    if (q.id === 'q8') return { ...q, status: 'Needs Revision' as const };
+    return q;
+  }),
   projects: INITIAL_PROJECTS,
-  journalEntries: [],
-  studyDays: [],
-  totalStudyHours: 0
+  journalEntries: [
+    {
+      id: 'j1',
+      date: '2026-10-11',
+      whatILearned: 'Mastered Prefix Sum + HashMap technique for Subarray Sum Equals K. Understood how cumulative frequencies translate O(N^2) subarray iteration into an O(N) single-pass lookup.',
+      problemsSolved: 'Subarray Sum Equals K, Two Sum, Group Anagrams',
+      struggledWith: 'Handling edge case when cumulative sum directly equals K without subtraction (resolved by map.put(0, 1)).',
+      mistakes: 'Initially forgot to handle duplicate elements in 3Sum.',
+      tomorrowPriority: 'Binary Search variations + custom Comparator sorting in Java 17.'
+    },
+    {
+      id: 'j2',
+      date: '2026-10-10',
+      whatILearned: 'Re-examined HashMap internal rehashing in Java 8. When bucket count exceeds 8 and table capacity >= 64, buckets convert from LinkedList to Red-Black Tree (O(log N)).',
+      problemsSolved: 'Group Anagrams, Two Sum II',
+      struggledWith: 'Sliding window pointer regression on repeat characters.',
+      mistakes: 'Did not use Math.max for left pointer advancement.',
+      tomorrowPriority: 'Mock Assessment Simulation #2 under timed conditions.'
+    }
+  ],
+  studyDays: ['2026-10-07', '2026-10-08', '2026-10-09', '2026-10-10', '2026-10-11'],
+  totalStudyHours: 18.5
 };

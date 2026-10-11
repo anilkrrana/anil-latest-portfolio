@@ -5,7 +5,7 @@ import { Plus, Search, Filter, Trash2, CheckCircle2, AlertCircle, Clock, Externa
 import { PATTERN_LIBRARY } from '../../data/defaultPrepData';
 
 export const ProblemLog: React.FC = () => {
-  const { state, addProblem, deleteProblem, updateProblem } = usePrep();
+  const { state, addProblem, deleteProblem, updateProblem, isAdmin } = usePrep();
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -83,19 +83,30 @@ export const ProblemLog: React.FC = () => {
             <span className="rounded bg-blue-500/10 px-2.5 py-0.5 text-xs font-mono text-blue-400 border border-blue-500/20">
               {state.problems.length} Logged
             </span>
+            {!isAdmin && (
+              <span className="rounded bg-zinc-800/80 px-2 py-0.5 text-[10px] font-mono text-zinc-400 border border-zinc-700/50">
+                Showcase Mode
+              </span>
+            )}
           </h2>
           <p className="mt-1 text-xs text-zinc-400 font-inter">
             Record time taken, hint usage, patterns, mistakes, and revision schedule.
           </p>
         </div>
 
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20"
-        >
-          <Plus className="h-4 w-4" />
-          <span>LOG NEW PROBLEM</span>
-        </button>
+        {isAdmin ? (
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20"
+          >
+            <Plus className="h-4 w-4" />
+            <span>LOG NEW PROBLEM</span>
+          </button>
+        ) : (
+          <div className="rounded-lg bg-[#09090b] px-3 py-1.5 border border-[#1e2029] text-xs font-mono text-zinc-400">
+            Read-Only Log
+          </div>
+        )}
       </div>
 
       {/* Filter Bar */}
@@ -235,27 +246,37 @@ export const ProblemLog: React.FC = () => {
                   </td>
 
                   <td className="px-4 py-3 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      <button
-                        onClick={() => updateProblem(p.id, { revisionRequired: !p.revisionRequired, nextRevisionDate: !p.revisionRequired ? todayStr : undefined })}
-                        className={`rounded px-2 py-1 text-[10px] font-mono font-semibold transition-all ${
-                          p.revisionRequired
-                            ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
-                            : 'bg-zinc-800 text-zinc-400 hover:text-white'
-                        }`}
-                        title="Toggle revision status"
-                      >
-                        {p.revisionRequired ? 'Needs Rev' : 'Clean'}
-                      </button>
+                    {isAdmin ? (
+                      <div className="flex items-center justify-center gap-2">
+                        <button
+                          onClick={() => updateProblem(p.id, { revisionRequired: !p.revisionRequired, nextRevisionDate: !p.revisionRequired ? todayStr : undefined })}
+                          className={`rounded px-2 py-1 text-[10px] font-mono font-semibold transition-all ${
+                            p.revisionRequired
+                              ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
+                              : 'bg-zinc-800 text-zinc-400 hover:text-white'
+                          }`}
+                          title="Toggle revision status"
+                        >
+                          {p.revisionRequired ? 'Needs Rev' : 'Clean'}
+                        </button>
 
-                      <button
-                        onClick={() => deleteProblem(p.id)}
-                        className="text-zinc-500 hover:text-rose-400 p-1"
-                        title="Delete entry"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
+                        <button
+                          onClick={() => deleteProblem(p.id)}
+                          className="text-zinc-500 hover:text-rose-400 p-1"
+                          title="Delete entry"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    ) : (
+                      <span className={`inline-flex items-center rounded px-2 py-0.5 text-[10px] font-mono font-medium ${
+                        p.revisionRequired
+                          ? 'bg-rose-500/10 text-rose-300 border border-rose-500/30'
+                          : 'bg-zinc-800 text-zinc-400'
+                      }`}>
+                        {p.revisionRequired ? 'Needs Rev' : 'Clean'}
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
