@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import { usePrep } from '../../context/PrepContext';
-import { Settings as SettingsIcon, Download, Upload, RefreshCw, Sparkles, Database, ShieldAlert } from 'lucide-react';
+import { Settings as SettingsIcon, Download, Upload, RefreshCw, Sparkles, Database, ShieldAlert, Save, GitCommit, CheckCircle2 } from 'lucide-react';
 
 export const Settings: React.FC = () => {
-  const { state, exportData, importData, resetData, seedDemoData, isAdmin } = usePrep();
+  const { state, exportData, importData, resetData, seedDemoData, isAdmin, syncStatus, syncToCodebase, lastSavedAt } = usePrep();
   const [importJson, setImportJson] = useState('');
   const [importStatus, setImportStatus] = useState<string | null>(null);
   const [copiedSnapshot, setCopiedSnapshot] = useState(false);
+  const [codebaseSyncMsg, setCodebaseSyncMsg] = useState<string | null>(null);
 
   const handleCopySnapshot = () => {
     navigator.clipboard.writeText(JSON.stringify(state, null, 2));
     setCopiedSnapshot(true);
     setTimeout(() => setCopiedSnapshot(false), 3000);
+  };
+
+  const handleSyncToCodebase = async () => {
+    const res = await syncToCodebase();
+    setCodebaseSyncMsg(res.message);
+    setTimeout(() => setCodebaseSyncMsg(null), 5000);
   };
 
   const handleImportSubmit = (e: React.FormEvent) => {
@@ -62,6 +69,67 @@ export const Settings: React.FC = () => {
           <p className="mt-1 text-xs text-zinc-400 font-inter">
             Export JSON backups, restore data, migrate to Supabase/PostgreSQL, or seed demo data.
           </p>
+        </div>
+      </div>
+
+      {/* Codebase & Git Sync Card */}
+      <div className="rounded-xl border border-blue-500/30 bg-[#121318] p-5 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-[#1e2029] pb-3">
+          <h3 className="text-base font-bold text-white font-outfit flex items-center gap-2">
+            <GitCommit className="h-4 w-4 text-blue-400" />
+            <span>Git & Codebase Persistence</span>
+            <span className="text-xs font-mono text-zinc-400 font-normal">(`data/userPrepState.json`)</span>
+          </h3>
+
+          <div className="flex items-center gap-2">
+            <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-mono border ${
+              syncStatus === 'saving'
+                ? 'border-amber-500/30 bg-amber-500/10 text-amber-300'
+                : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+            }`}>
+              <span className={`h-1.5 w-1.5 rounded-full ${syncStatus === 'saving' ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400'}`}></span>
+              <span>{syncStatus === 'saving' ? 'Syncing...' : 'Synced to Project'}</span>
+            </span>
+            {lastSavedAt && (
+              <span className="text-[11px] font-mono text-zinc-500 hidden sm:inline">
+                Last saved {lastSavedAt}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <p className="text-xs text-zinc-300 font-inter leading-relaxed">
+          Your preparation data is saved to browser storage and auto-synced to <code className="text-blue-300 bg-blue-950/40 px-1 py-0.5 rounded font-mono text-[11px]">data/userPrepState.json</code> on your machine.
+          Whenever you commit and push to GitHub, your actual progress travels with your code and is visible to everyone on your live site!
+        </p>
+
+        {codebaseSyncMsg && (
+          <div className="flex items-center gap-2 rounded-lg border border-blue-500/40 bg-blue-950/40 px-3 py-2 text-xs font-mono text-blue-200">
+            <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+            <span>{codebaseSyncMsg}</span>
+          </div>
+        )}
+
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-1">
+          {isAdmin ? (
+            <button
+              onClick={handleSyncToCodebase}
+              disabled={syncStatus === 'saving'}
+              className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20 font-mono"
+            >
+              <Save className="h-4 w-4" />
+              <span>{syncStatus === 'saving' ? 'WRITING TO DISK...' : 'SAVE SNAPSHOT TO CODEBASE'}</span>
+            </button>
+          ) : (
+            <div className="text-xs font-mono text-amber-400/80 bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2">
+              🔒 Unlock Owner Mode (PIN: 7739) in top header to sync changes to codebase.
+            </div>
+          )}
+
+          <div className="rounded-lg bg-[#09090b] border border-[#1e2029] px-3 py-2 text-[11px] font-mono text-zinc-400 flex items-center gap-2">
+            <span className="text-blue-400 font-bold">$</span>
+            <span>git add data/userPrepState.json && git commit -m &quot;update prep progress&quot; && git push</span>
+          </div>
         </div>
       </div>
 

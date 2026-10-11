@@ -20,6 +20,11 @@ import {
   INITIAL_CS_TOPICS,
   PATTERN_LIBRARY
 } from '../data/defaultPrepData';
+import userSavedState from '../data/userPrepState.json';
+
+const DEFAULT_BASE_STATE: PrepState = (userSavedState && (userSavedState as any).targetDate)
+  ? (userSavedState as unknown as PrepState)
+  : INITIAL_PREP_STATE;
 
 interface ReadinessBreakdown {
   overall: number;
@@ -40,6 +45,9 @@ interface PrepContextType {
   isAdmin: boolean;
   loginAdmin: (pin: string) => boolean;
   logoutAdmin: () => void;
+  syncStatus: 'synced' | 'saving' | 'offline';
+  lastSavedAt: string | null;
+  syncToCodebase: (overrideState?: PrepState) => Promise<{ success: boolean; message: string }>;
   
   // Actions
   toggleMode: (mode?: PrepMode) => void;
@@ -69,18 +77,26 @@ interface PrepContextType {
 const PrepContext = createContext<PrepContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'infosys_sp_crack_system_v1';
+const ADMIN_STORAGE_KEY = 'prep_admin_persistent_v1';
 
 export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [state, setState] = useState<PrepState>(INITIAL_PREP_STATE);
+  const [state, setState] = useState<PrepState>(DEFAULT_BASE_STATE);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<'synced' | 'saving' | 'offline'>('synced');
+  const [lastSavedAt, setLastSavedAt] = useState<string | null>(null);
 
-  // Check admin session from sessionStorage
+  const hasHydratedRef = React.useRef(false);
+  const autoSaveTimerRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  // Check admin session from persistent localStorage, fallback to legacy sessionStorage
   useEffect(() => {
     try {
-      const adminSession = sessionStorage.getItem('prep_admin_session');
-      if (adminSession === 'true') {
+      const persistentAdmin = localStorage.getItem(ADMIN_STORAGE_KEY);
+      const sessionAdmin = sessionStorage.getItem('prep_admin_session');
+      if (persistentAdmin === 'true' || sessionAdmin === 'true') {
         setIsAdmin(true);
+        localStorage.setItem(ADMIN_STORAGE_KEY, 'true');
       }
     } catch (e) {
       console.error('Session storage read error:', e);
@@ -92,6 +108,7 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (pin.trim() === targetPin) {
       setIsAdmin(true);
       try {
+        localStorage.setItem(ADMIN_STORAGE_KEY, 'true');
         sessionStorage.setItem('prep_admin_session', 'true');
       } catch (e) {
         console.error(e);
@@ -104,37 +121,115 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logoutAdmin = () => {
     setIsAdmin(false);
     try {
+      localStorage.removeItem(ADMIN_STORAGE_KEY);
       sessionStorage.removeItem('prep_admin_session');
     } catch (e) {
       console.error(e);
     }
   };
 
-  // Load from LocalStorage
+  // Sync to codebase disk via Next.js API
+  const syncToCodebase = async (overrideState?: PrepState): Promise<{ success: boolean; message: string }> => {
+    try {
+      setSyncStatus('saving');
+      const stateToSave = overrideState || state;
+      const res = await fetch('/api/prep-state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          state: stateToSave,
+          pin: process.env.NEXT_PUBLIC_PREP_ADMIN_PIN || '7739',
+        }),
+      });
+      const data = await res.json();
+      const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      setLastSavedAt(nowStr);
+      setSyncStatus('synced');
+      return { 
+        success: data.success ?? true, 
+        message: data.message || 'Saved to codebase data/userPrepState.json!' 
+      };
+    } catch (err: any) {
+      console.warn('API sync failed, preserved in localStorage:', err);
+      setSyncStatus('offline');
+      return {
+        success: true,
+        message: 'Saved in local browser storage (API offline).',
+      };
+    }
+  };
+
+  // Load from LocalStorage first, then verify with server
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        setState(parsed);
+        if (parsed && parsed.targetDate && parsed.dsaTopics) {
+          setState(parsed);
+        }
+      } else {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_BASE_STATE));
       }
     } catch (e) {
       console.error('Failed to load prep data from localStorage:', e);
+      try {
+        const backup = localStorage.getItem(STORAGE_KEY + '_backup');
+        if (backup) {
+          const parsedBackup = JSON.parse(backup);
+          if (parsedBackup && parsedBackup.targetDate) {
+            setState(parsedBackup);
+          }
+        }
+      } catch (err) {}
     } finally {
+      hasHydratedRef.current = true;
       setIsLoaded(true);
     }
+
+    // Background verify: check if server has persisted state
+    fetch('/api/prep-state')
+      .then(res => res.json())
+      .then(serverData => {
+        if (serverData && serverData.targetDate && serverData.dsaTopics) {
+          const currentLocal = localStorage.getItem(STORAGE_KEY);
+          if (!currentLocal) {
+            setState(serverData);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(serverData));
+          }
+        }
+      })
+      .catch(() => {});
   }, []);
 
-  // Save to LocalStorage
+  // Save to LocalStorage & Debounce Sync to Disk in Owner Mode
   useEffect(() => {
-    if (isLoaded) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch (e) {
-        console.error('Failed to save prep data:', e);
+    if (!hasHydratedRef.current || !isLoaded) return;
+
+    try {
+      const serialized = JSON.stringify(state);
+      const prev = localStorage.getItem(STORAGE_KEY);
+      if (prev && prev !== serialized) {
+        localStorage.setItem(STORAGE_KEY + '_backup', prev);
       }
+      localStorage.setItem(STORAGE_KEY, serialized);
+      const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      setLastSavedAt(nowStr);
+    } catch (e) {
+      console.error('Failed to save prep data:', e);
     }
-  }, [state, isLoaded]);
+
+    if (isAdmin) {
+      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+      autoSaveTimerRef.current = setTimeout(() => {
+        syncToCodebase(state);
+      }, 1500);
+    }
+
+    return () => {
+      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    };
+  }, [state, isLoaded, isAdmin]);
 
   // Record today's study activity
   const recordTodayActivity = (hours: number = 0.5) => {
@@ -564,6 +659,9 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isAdmin,
         loginAdmin,
         logoutAdmin,
+        syncStatus,
+        lastSavedAt,
+        syncToCodebase,
         toggleMode,
         addProblem,
         updateProblem,

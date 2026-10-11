@@ -40,13 +40,13 @@ export default function Hero() {
         >
           <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-blue-500/40 p-0.5 dark:bg-neutral-900 bg-white shadow-xl shadow-blue-500/10">
             <Image
-              src="/profile-pic-portfolio.jpg"
+              src="/anil-latest-profile.jpg"
               alt="Anil Kumar Rana"
               fill
               quality={100}
               sizes="200px"
               priority
-              className="object-cover rounded-full"
+              className="object-cover object-top rounded-full"
             />
           </div>
           <div className="text-center sm:text-left">

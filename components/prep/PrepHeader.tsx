@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { usePrep } from '../../context/PrepContext';
-import { Calendar, Flame, Shield, Target, Code, MessageSquare, Lock, Unlock, Eye } from 'lucide-react';
+import { Calendar, Flame, Shield, Target, Code, MessageSquare, Lock, Unlock, Eye, Save, CheckCircle2 } from 'lucide-react';
 import { AdminLockModal } from './AdminLockModal';
 
 export const PrepHeader: React.FC = () => {
-  const { state, daysRemaining, toggleMode, isAdmin, logoutAdmin } = usePrep();
+  const { state, daysRemaining, toggleMode, isAdmin, logoutAdmin, syncStatus, syncToCodebase, lastSavedAt } = usePrep();
   const [isLockModalOpen, setIsLockModalOpen] = useState(false);
+  const [syncFeedback, setSyncFeedback] = useState<string | null>(null);
+  
+  const handleManualSave = async () => {
+    const res = await syncToCodebase();
+    setSyncFeedback(res.message);
+    setTimeout(() => setSyncFeedback(null), 4000);
+  };
   
   // Calculate current streak
   const streak = state.studyDays.length;
@@ -69,6 +76,18 @@ export const PrepHeader: React.FC = () => {
                   <span className="text-emerald-300 font-semibold">OWNER MODE</span>
                   <span className="hidden sm:inline text-[10px] text-emerald-400/80">(Editing Active)</span>
                 </div>
+
+                {/* Save Snapshot to Repo Button */}
+                <button
+                  onClick={handleManualSave}
+                  disabled={syncStatus === 'saving'}
+                  className="flex items-center gap-1.5 rounded-lg border border-blue-500/30 bg-blue-500/10 px-2.5 py-1.5 text-xs font-mono font-medium text-blue-300 hover:bg-blue-500/20 transition-all shadow-sm"
+                  title="Save current progress directly to data/userPrepState.json on disk"
+                >
+                  <Save className="h-3.5 w-3.5 text-blue-400" />
+                  <span>{syncStatus === 'saving' ? 'Syncing...' : 'Save to Repo'}</span>
+                </button>
+
                 <button
                   onClick={logoutAdmin}
                   className="flex items-center gap-1.5 rounded-lg border border-rose-500/30 bg-rose-500/10 px-2.5 py-1.5 text-xs font-mono font-medium text-rose-300 hover:bg-rose-500/20 transition-all shadow-sm"
@@ -117,6 +136,17 @@ export const PrepHeader: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* Sync Feedback Toast Banner */}
+        {syncFeedback && (
+          <div className="mx-auto mt-2 max-w-7xl">
+            <div className="flex items-center gap-2 rounded-lg border border-blue-500/40 bg-blue-950/60 px-3 py-1.5 text-xs font-mono text-blue-200">
+              <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+              <span>{syncFeedback}</span>
+              {lastSavedAt && <span className="text-zinc-400 ml-auto text-[10px]">Saved at {lastSavedAt}</span>}
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Admin PIN Unlock Modal */}
