@@ -7,6 +7,13 @@ export interface ProfileKnowledge {
     location: string;
     bio: string;
   };
+  certifications?: Array<{
+    title: string;
+    issuer: string;
+    status: string;
+    skillsVerified: string[];
+    description: string;
+  }>;
   contact: {
     email: string;
     github: string;
@@ -67,12 +74,27 @@ export interface ProfileKnowledge {
 export const profileKnowledge: ProfileKnowledge = {
   identity: {
     name: "Anil Kumar Rana",
-    role: "Senior Software Engineer",
+    role: "Senior Software Engineer & Salesforce Certified MuleSoft Developer",
     company: "Capgemini",
     experience: "2+ years of professional software engineering experience",
     location: "India",
-    bio: "Senior Software Engineer at Capgemini specializing in Java backend development, Spring Boot microservices, enterprise MuleSoft integrations, PostgreSQL, Redis caching, and robust API design."
+    bio: "Senior Software Engineer at Capgemini and Salesforce Certified MuleSoft Developer I specializing in Java backend development, Spring Boot microservices, enterprise MuleSoft integrations, DataWeave 2.0, PostgreSQL, Redis caching, and robust API design."
   },
+  certifications: [
+    {
+      title: "Salesforce Certified MuleSoft Developer I",
+      issuer: "Salesforce / MuleSoft",
+      status: "Active & Verified",
+      skillsVerified: [
+        "API-Led Connectivity & RAML 1.0",
+        "Mule 4 Event Model & Routing",
+        "DataWeave 2.0 Polymorphic Transformation",
+        "Enterprise Error Handling Strategies",
+        "Anypoint Platform & CloudHub 2.0 Deployment"
+      ],
+      description: "Official credential certifying mastery in designing, building, testing, debugging, and deploying enterprise-grade MuleSoft 4 APIs and integrations."
+    }
+  ],
   contact: {
     email: "er.anilkrana@gmail.com",
     github: "https://github.com/anilkrrana",
@@ -80,7 +102,7 @@ export const profileKnowledge: ProfileKnowledge = {
     youtube: "https://www.youtube.com/@webtechnil",
     resume: "https://drive.google.com/file/d/1z94SpgAE9w-950xogS74NxzpgCRpod7N/view?usp=sharing"
   },
-  professionalSummary: "Anil Kumar Rana is a Senior Software Engineer at Capgemini (promoted Mar 2025) with over 2 years of professional software engineering experience. His primary technical direction is Java backend engineering, Spring Boot microservices, REST APIs, enterprise MuleSoft API integrations, PostgreSQL database engineering, Redis caching, and production-oriented system design.",
+  professionalSummary: "Anil Kumar Rana is a Senior Software Engineer at Capgemini (promoted Mar 2025) and a Salesforce Certified MuleSoft Developer I with over 2 years of professional software engineering experience. His primary technical direction is enterprise integration, MuleSoft 4.9, DataWeave 2.0, Java backend engineering, Spring Boot microservices, REST APIs, PostgreSQL database engineering, Redis caching, and production-oriented system design.",
   experience: [
     {
       company: "Capgemini",
@@ -209,13 +231,24 @@ export const profileKnowledge: ProfileKnowledge = {
   },
   recruiterSummary: `📌 RECRUITER SUMMARY — ANIL KUMAR RANA
 
-👤 WHO I AM: Senior Software Engineer at Capgemini (promoted Mar 2025) with 2+ years of professional software engineering experience.
-⚡ CORE TECHNICAL FOCUS: Java 21, Spring Boot, REST APIs, PostgreSQL, Redis, Docker, MuleSoft 4.9 enterprise API integration.
-🏆 FLAGSHIP PROJECT: OrderFlow — high-concurrency Spring Boot backend engine with pessimistic locking, Redis cache-aside, and Razorpay HMAC security.
-💡 ENGINEERING STRENGTHS: Backend correctness, concurrency control, API security, automated testing, and performance optimization.
+👤 WHO I AM: Senior Software Engineer at Capgemini (promoted Mar 2025) & Salesforce Certified MuleSoft Developer I (2+ years exp).
+⚡ CORE TECHNICAL FOCUS: MuleSoft 4.9, DataWeave 2.0, Java 21, Spring Boot, REST APIs, PostgreSQL, Redis, Docker, Anypoint Platform.
+🏆 CREDENTIAL: Salesforce Certified MuleSoft Developer I (Active & Verified).
+🚀 FLAGSHIP PROJECT: OrderFlow — high-concurrency Spring Boot backend engine with pessimistic locking, Redis cache-aside, and Razorpay HMAC security.
+💡 ENGINEERING STRENGTHS: Enterprise API integrations, DataWeave data mapping, concurrency control, API security, and performance tuning.
 🎓 MENTORSHIP: Mentors 10+ online students in Java & Spring Boot fundamentals (YouTube: @webtechnil).
 📬 CONTACT: er.anilkrana@gmail.com | GitHub: github.com/anilkrrana`,
   faqs: [
+    {
+      keywords: ["feedback", "recommendation", "reviews", "colleagues", "teammates", "performance", "praise", "raja", "bujjikonda", "advancement"],
+      question: "What feedback and recommendations has Anil received from colleagues at Capgemini?",
+      answer: "Anil has received outstanding verified performance feedback from senior leads and colleagues at Capgemini:\n\n1. Raja Sekhar Gowravarapu (Technical Delivery Lead): Praised Anil's execution migrating 7 critical FMC legacy endpoints to MuleSoft 4.9, leading MuleSoft 4.9 & CloudHub modernization, architecting payment integrations (Cerillion, Amdocs, Emida), and earning his MuleSoft Developer certification.\n\n2. Bujjikonda Vedantam (Senior Integration Architect): Highlighted Anil's pivotal contributions to the strategic ESB Conversion Program for Liberty Latin America (LLA), cloud transformation, and proactive team technical leadership.\n\n3. Raja Das (Senior Consultant): Commended Anil's delivery on the LC market 4.x and 3.9 endpoint migrations, workflow innovations, high-impact contributions, and dependable collaborative engineering."
+    },
+    {
+      keywords: ["certification", "certified", "mulesoft", "salesforce", "mcd", "developer 1", "credentials"],
+      question: "Is Anil certified? What certifications does he hold?",
+      answer: "Yes! Anil is a Salesforce Certified MuleSoft Developer I. This credential certifies his verified enterprise competence in architecting API-led connectivity, developing and debugging Mule 4 flows, writing complex DataWeave 2.0 transformations, orchestrating error-handling and transaction policies, and deploying microservices on Anypoint Platform and CloudHub 2.0."
+    },
     {
       keywords: ["who", "about", "bio", "background", "summary", "anil"],
       question: "Who is Anil Kumar Rana?",

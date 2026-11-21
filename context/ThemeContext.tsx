@@ -18,14 +18,22 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    // Check localStorage or system preference
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
+    let savedTheme: Theme | null = null;
+    try {
+      savedTheme = localStorage.getItem("theme") as Theme | null;
+    } catch (e) {
+      // Storage blocked (e.g. Brave shields / private browsing)
+    }
+
     if (savedTheme === "dark" || savedTheme === "light") {
       setTheme(savedTheme);
       document.documentElement.classList.toggle("dark", savedTheme === "dark");
     } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const initialTheme = prefersDark ? "dark" : "dark"; // Default to dark mode
+      let prefersDark = true;
+      try {
+        prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      } catch (e) {}
+      const initialTheme = prefersDark ? "dark" : "dark";
       setTheme(initialTheme);
       document.documentElement.classList.toggle("dark", initialTheme === "dark");
     }
@@ -34,7 +42,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
-    localStorage.setItem("theme", nextTheme);
+    try {
+      localStorage.setItem("theme", nextTheme);
+    } catch (e) {}
     if (nextTheme === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
@@ -53,5 +63,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-  return context || defaultContext;
+  if (!context) {
+    return defaultContext;
+  }
+  return context;
 }

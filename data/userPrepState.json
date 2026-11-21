@@ -484,5 +484,12 @@
     "2026-10-07",
     "2026-10-11"
   ],
-  "totalStudyHours": 1.5
+  "totalStudyHours": 1.5,
+  "schemaVersion": 3,
+  "studySessions": [],
+  "weeklyReviews": [],
+  "applications": [],
+  "topicProgress": {},
+  "spacedRevisions": [],
+  "targetCompanyProfile": "general"
 }

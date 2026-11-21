@@ -38,12 +38,12 @@ export const PrepHeader: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center rounded-md bg-blue-950/80 px-2 py-0.5 text-xs font-mono font-medium text-blue-400 border border-blue-800/50">
-                INFOSYS SP SYSTEM
+                SP SYSTEM
               </span>
               <span className="text-xs font-mono text-zinc-500">v2.4</span>
             </div>
             <h1 className="mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl font-outfit">
-              INFOSYS SP L1/L2 — CRACK SYSTEM
+              SP L1/L2 — CRACK SYSTEM
             </h1>
             <p className="text-sm text-zinc-400 font-inter">
               {daysRemaining > 0 ? `${daysRemaining}-Day Coding Assessment & Technical Interview Mission` : 'Technical Interview Preparation Mode'}

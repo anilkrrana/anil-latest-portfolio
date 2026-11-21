@@ -1,12 +1,29 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Skill from "./Skill";
-import { CpuChipIcon, ServerIcon, CommandLineIcon, CloudIcon, CodeBracketIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import TechOrbit3D from "./TechOrbit3D";
+import HolographicTiltCard from "./HolographicTiltCard";
+import { CpuChipIcon, ServerIcon, CommandLineIcon, CloudIcon, CodeBracketIcon, SparklesIcon, CheckBadgeIcon } from "@heroicons/react/24/outline";
 
 export default function Skills() {
-  const [activeCategory, setActiveCategory] = useState<string | null>("backend");
+  const [activeCategory, setActiveCategory] = useState<string | null>("integration");
 
   const skillCategories = [
+    {
+      id: "integration",
+      title: "MuleSoft & Salesforce Integration",
+      icon: CheckBadgeIcon,
+      skills: [
+        { name: "Salesforce Certified", imgsrc: "/skillsLogos/salesforce-mulesoft-certified.svg" },
+        { name: "MuleSoft 4.9", imgsrc: "/skillsLogos/mulesoft.svg" },
+        { name: "Salesforce Cloud", imgsrc: "/skillsLogos/salesforce.svg" },
+        { name: "DataWeave 2.0", imgsrc: "/skillsLogos/dataweave.svg" },
+        { name: "RAML 1.0", imgsrc: "/skillsLogos/raml.svg" },
+        { name: "API-Led Connectivity", imgsrc: "/skillsLogos/api-design.svg" },
+        { name: "Anypoint Platform", imgsrc: "/skillsLogos/mulesoft.svg" },
+        { name: "ActiveMQ Queues", imgsrc: "/skillsLogos/concurrency.svg" },
+      ]
+    },
     {
       id: "backend",
       title: "Backend & Core",
@@ -109,6 +126,9 @@ export default function Skills() {
           <div className="w-12 h-1 bg-blue-500 rounded-full mt-3" />
         </div>
 
+        {/* 3D Interactive Technology Orbit Carousel */}
+        <TechOrbit3D />
+
         {/* Category Filter Pills (Smooth Navigation Targets) */}
         <div className="flex flex-wrap items-center justify-center gap-3 mb-12 sticky top-20 z-20 py-2 backdrop-blur-md dark:bg-black/40 bg-white/40 rounded-2xl p-2">
           <button
@@ -143,7 +163,7 @@ export default function Skills() {
           })}
         </div>
 
-        {/* Categorized Skills Grid */}
+        {/* Categorized Skills Grid in 3D Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((cat) => {
             const Icon = cat.icon;
@@ -153,29 +173,41 @@ export default function Skills() {
               <div
                 id={`skills-${cat.id}`}
                 key={cat.id}
-                className={`cmdCard p-6 border-neutral-800 transition-all duration-300 ${
-                  isCatActive ? "opacity-100 border-blue-500/40 ring-1 ring-blue-500/20" : "opacity-50"
-                }`}
+                className="h-full"
               >
-                <div className="flex items-center gap-3 pb-4 mb-4 border-b dark:border-neutral-800 border-slate-200">
-                  <div className="w-8 h-8 rounded-lg dark:bg-blue-900/60 bg-blue-100 border dark:border-blue-800/60 border-blue-200 flex items-center justify-center text-blue-500">
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-base font-bold dark:text-white text-slate-900 font-outfit">
-                    {cat.title}
-                  </h3>
-                </div>
+                <HolographicTiltCard
+                  intensity={6}
+                  glowColor="rgba(59, 130, 246, 0.35)"
+                  className="rounded-2xl h-full"
+                >
+                  <div
+                    className={`cmdCard p-6 border-neutral-800 transition-all duration-300 h-full flex flex-col justify-between ${
+                      isCatActive ? "opacity-100 border-blue-500/40 ring-1 ring-blue-500/20" : "opacity-50"
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center gap-3 pb-4 mb-4 border-b dark:border-neutral-800 border-slate-200">
+                        <div className="w-8 h-8 rounded-lg dark:bg-blue-900/60 bg-blue-100 border dark:border-blue-800/60 border-blue-200 flex items-center justify-center text-blue-500">
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <h3 className="text-base font-bold dark:text-white text-slate-900 font-outfit">
+                          {cat.title}
+                        </h3>
+                      </div>
 
-                <div className="grid grid-cols-2 gap-2.5">
-                  {cat.skills.map((skill, idx) => (
-                    <Skill
-                      key={idx}
-                      name={skill.name}
-                      imgsrc={skill.imgsrc}
-                      isHighlighted={isCatActive && activeCategory === cat.id}
-                    />
-                  ))}
-                </div>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        {cat.skills.map((skill, idx) => (
+                          <Skill
+                            key={idx}
+                            name={skill.name}
+                            imgsrc={skill.imgsrc}
+                            isHighlighted={isCatActive && activeCategory === cat.id}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </HolographicTiltCard>
               </div>
             );
           })}

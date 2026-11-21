@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import HolographicTiltCard from "./HolographicTiltCard";
 import { 
   PlayIcon, 
   ArrowPathIcon, 
@@ -269,43 +270,76 @@ export default function OrderFlowShowcase() {
           </div>
         </div>
 
-        {/* ENGINEERING CONCEPTS BREAKDOWN CARDS */}
+        {/* 3D HOLOGRAPHIC ARCHITECTURAL PILLAR CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="cmdCard p-6 border-neutral-800 space-y-3 hover:border-blue-500/50 transition-all">
-            <div className="w-10 h-10 rounded-lg dark:bg-blue-900/60 bg-blue-100 border dark:border-blue-800/60 border-blue-200 flex items-center justify-center text-blue-500">
-              <LockClosedIcon className="w-5 h-5" />
+          <HolographicTiltCard
+            intensity={9}
+            glowColor="rgba(59, 130, 246, 0.45)"
+            className="rounded-2xl h-full"
+          >
+            <div className="cmdCard p-6 border-neutral-800 space-y-3 hover:border-blue-500/50 transition-all h-full flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-lg dark:bg-blue-900/60 bg-blue-100 border dark:border-blue-800/60 border-blue-200 flex items-center justify-center text-blue-500 mb-3">
+                  <LockClosedIcon className="w-5 h-5" />
+                </div>
+                <h4 className="text-lg font-bold dark:text-white text-slate-900 font-outfit">
+                  Pessimistic Concurrency Locking
+                </h4>
+                <p className="text-xs dark:text-neutral-300 text-slate-600 leading-relaxed font-light mt-2">
+                  Uses SQL <code className="text-blue-500 font-mono">PESSIMISTIC_WRITE</code> locks during order creation to prevent inventory overselling when multiple concurrent users purchase the last item simultaneously.
+                </p>
+              </div>
+              <div className="pt-3 border-t dark:border-neutral-800 border-slate-200 text-[10px] font-mono text-blue-400">
+                PostgreSQL · Row Level Lock
+              </div>
             </div>
-            <h4 className="text-lg font-bold dark:text-white text-slate-900 font-outfit">
-              Pessimistic Concurrency Locking
-            </h4>
-            <p className="text-xs dark:text-neutral-300 text-slate-600 leading-relaxed font-light">
-              Uses SQL <code className="text-blue-500 font-mono">PESSIMISTIC_WRITE</code> locks during order creation to prevent inventory overselling when multiple concurrent users purchase the last item simultaneously.
-            </p>
-          </div>
+          </HolographicTiltCard>
 
-          <div className="cmdCard p-6 border-neutral-800 space-y-3 hover:border-indigo-500/50 transition-all">
-            <div className="w-10 h-10 rounded-lg dark:bg-indigo-900/60 bg-indigo-100 border dark:border-indigo-800/60 border-indigo-200 flex items-center justify-center text-indigo-500">
-              <BoltIcon className="w-5 h-5" />
+          <HolographicTiltCard
+            intensity={9}
+            glowColor="rgba(99, 102, 241, 0.45)"
+            className="rounded-2xl h-full"
+          >
+            <div className="cmdCard p-6 border-neutral-800 space-y-3 hover:border-indigo-500/50 transition-all h-full flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-lg dark:bg-indigo-900/60 bg-indigo-100 border dark:border-indigo-800/60 border-indigo-200 flex items-center justify-center text-indigo-500 mb-3">
+                  <BoltIcon className="w-5 h-5" />
+                </div>
+                <h4 className="text-lg font-bold dark:text-white text-slate-900 font-outfit">
+                  Redis Cache-Aside Pattern
+                </h4>
+                <p className="text-xs dark:text-neutral-300 text-slate-600 leading-relaxed font-light mt-2">
+                  Accelerates product lookup latency by caching catalog data in Redis. Automatic cache invalidation triggers upon stock updates to ensure strict data consistency.
+                </p>
+              </div>
+              <div className="pt-3 border-t dark:border-neutral-800 border-slate-200 text-[10px] font-mono text-indigo-400">
+                Sub-Millisecond Read Latency
+              </div>
             </div>
-            <h4 className="text-lg font-bold dark:text-white text-slate-900 font-outfit">
-              Redis Cache-Aside Pattern
-            </h4>
-            <p className="text-xs dark:text-neutral-300 text-slate-600 leading-relaxed font-light">
-              Accelerates product lookup latency by caching catalog data in Redis. Automatic cache invalidation triggers upon stock updates to ensure strict data consistency.
-            </p>
-          </div>
+          </HolographicTiltCard>
 
-          <div className="cmdCard p-6 border-neutral-800 space-y-3 hover:border-emerald-500/50 transition-all">
-            <div className="w-10 h-10 rounded-lg dark:bg-emerald-900/60 bg-emerald-100 border dark:border-emerald-800/60 border-emerald-200 flex items-center justify-center text-emerald-500">
-              <ShieldCheckIcon className="w-5 h-5" />
+          <HolographicTiltCard
+            intensity={9}
+            glowColor="rgba(16, 185, 129, 0.45)"
+            className="rounded-2xl h-full"
+          >
+            <div className="cmdCard p-6 border-neutral-800 space-y-3 hover:border-emerald-500/50 transition-all h-full flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-lg dark:bg-emerald-900/60 bg-emerald-100 border dark:border-emerald-800/60 border-emerald-200 flex items-center justify-center text-emerald-500 mb-3">
+                  <ShieldCheckIcon className="w-5 h-5" />
+                </div>
+                <h4 className="text-lg font-bold dark:text-white text-slate-900 font-outfit">
+                  Razorpay Webhook HMAC Verification
+                </h4>
+                <p className="text-xs dark:text-neutral-300 text-slate-600 leading-relaxed font-light mt-2">
+                  Verifies payment webhook authenticity via <code className="text-emerald-500 font-mono">HMAC-SHA256</code> signature calculations, ensuring payment status callbacks cannot be spoofed or duplicated.
+                </p>
+              </div>
+              <div className="pt-3 border-t dark:border-neutral-800 border-slate-200 text-[10px] font-mono text-emerald-400">
+                Cryptographic Webhook Security
+              </div>
             </div>
-            <h4 className="text-lg font-bold dark:text-white text-slate-900 font-outfit">
-              Razorpay Webhook HMAC Verification
-            </h4>
-            <p className="text-xs dark:text-neutral-300 text-slate-600 leading-relaxed font-light">
-              Verifies payment webhook authenticity via <code className="text-emerald-500 font-mono">HMAC-SHA256</code> signature calculations, ensuring payment status callbacks cannot be spoofed or duplicated.
-            </p>
-          </div>
+          </HolographicTiltCard>
         </div>
       </div>
     </section>

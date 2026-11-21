@@ -1,95 +1,96 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { PrepProvider, usePrep } from '../context/PrepContext';
 
-import { PrepHeader } from '../components/prep/PrepHeader';
-import { HeroCountdown } from '../components/prep/HeroCountdown';
+// Navigation & Global Components
+import { GrowthOSHeader } from '../components/prep/GrowthOSHeader';
+import { SessionLoggerModal } from '../components/prep/SessionLoggerModal';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+
+// Tab Components
+import { ActivityHeatmap } from '../components/prep/ActivityHeatmap';
+import { WeightedReadinessDashboard } from '../components/prep/WeightedReadinessDashboard';
 import { NextActionBanner } from '../components/prep/NextActionBanner';
 import { KPIGrid } from '../components/prep/KPIGrid';
 import { TodayPlan } from '../components/prep/TodayPlan';
-import { Roadmap22Days } from '../components/prep/Roadmap22Days';
-import { DSATracker } from '../components/prep/DSATracker';
-import { JavaCSTracker } from '../components/prep/JavaCSTracker';
+
+import { DSATUFTracker } from '../components/prep/DSATUFTracker';
 import { ProblemLog } from '../components/prep/ProblemLog';
-import { RevisionEngine } from '../components/prep/RevisionEngine';
 import { PatternLibrary } from '../components/prep/PatternLibrary';
-import { TimedCodingMode } from '../components/prep/TimedCodingMode';
-import { MockAssessmentMode } from '../components/prep/MockAssessmentMode';
-import { PerformanceAnalytics } from '../components/prep/PerformanceAnalytics';
-import { ReadinessScore } from '../components/prep/ReadinessScore';
-import { InterviewMode } from '../components/prep/InterviewMode';
-import { ProjectPrep } from '../components/prep/ProjectPrep';
-import { DailyJournal } from '../components/prep/DailyJournal';
+
+import { SystemDesignAndLLDTab } from '../components/prep/SystemDesignAndLLDTab';
+import { JavaBackendTab } from '../components/prep/JavaBackendTab';
+import { DatabasesAndCoreCSTab } from '../components/prep/DatabasesAndCoreCSTab';
+import { CloudFundamentalsTab } from '../components/prep/CloudFundamentalsTab';
+import { BehavioralAndProjectTab } from '../components/prep/BehavioralAndProjectTab';
+import { CompanyPreparationTab } from '../components/prep/CompanyPreparationTab';
+import { RevisionAndMocksTab } from '../components/prep/RevisionAndMocksTab';
+import { ApplicationsAndCareerTab } from '../components/prep/ApplicationsAndCareerTab';
 import { Settings } from '../components/prep/Settings';
-import { ErrorBoundary } from '../components/ErrorBoundary';
 
 import { 
   LayoutDashboard, 
-  Map, 
   Code, 
+  Layers, 
   Coffee, 
   Database, 
-  RotateCcw, 
-  BookOpen, 
-  Clock, 
-  ShieldAlert, 
-  BarChart3, 
+  Cloud, 
   Award, 
-  MessageSquare, 
-  FolderGit2, 
-  Calendar, 
+  Building2, 
+  RotateCcw, 
+  Briefcase, 
   Settings as SettingsIcon,
-  ArrowLeft
+  ArrowLeft,
+  Plus
 } from 'lucide-react';
 
 type NavTab = 
   | 'overview' 
-  | 'roadmap' 
   | 'dsa' 
-  | 'java-cs' 
-  | 'problems' 
-  | 'revision' 
-  | 'patterns' 
-  | 'timed-coding' 
-  | 'mock-tests' 
-  | 'analytics' 
-  | 'readiness' 
-  | 'interview-q' 
-  | 'project-prep' 
-  | 'journal' 
+  | 'system-design' 
+  | 'java-backend' 
+  | 'database-cs' 
+  | 'cloud' 
+  | 'behavioral-project' 
+  | 'company-roadmaps' 
+  | 'revision-mocks' 
+  | 'career-pipeline' 
   | 'settings';
 
 const DashboardContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState<NavTab>('overview');
+  const [isSessionLoggerOpen, setIsSessionLoggerOpen] = useState(false);
+  const [loggerDuration, setLoggerDuration] = useState(45);
 
-  const navItems: { id: NavTab; label: string; icon: any; count?: number }[] = [
-    { id: 'overview', label: 'Overview', icon: LayoutDashboard },
-    { id: 'roadmap', label: '22-Day Roadmap', icon: Map },
-    { id: 'dsa', label: 'DSA Tracker', icon: Code },
-    { id: 'java-cs', label: 'Java & CS', icon: Coffee },
-    { id: 'problems', label: 'Problem Log', icon: Database },
-    { id: 'revision', label: 'Revision Engine', icon: RotateCcw },
-    { id: 'patterns', label: 'Pattern Library', icon: BookOpen },
-    { id: 'timed-coding', label: 'Timed Coding', icon: Clock },
-    { id: 'mock-tests', label: 'Mock Exams', icon: ShieldAlert },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'readiness', label: 'Readiness Score', icon: Award },
-    { id: 'interview-q', label: 'Interview Q&A', icon: MessageSquare },
-    { id: 'project-prep', label: 'Project STAR', icon: FolderGit2 },
-    { id: 'journal', label: 'Daily Journal', icon: Calendar },
+  const navItems: { id: NavTab; label: string; icon: any }[] = [
+    { id: 'overview', label: 'Command Center', icon: LayoutDashboard },
+    { id: 'dsa', label: 'DSA & Complexity', icon: Code },
+    { id: 'system-design', label: 'System Design & LLD', icon: Layers },
+    { id: 'java-backend', label: 'Java & Backend', icon: Coffee },
+    { id: 'database-cs', label: 'Databases & Core CS', icon: Database },
+    { id: 'cloud', label: 'Cloud Fundamentals', icon: Cloud },
+    { id: 'behavioral-project', label: 'Behavioral & Projects', icon: Award },
+    { id: 'company-roadmaps', label: 'Company Playbooks', icon: Building2 },
+    { id: 'revision-mocks', label: 'Revision & Mocks', icon: RotateCcw },
+    { id: 'career-pipeline', label: 'Applications & Career', icon: Briefcase },
     { id: 'settings', label: 'Settings', icon: SettingsIcon },
   ];
+
+  const handleOpenLogger = (duration: number = 45) => {
+    setLoggerDuration(duration);
+    setIsSessionLoggerOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 font-inter selection:bg-blue-500 selection:text-white">
       {/* Top Header */}
-      <PrepHeader />
+      <GrowthOSHeader onOpenSessionLogger={handleOpenLogger} />
 
       {/* Main Container */}
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 space-y-6">
         {/* Navigation Bar */}
-        <div className="flex items-center justify-between border-b border-[#1e2029] pb-2">
+        <div className="flex items-center justify-between border-b border-[#1e2029] pb-2 gap-3">
           {/* Back to Portfolio Link */}
           <Link
             href="/"
@@ -123,32 +124,78 @@ const DashboardContent: React.FC = () => {
         </div>
 
         {/* Tab Views */}
-        <ErrorBoundary fallbackTitle="Preparation Module Error">
+        <ErrorBoundary fallbackTitle="Growth OS Module Error">
+          {/* A. Command Center */}
           {activeTab === 'overview' && (
             <div className="space-y-6">
-              <HeroCountdown />
-              <NextActionBanner onNavigateTab={(tab) => setActiveTab(tab as NavTab)} />
+              {/* Activity Heatmap covering 365 days */}
+              <ActivityHeatmap />
+
+              {/* Data-driven 11-Pillar Readiness Gauge */}
+              <WeightedReadinessDashboard />
+
+              {/* Action Banner with Continue Learning */}
+              <NextActionBanner onNavigateTab={(tab) => {
+                if (tab === 'dsa') setActiveTab('dsa');
+                else if (tab === 'mock-tests') setActiveTab('revision-mocks');
+                else if (tab === 'java-cs') setActiveTab('java-backend');
+                else setActiveTab('overview');
+              }} />
+
+              {/* KPI Grid */}
               <KPIGrid />
+
+              {/* Today Plan */}
               <TodayPlan />
             </div>
           )}
 
-          {activeTab === 'roadmap' && <Roadmap22Days />}
-          {activeTab === 'dsa' && <DSATracker />}
-          {activeTab === 'java-cs' && <JavaCSTracker />}
-          {activeTab === 'problems' && <ProblemLog />}
-          {activeTab === 'revision' && <RevisionEngine />}
-          {activeTab === 'patterns' && <PatternLibrary />}
-          {activeTab === 'timed-coding' && <TimedCodingMode />}
-          {activeTab === 'mock-tests' && <MockAssessmentMode />}
-          {activeTab === 'analytics' && <PerformanceAnalytics />}
-          {activeTab === 'readiness' && <ReadinessScore />}
-          {activeTab === 'interview-q' && <InterviewMode />}
-          {activeTab === 'project-prep' && <ProjectPrep />}
-          {activeTab === 'journal' && <DailyJournal />}
+          {/* B. DSA & Complexity */}
+          {activeTab === 'dsa' && (
+            <div className="space-y-6">
+              <DSATUFTracker />
+              <div className="border-t border-[#1e2029] pt-6 space-y-6">
+                <ProblemLog />
+                <PatternLibrary />
+              </div>
+            </div>
+          )}
+
+          {/* C. System Design & LLD */}
+          {activeTab === 'system-design' && <SystemDesignAndLLDTab />}
+
+          {/* D. Java & Backend Engineering */}
+          {activeTab === 'java-backend' && <JavaBackendTab />}
+
+          {/* E. Databases & Core CS */}
+          {activeTab === 'database-cs' && <DatabasesAndCoreCSTab />}
+
+          {/* F. Cloud Fundamentals */}
+          {activeTab === 'cloud' && <CloudFundamentalsTab />}
+
+          {/* G. Behavioral & Projects */}
+          {activeTab === 'behavioral-project' && <BehavioralAndProjectTab />}
+
+          {/* H. Company Roadmaps & Question Bank */}
+          {activeTab === 'company-roadmaps' && <CompanyPreparationTab />}
+
+          {/* I. Revision & Mock Interviews */}
+          {activeTab === 'revision-mocks' && <RevisionAndMocksTab />}
+
+          {/* J. Applications & Career Progress */}
+          {activeTab === 'career-pipeline' && <ApplicationsAndCareerTab />}
+
+          {/* Settings */}
           {activeTab === 'settings' && <Settings />}
         </ErrorBoundary>
       </main>
+
+      {/* Global Session Logger Modal */}
+      <SessionLoggerModal
+        isOpen={isSessionLoggerOpen}
+        onClose={() => setIsSessionLoggerOpen(false)}
+        defaultDurationMinutes={loggerDuration}
+      />
     </div>
   );
 };
@@ -157,8 +204,11 @@ export default function InfosysPrepPage() {
   return (
     <>
       <Head>
-        <title>INFOSYS SP L1/L2 — CRACK SYSTEM | Preparation Mission Control</title>
-        <meta name="description" content="Mission Control for Infosys SP L1/L2 Specialist Programmer coding assessment and technical interview preparation." />
+        <title>SDE Crack System | Product Company Interview Preparation</title>
+        <meta 
+          name="description" 
+          content="A structured software engineering interview preparation dashboard covering DSA, Java, system design, backend engineering, computer science fundamentals, and product-company interview readiness." 
+        />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.svg" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
