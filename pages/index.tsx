@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import CertificationShowcase from "@/components/CertificationShowcase";
 import About from "@/components/About";
 import AskAnil from "@/components/AskAnil";
 import ProfessionalFeedback from "@/components/ProfessionalFeedback";
@@ -14,9 +15,9 @@ import CurrentlyLearning from "@/components/CurrentlyLearning";
 import Contact from "@/components/Contact";
 
 export default function Home({ data }: any) {
-  const title = "Anil Kumar Rana | Senior Software Engineer | Java Backend Developer";
+  const title = "Anil Kumar Rana | Salesforce Certified MuleSoft Developer | Senior Software Engineer";
   const description =
-    "Portfolio of Anil Kumar Rana — Senior Software Engineer at Capgemini with 2+ years experience building scalable backend systems, Spring Boot microservices, REST APIs, PostgreSQL, Redis caching, and MuleSoft enterprise integrations.";
+    "Portfolio of Anil Kumar Rana — Salesforce Certified MuleSoft Developer I & Senior Software Engineer at Capgemini with 2+ years experience building scalable enterprise integrations, API-led connectivity, Spring Boot microservices, DataWeave 2.0, PostgreSQL, and Redis caching.";
   const url = "https://anil-latest-portfolio.vercel.app/";
 
   return (
@@ -51,7 +52,12 @@ export default function Home({ data }: any) {
         <Hero />
       </section>
 
-      {/* 3. About Section */}
+      {/* 3. 🌟 Flagship Credential — Salesforce Certified MuleSoft Developer I */}
+      <section id="certifications">
+        <CertificationShowcase />
+      </section>
+
+      {/* 4. About Section */}
       <section id="about">
         <About />
       </section>

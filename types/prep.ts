@@ -146,9 +146,122 @@ export interface JournalEntry {
   struggledWith: string;
   mistakes: string;
   tomorrowPriority: string;
+  energyLevel?: number; // 1-10
+}
+
+export type StudyCategory = 
+  | 'DSA' 
+  | 'System Design' 
+  | 'LLD' 
+  | 'Core Java' 
+  | 'Backend' 
+  | 'Database' 
+  | 'Core CS' 
+  | 'Cloud' 
+  | 'Behavioral' 
+  | 'Project' 
+  | 'Mock' 
+  | 'Revision'
+  | 'Other';
+
+export interface StudySession {
+  id: string;
+  date: string; // YYYY-MM-DD local calendar date
+  durationMinutes: number;
+  category: StudyCategory;
+  topic: string;
+  taskType: 'Theory' | 'Coding Practice' | 'System Design' | 'Revision' | 'Mock' | 'Project Build';
+  problemsSolved?: number;
+  difficulty?: Difficulty;
+  completionStatus: 'Completed' | 'In Progress' | 'Struggled';
+  notes: string;
+  resourceUrl?: string;
+  createdAt: string;
+}
+
+export interface HeatmapDay {
+  date: string; // YYYY-MM-DD
+  totalMinutes: number;
+  problemsSolved: number;
+  categories: string[];
+  topics: string[];
+  sessionsCount: number;
+  level: 0 | 1 | 2 | 3; // 0=none, 1=light (<30m), 2=moderate (30-90m), 3=high (>90m or >=2 problems)
+  hasQualifyingWork: boolean;
+}
+
+export interface WeeklyReviewEntry {
+  id: string;
+  weekStartDate: string; // YYYY-MM-DD
+  problemsSolved: number;
+  studyHours: number;
+  pillarHours: Record<string, number>;
+  majorLearning: string;
+  weakestArea: string;
+  missedGoals?: string;
+  energyRating: number; // 1-10
+  nextWeekPriorities: string;
+  createdAt: string;
+}
+
+export type ApplicationStage = 
+  | 'Interested' 
+  | 'Preparing' 
+  | 'Referral Requested' 
+  | 'Applied' 
+  | 'Recruiter Screen' 
+  | 'Technical Assessment' 
+  | 'Virtual Loop / Onsite' 
+  | 'Offer' 
+  | 'Rejected' 
+  | 'On Hold';
+
+export interface JobApplication {
+  id: string;
+  company: string;
+  role: string;
+  level: string; // SDE-1, SDE-2, Senior SWE
+  stage: ApplicationStage;
+  dateApplied: string;
+  jobUrl?: string;
+  referralContact?: string;
+  recruiterContact?: string;
+  compensationNotes?: string;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface SpacedRevisionItem {
+  id: string;
+  topicId: string;
+  topicName: string;
+  pillar: string;
+  firstLearnedDate: string;
+  lastRevisedDate?: string;
+  nextRevisionDate: string;
+  intervalIndex: number; // 0=1d, 1=3d, 2=7d, 3=14d, 4=30d
+  status: 'Due' | 'Overdue' | 'Upcoming' | 'Mastered';
+  notes?: string;
+}
+
+export interface ActiveTimerState {
+  isRunning: boolean;
+  elapsedSeconds: number;
+  topic?: string;
+  category?: StudyCategory;
+  startedAt?: number;
+}
+
+export interface TopicProgressRecord {
+  status: 'Not Started' | 'In Progress' | 'Completed' | 'Needs Revision';
+  confidence: number; // 0-100
+  lastStudiedDate?: string;
+  nextRevisionDate?: string;
+  notes?: string;
 }
 
 export interface PrepState {
+  schemaVersion?: number;
   targetDate: string; // e.g. "2026-11-01"
   mode: PrepMode;
   dailyTasks: DailyTask[];
@@ -163,4 +276,13 @@ export interface PrepState {
   journalEntries: JournalEntry[];
   studyDays: string[]; // array of YYYY-MM-DD dates with activity
   totalStudyHours: number;
+  
+  // Growth OS Upgrades
+  studySessions?: StudySession[];
+  weeklyReviews?: WeeklyReviewEntry[];
+  applications?: JobApplication[];
+  topicProgress?: Record<string, TopicProgressRecord>;
+  spacedRevisions?: SpacedRevisionItem[];
+  activeTimer?: ActiveTimerState;
+  targetCompanyProfile?: 'general' | 'microsoft' | 'amazon' | 'google';
 }

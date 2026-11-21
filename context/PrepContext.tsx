@@ -11,7 +11,14 @@ import {
   InterviewQuestion, 
   ProjectPrep, 
   JournalEntry,
-  PrepMode
+  PrepMode,
+  StudySession,
+  HeatmapDay,
+  WeeklyReviewEntry,
+  JobApplication,
+  SpacedRevisionItem,
+  TopicProgressRecord,
+  ActiveTimerState
 } from '../types/prep';
 import { 
   INITIAL_PREP_STATE, 
@@ -78,6 +85,13 @@ export const normalizePrepState = (raw: any): PrepState => {
     journalEntries: Array.isArray(raw.journalEntries) ? raw.journalEntries : base.journalEntries,
     studyDays: Array.isArray(raw.studyDays) ? raw.studyDays : base.studyDays,
     totalStudyHours: typeof raw.totalStudyHours === 'number' ? raw.totalStudyHours : (base.totalStudyHours || 0),
+    schemaVersion: 3,
+    studySessions: Array.isArray(raw.studySessions) ? raw.studySessions : (base.studySessions || []),
+    weeklyReviews: Array.isArray(raw.weeklyReviews) ? raw.weeklyReviews : (base.weeklyReviews || []),
+    applications: Array.isArray(raw.applications) ? raw.applications : (base.applications || []),
+    topicProgress: (typeof raw.topicProgress === 'object' && raw.topicProgress !== null) ? raw.topicProgress : (base.topicProgress || {}),
+    spacedRevisions: Array.isArray(raw.spacedRevisions) ? raw.spacedRevisions : (base.spacedRevisions || []),
+    targetCompanyProfile: raw.targetCompanyProfile || 'general',
   };
 };
 
@@ -106,6 +120,28 @@ interface PrepContextType {
   lastSavedAt: string | null;
   syncToCodebase: (overrideState?: PrepState) => Promise<{ success: boolean; message: string }>;
   
+  // Growth OS additions
+  heatmapDays: HeatmapDay[];
+  streakStats: {
+    currentStreak: number;
+    longestStreak: number;
+    totalActiveDays: number;
+    totalStudyMinutes: number;
+    totalProblemsSolved: number;
+  };
+  pillarReadiness: Record<string, { name: string; weight: number; score: number; contribution: number }>;
+  logStudySession: (session: Omit<StudySession, 'id' | 'createdAt'>) => void;
+  updateStudySession: (id: string, updates: Partial<StudySession>) => void;
+  deleteStudySession: (id: string) => void;
+  setTopicProgress: (topicId: string, status: TopicProgressRecord['status'], confidence: number, notes?: string) => void;
+  addWeeklyReview: (entry: Omit<WeeklyReviewEntry, 'id' | 'createdAt'>) => void;
+  addApplication: (app: Omit<JobApplication, 'id' | 'createdAt'>) => void;
+  updateApplication: (id: string, updates: Partial<JobApplication>) => void;
+  deleteApplication: (id: string) => void;
+  triggerRevision: (topicId: string, topicName: string, pillar: string) => void;
+  completeRevision: (revisionId: string, newConfidence?: number) => void;
+  setTargetCompanyProfile: (profile: 'general' | 'microsoft' | 'amazon' | 'google') => void;
+
   // Actions
   toggleMode: (mode?: PrepMode) => void;
   addProblem: (problem: Omit<Problem, 'id'>) => void;
@@ -409,6 +445,308 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const readiness = calculateReadiness();
+
+  // === Growth OS Activity Heatmap & Streak Logic ===
+  const heatmapDays = React.useMemo<HeatmapDay[]>(() => {
+    const days: HeatmapDay[] = [];
+    const now = new Date();
+    // 365 days ending today
+    for (let i = 364; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+
+      const sessions = (state.studySessions || []).filter(s => s.date === dateStr);
+      const totalMinutes = sessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
+      const problemsSolved = sessions.reduce((acc, s) => acc + (s.problemsSolved || 0), 0);
+      const categories = Array.from(new Set(sessions.map(s => s.category).filter(Boolean)));
+      const topics = sessions.map(s => s.topic).filter(Boolean);
+
+      const hasLegacyDay = (state.studyDays || []).includes(dateStr);
+      const hasQualifyingWork = totalMinutes > 0 || problemsSolved > 0 || hasLegacyDay;
+
+      let level: 0 | 1 | 2 | 3 = 0;
+      if (totalMinutes >= 90 || problemsSolved >= 2) {
+        level = 3;
+      } else if (totalMinutes >= 30 || problemsSolved >= 1) {
+        level = 2;
+      } else if (totalMinutes > 0 || hasLegacyDay) {
+        level = 1;
+      }
+
+      days.push({
+        date: dateStr,
+        totalMinutes: totalMinutes || (hasLegacyDay ? 45 : 0),
+        problemsSolved,
+        categories,
+        topics,
+        sessionsCount: sessions.length || (hasLegacyDay ? 1 : 0),
+        level,
+        hasQualifyingWork
+      });
+    }
+    return days;
+  }, [state.studySessions, state.studyDays]);
+
+  const streakStats = React.useMemo(() => {
+    let currentStreak = 0;
+    let longestStreak = 0;
+    let tempStreak = 0;
+    let totalActiveDays = 0;
+    const totalProblems = (state.problems || []).length;
+
+    for (const day of heatmapDays) {
+      if (day.hasQualifyingWork) {
+        totalActiveDays++;
+        tempStreak++;
+        if (tempStreak > longestStreak) longestStreak = tempStreak;
+      } else {
+        tempStreak = 0;
+      }
+    }
+
+    const todayIndex = heatmapDays.length - 1;
+    const todayActive = heatmapDays[todayIndex]?.hasQualifyingWork;
+    const yesterdayActive = heatmapDays[todayIndex - 1]?.hasQualifyingWork;
+
+    if (todayActive) {
+      let idx = todayIndex;
+      while (idx >= 0 && heatmapDays[idx]?.hasQualifyingWork) {
+        currentStreak++;
+        idx--;
+      }
+    } else if (yesterdayActive) {
+      let idx = todayIndex - 1;
+      while (idx >= 0 && heatmapDays[idx]?.hasQualifyingWork) {
+        currentStreak++;
+        idx--;
+      }
+    }
+
+    const totalStudyMinutes = heatmapDays.reduce((acc, d) => acc + d.totalMinutes, 0);
+
+    return {
+      currentStreak,
+      longestStreak: Math.max(longestStreak, currentStreak),
+      totalActiveDays,
+      totalStudyMinutes,
+      totalProblemsSolved: totalProblems
+    };
+  }, [heatmapDays, state.problems]);
+
+  // === Growth OS Data-Driven 11-Pillar Readiness ===
+  const pillarReadiness = React.useMemo(() => {
+    const tp = state.topicProgress || {};
+
+    const dsaSolved = (state.problems || []).length;
+    const dsaScore = Math.min(100, Math.round((dsaSolved / 35) * 100));
+
+    const hldCompleted = Object.entries(tp).filter(([k, v]) => k.startsWith('sd-') && v.status === 'Completed').length;
+    const hldScore = Math.min(100, Math.round((hldCompleted / 10) * 100));
+
+    const lldCompleted = Object.entries(tp).filter(([k, v]) => (k.startsWith('pat-') || k.startsWith('mc-')) && v.status === 'Completed').length;
+    const lldScore = Math.min(100, Math.round((lldCompleted / 8) * 100));
+
+    const javaCompleted = Object.entries(tp).filter(([k, v]) => k.startsWith('java-') && v.status === 'Completed').length;
+    const javaScore = Math.min(100, Math.round((javaCompleted / 10) * 100));
+
+    const backendCompleted = Object.entries(tp).filter(([k, v]) => k.startsWith('backend-') && v.status === 'Completed').length;
+    const backendScore = Math.min(100, Math.round((backendCompleted / 8) * 100));
+
+    const dbCompleted = Object.entries(tp).filter(([k, v]) => k.startsWith('db-') && v.status === 'Completed').length;
+    const dbScore = Math.min(100, Math.round((dbCompleted / 6) * 100));
+
+    const csCompleted = Object.entries(tp).filter(([k, v]) => k.startsWith('cs-') && v.status === 'Completed').length;
+    const csScore = Math.min(100, Math.round((csCompleted / 6) * 100));
+
+    const cloudCompleted = Object.entries(tp).filter(([k, v]) => k.startsWith('cloud-') && v.status === 'Completed').length;
+    const cloudScore = Math.min(100, Math.round((cloudCompleted / 5) * 100));
+
+    const behCompleted = Object.entries(tp).filter(([k, v]) => k.startsWith('lp-') && v.status === 'Completed').length;
+    const behScore = Math.min(100, Math.round((behCompleted / 6) * 100));
+
+    const projectScore = (state.projects || []).length > 0 ? 80 : 0;
+
+    const mockCount = (state.mockTests || []).length + (state.timedSessions || []).length;
+    const mockScore = Math.min(100, Math.round((mockCount / 5) * 100));
+
+    return {
+      dsa: { name: 'Data Structures & Algorithms', weight: 22, score: dsaScore, contribution: +(dsaScore * 0.22).toFixed(1) },
+      hld: { name: 'High-Level System Design', weight: 18, score: hldScore, contribution: +(hldScore * 0.18).toFixed(1) },
+      lld: { name: 'Low-Level Design & Machine Coding', weight: 10, score: lldScore, contribution: +(lldScore * 0.10).toFixed(1) },
+      java: { name: 'Core Java & JVM Internals', weight: 8, score: javaScore, contribution: +(javaScore * 0.08).toFixed(1) },
+      backend: { name: 'Backend Engineering & Kafka', weight: 8, score: backendScore, contribution: +(backendScore * 0.08).toFixed(1) },
+      database: { name: 'Database Engineering & SQL', weight: 6, score: dbScore, contribution: +(dbScore * 0.06).toFixed(1) },
+      corecs: { name: 'CS Fundamentals (OS, Networks)', weight: 6, score: csScore, contribution: +(csScore * 0.06).toFixed(1) },
+      cloud: { name: 'Cloud Fundamentals (AWS, Azure)', weight: 5, score: cloudScore, contribution: +(cloudScore * 0.05).toFixed(1) },
+      behavioral: { name: 'Behavioral Interviews (STAR)', weight: 7, score: behScore, contribution: +(behScore * 0.07).toFixed(1) },
+      projects: { name: 'Project Deep Dive & Defense', weight: 5, score: projectScore, contribution: +(projectScore * 0.05).toFixed(1) },
+      mocks: { name: 'Mock Interview Analytics', weight: 5, score: mockScore, contribution: +(mockScore * 0.05).toFixed(1) },
+    };
+  }, [state.topicProgress, state.problems, state.projects, state.mockTests, state.timedSessions]);
+
+  // === Growth OS Method Implementations ===
+  const logStudySession = (session: Omit<StudySession, 'id' | 'createdAt'>) => {
+    const newSession: StudySession = {
+      ...session,
+      id: `sess_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      createdAt: new Date().toISOString()
+    };
+
+    setState(prev => {
+      const studySessions = [newSession, ...(prev.studySessions || [])];
+      const studyDaysSet = new Set(prev.studyDays || []);
+      studyDaysSet.add(session.date);
+      const studyDays = Array.from(studyDaysSet);
+      const totalStudyHours = +(prev.totalStudyHours + (session.durationMinutes / 60)).toFixed(1);
+
+      return {
+        ...prev,
+        studySessions,
+        studyDays,
+        totalStudyHours
+      };
+    });
+  };
+
+  const updateStudySession = (id: string, updates: Partial<StudySession>) => {
+    setState(prev => ({
+      ...prev,
+      studySessions: (prev.studySessions || []).map(s => s.id === id ? { ...s, ...updates } : s)
+    }));
+  };
+
+  const deleteStudySession = (id: string) => {
+    setState(prev => {
+      const sessionToDelete = (prev.studySessions || []).find(s => s.id === id);
+      const filtered = (prev.studySessions || []).filter(s => s.id !== id);
+      const deductedHours = sessionToDelete ? +(sessionToDelete.durationMinutes / 60).toFixed(1) : 0;
+      const totalStudyHours = Math.max(0, +(prev.totalStudyHours - deductedHours).toFixed(1));
+
+      return {
+        ...prev,
+        studySessions: filtered,
+        totalStudyHours
+      };
+    });
+  };
+
+  const setTopicProgress = (topicId: string, status: TopicProgressRecord['status'], confidence: number, notes?: string) => {
+    const today = new Date().toISOString().split('T')[0];
+    setState(prev => ({
+      ...prev,
+      topicProgress: {
+        ...(prev.topicProgress || {}),
+        [topicId]: {
+          status,
+          confidence: Math.min(100, Math.max(0, confidence)),
+          lastStudiedDate: today,
+          notes: notes || prev.topicProgress?.[topicId]?.notes
+        }
+      }
+    }));
+  };
+
+  const addWeeklyReview = (entry: Omit<WeeklyReviewEntry, 'id' | 'createdAt'>) => {
+    const newReview: WeeklyReviewEntry = {
+      ...entry,
+      id: `wr_${Date.now()}`,
+      createdAt: new Date().toISOString()
+    };
+    setState(prev => ({
+      ...prev,
+      weeklyReviews: [newReview, ...(prev.weeklyReviews || [])]
+    }));
+  };
+
+  const addApplication = (app: Omit<JobApplication, 'id' | 'createdAt'>) => {
+    const newApp: JobApplication = {
+      ...app,
+      id: `app_${Date.now()}`,
+      createdAt: new Date().toISOString()
+    };
+    setState(prev => ({
+      ...prev,
+      applications: [newApp, ...(prev.applications || [])]
+    }));
+  };
+
+  const updateApplication = (id: string, updates: Partial<JobApplication>) => {
+    setState(prev => ({
+      ...prev,
+      applications: (prev.applications || []).map(a => a.id === id ? { ...a, ...updates } : a)
+    }));
+  };
+
+  const deleteApplication = (id: string) => {
+    setState(prev => ({
+      ...prev,
+      applications: (prev.applications || []).filter(a => a.id !== id)
+    }));
+  };
+
+  const triggerRevision = (topicId: string, topicName: string, pillar: string) => {
+    const today = new Date();
+    const nextDate = new Date(today);
+    nextDate.setDate(nextDate.getDate() + 1);
+    const nextDateStr = nextDate.toISOString().split('T')[0];
+
+    const newItem: SpacedRevisionItem = {
+      id: `rev_${topicId}`,
+      topicId,
+      topicName,
+      pillar,
+      firstLearnedDate: today.toISOString().split('T')[0],
+      nextRevisionDate: nextDateStr,
+      intervalIndex: 0,
+      status: 'Upcoming'
+    };
+
+    setState(prev => {
+      const existing = (prev.spacedRevisions || []).filter(r => r.topicId !== topicId);
+      return {
+        ...prev,
+        spacedRevisions: [newItem, ...existing]
+      };
+    });
+  };
+
+  const completeRevision = (revisionId: string, newConfidence?: number) => {
+    const INTERVAL_DAYS = [1, 3, 7, 14, 30];
+    setState(prev => {
+      const revisions = (prev.spacedRevisions || []).map(item => {
+        if (item.id !== revisionId) return item;
+        const nextIdx = item.intervalIndex + 1;
+        if (nextIdx >= INTERVAL_DAYS.length) {
+          return {
+            ...item,
+            lastRevisedDate: new Date().toISOString().split('T')[0],
+            status: 'Mastered' as const,
+            intervalIndex: nextIdx
+          };
+        }
+        const nextDate = new Date();
+        nextDate.setDate(nextDate.getDate() + INTERVAL_DAYS[nextIdx]);
+        return {
+          ...item,
+          lastRevisedDate: new Date().toISOString().split('T')[0],
+          nextRevisionDate: nextDate.toISOString().split('T')[0],
+          intervalIndex: nextIdx,
+          status: 'Upcoming' as const
+        };
+      });
+
+      return {
+        ...prev,
+        spacedRevisions: revisions
+      };
+    });
+  };
+
+  const setTargetCompanyProfile = (profile: 'general' | 'microsoft' | 'amazon' | 'google') => {
+    setState(prev => ({ ...prev, targetCompanyProfile: profile }));
+  };
+
 
   // Dynamically determine "What should I do next?"
   const getNextAction = (): string => {
@@ -750,7 +1088,21 @@ export const PrepProvider: React.FC<{ children: React.ReactNode }> = ({ children
         exportData,
         importData,
         resetData,
-        seedDemoData
+        seedDemoData,
+        heatmapDays,
+        streakStats,
+        pillarReadiness,
+        logStudySession,
+        updateStudySession,
+        deleteStudySession,
+        setTopicProgress,
+        addWeeklyReview,
+        addApplication,
+        updateApplication,
+        deleteApplication,
+        triggerRevision,
+        completeRevision,
+        setTargetCompanyProfile
       }}
     >
       {children}

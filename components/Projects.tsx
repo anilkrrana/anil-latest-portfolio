@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import HolographicTiltCard from "./HolographicTiltCard";
 import { 
   ArrowUpRightIcon, 
   CodeBracketIcon, 
@@ -21,7 +22,7 @@ export default function Projects({ data }: Props) {
     : data.filter((p: any) => p.category === activeFilter);
 
   return (
-    <section id="projects" className="py-24 relative bg-command-grid">
+    <section id="projects" className="py-24 relative bg-command-grid bg-radial-gradient">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-12">
@@ -57,7 +58,7 @@ export default function Projects({ data }: Props) {
           ))}
         </div>
 
-        {/* Dynamic Project Grid */}
+        {/* Dynamic 3D Project Grid */}
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
             {filteredProjects.map((project: any) => (
@@ -68,65 +69,86 @@ export default function Projects({ data }: Props) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4 }}
-                onClick={() => setSelectedProject(project)}
-                className={`cmdCard p-5 border-neutral-800 flex flex-col justify-between cursor-pointer group hover:border-blue-500/50 transition-all ${
-                  project.isFlagship ? "border-blue-500/50 dark:bg-blue-900/20 bg-blue-50/50" : ""
-                }`}
+                className="h-full"
               >
-                <div>
-                  {/* Category & Badge */}
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-blue-500 dark:bg-blue-900/40 bg-blue-50 px-2.5 py-0.5 rounded border dark:border-blue-800/40 border-blue-200">
-                      {project.category || "Engineering"}
-                    </span>
-                    {project.isFlagship && (
-                      <span className="cmdBadge text-[10px] py-0.5">★ FLAGSHIP</span>
-                    )}
-                  </div>
+                <HolographicTiltCard
+                  intensity={7}
+                  glowColor={project.isFlagship ? "rgba(0, 161, 224, 0.45)" : "rgba(59, 130, 246, 0.35)"}
+                  className="h-full rounded-2xl"
+                >
+                  <div
+                    onClick={() => setSelectedProject(project)}
+                    className={`cmdCard p-5 border-neutral-800 flex flex-col justify-between cursor-pointer group hover:border-blue-500/60 transition-all duration-300 h-full ${
+                      project.isFlagship ? "border-blue-500/50 dark:bg-blue-900/20 bg-blue-50/50" : ""
+                    }`}
+                  >
+                    <div>
+                      {/* Category & Badge */}
+                      <div
+                        style={{ transform: "translateZ(20px)" }}
+                        className="flex items-center justify-between mb-3"
+                      >
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-blue-500 dark:bg-blue-900/40 bg-blue-50 px-2.5 py-0.5 rounded border dark:border-blue-800/40 border-blue-200">
+                          {project.category || "Engineering"}
+                        </span>
+                        {project.isFlagship && (
+                          <span className="cmdBadge text-[10px] py-0.5">★ FLAGSHIP</span>
+                        )}
+                      </div>
 
-                  {/* Project Image Preview */}
-                  <div className="relative w-full h-44 rounded-lg overflow-hidden mb-4 dark:bg-black bg-slate-100 border dark:border-neutral-800/80 border-slate-200">
-                    <Image
-                      src={project.imgurl}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 400px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
-                  </div>
+                      {/* Project Image Preview with 3D Pop */}
+                      <div
+                        style={{ transform: "translateZ(15px)" }}
+                        className="relative w-full h-44 rounded-lg overflow-hidden mb-4 dark:bg-black bg-slate-100 border dark:border-neutral-800/80 border-slate-200"
+                      >
+                        <Image
+                          src={project.imgurl}
+                          alt={project.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 400px"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+                      </div>
 
-                  {/* Title & Subtitle */}
-                  <h3 className="text-lg font-bold dark:text-white text-slate-900 font-outfit group-hover:text-blue-500 transition-colors flex items-center justify-between">
-                    <span>{project.title}</span>
-                    <ArrowUpRightIcon className="w-4 h-4 text-neutral-400 group-hover:text-blue-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                  </h3>
+                      {/* Title & Subtitle */}
+                      <div style={{ transform: "translateZ(25px)" }}>
+                        <h3 className="text-lg font-bold dark:text-white text-slate-900 font-outfit group-hover:text-blue-500 transition-colors flex items-center justify-between">
+                          <span>{project.title}</span>
+                          <ArrowUpRightIcon className="w-4 h-4 text-neutral-400 group-hover:text-blue-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                        </h3>
 
-                  {project.subtitle && (
-                    <p className="text-xs text-blue-500 font-mono mt-0.5 font-medium">
-                      {project.subtitle}
-                    </p>
-                  )}
+                        {project.subtitle && (
+                          <p className="text-xs text-blue-500 font-mono mt-0.5 font-medium">
+                            {project.subtitle}
+                          </p>
+                        )}
 
-                  <p className="text-xs dark:text-neutral-300 text-slate-600 font-light mt-2 line-clamp-3 leading-relaxed">
-                    {project.content}
-                  </p>
-                </div>
+                        <p className="text-xs sm:text-sm dark:text-neutral-200 text-slate-700 font-normal mt-2 line-clamp-3 leading-relaxed">
+                          {project.content}
+                        </p>
+                      </div>
+                    </div>
 
-                {/* Tech Tags & Footer */}
-                <div className="pt-4 mt-4 border-t dark:border-neutral-800/80 border-slate-200 flex items-center justify-between text-xs">
-                  <div className="flex flex-wrap gap-1.5 max-w-[70%]">
-                    {project.tags?.slice(0, 3).map((tag: string, i: number) => (
-                      <span key={i} className="text-[10px] font-mono dark:text-neutral-400 text-slate-600 dark:bg-black bg-slate-100 px-2 py-0.5 rounded border dark:border-neutral-800 border-slate-200">
-                        {tag}
+                    {/* Tech Tags & Footer */}
+                    <div
+                      style={{ transform: "translateZ(20px)" }}
+                      className="pt-4 mt-4 border-t dark:border-neutral-800/80 border-slate-200 flex items-center justify-between text-xs"
+                    >
+                      <div className="flex flex-wrap gap-1.5 max-w-[70%]">
+                        {project.tags?.slice(0, 3).map((tag: string, i: number) => (
+                          <span key={i} className="text-[10px] font-mono dark:text-neutral-400 text-slate-600 dark:bg-black bg-slate-100 px-2 py-0.5 rounded border dark:border-neutral-800 border-slate-200">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <span className="text-xs font-mono text-blue-500 font-medium group-hover:underline">
+                        Details →
                       </span>
-                    ))}
+                    </div>
                   </div>
-
-                  <span className="text-xs font-mono text-blue-500 font-medium group-hover:underline">
-                    Details →
-                  </span>
-                </div>
+                </HolographicTiltCard>
               </motion.div>
             ))}
           </AnimatePresence>

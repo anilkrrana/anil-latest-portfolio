@@ -3,10 +3,12 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bars3Icon, XMarkIcon, ArrowDownTrayIcon, SunIcon, MoonIcon, SparklesIcon, AcademicCapIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "@/context/ThemeContext";
+import { VisitorCounter } from "./VisitorCounter";
 
 const navItems = [
   { name: "About", href: "#about" },
-  { name: "Ask Anil ✦", href: "#ask-anil", highlight: true },
+  { name: "Certifications ✦", href: "#certifications", highlight: true },
+  { name: "Ask Anil ✦", href: "#ask-anil", highlight: false },
   { name: "Feedback", href: "#feedback" },
   { name: "Experience", href: "#experience" },
   { name: "OrderFlow", href: "#orderflow" },
@@ -52,11 +54,11 @@ export default function Header() {
             AK
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold tracking-wider dark:text-neutral-100 text-slate-900 font-outfit group-hover:text-blue-500 transition-colors">
+            <span className="text-sm font-semibold tracking-wider dark:text-neutral-100 text-slate-900 font-outfit group-hover:text-cyan-400 transition-colors">
               ANIL KUMAR RANA
             </span>
-            <span className="text-[10px] font-mono dark:text-neutral-400 text-slate-500 tracking-tight">
-              SENIOR SOFTWARE ENGINEER
+            <span className="text-[10px] font-mono dark:text-cyan-400 text-cyan-600 tracking-tight font-semibold">
+              SALESFORCE CERTIFIED · SENIOR SE
             </span>
           </div>
         </a>
@@ -80,6 +82,8 @@ export default function Header() {
 
         {/* Action CTAs: Theme Toggle & Resume */}
         <div className="flex items-center gap-2 sm:gap-3">
+          <VisitorCounter />
+
           {/* Dark / Light Mode Toggle Button */}
           <button
             onClick={toggleTheme}
@@ -107,7 +111,7 @@ export default function Header() {
           <Link
             href="/infosys-sp-preparation"
             className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold text-blue-400 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg transition-all focus:outline-none"
-            title="Infosys SP Coding Assessment & Interview Preparation System"
+            title="Product-Based Company SDE Preparation & Roadmap"
           >
             <AcademicCapIcon className="w-4 h-4 text-blue-400" />
             <span>SP PREP 🎯</span>

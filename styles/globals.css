@@ -8,6 +8,9 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   /* Default Dark Mode */
@@ -23,6 +26,7 @@
   }
 
   body {
+    display: block !important;
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
   }

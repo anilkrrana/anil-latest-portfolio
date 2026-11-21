@@ -434,5 +434,12 @@ export const INITIAL_PREP_STATE: PrepState = {
     }
   ],
   studyDays: ['2026-10-07', '2026-10-08', '2026-10-09', '2026-10-10', '2026-10-11'],
-  totalStudyHours: 18.5
+  totalStudyHours: 18.5,
+  schemaVersion: 3,
+  studySessions: [],
+  weeklyReviews: [],
+  applications: [],
+  topicProgress: {},
+  spacedRevisions: [],
+  targetCompanyProfile: 'general'
 };
